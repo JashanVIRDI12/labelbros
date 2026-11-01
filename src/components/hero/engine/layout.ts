@@ -4,7 +4,17 @@
  * in the "full" zone (the free space beside the headline). rot is in degrees.
  * The stage then nudges every start position clear of the text.
  */
-export type Placement = { id: string; x: number; y: number; rot: number; zone?: "band" | "full"; minWidth?: number; minBand?: number };
+export type Placement = {
+  id: string;
+  x: number;
+  y: number;
+  rot: number;
+  /** size multiplier for this placement (1 = the layout scale) */
+  s?: number;
+  zone?: "band" | "full";
+  minWidth?: number;
+  minBand?: number;
+};
 export type Layout = {
   name: "desktop" | "mobile";
   scale: (w: number, h: number, band: number) => number;

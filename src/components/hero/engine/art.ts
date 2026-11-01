@@ -708,6 +708,12 @@ export type RenderedSticker = {
 
 const PAD = 4;
 
+/** Logical size of a rendered sticker (art + die-cut border + padding), before any scale. */
+export function stickerSize(design: StickerDesign) {
+  const pad = design.border + PAD;
+  return { width: design.w + pad * 2, height: design.h + pad * 2 };
+}
+
 function makeCanvas(w: number, h: number) {
   const c = document.createElement("canvas");
   c.width = Math.max(1, Math.ceil(w));
@@ -726,7 +732,12 @@ export function yieldToMain(): Promise<void> {
  * Draw the art, grow a white die-cut border around its silhouette, and build a hit mask.
  * Each step runs in its own task.
  */
-export async function renderSticker(design: StickerDesign, fonts: Fonts, scale: number): Promise<RenderedSticker> {
+export async function renderSticker(
+  design: StickerDesign,
+  fonts: Fonts,
+  scale: number,
+  opts: { mask?: boolean } = {},
+): Promise<RenderedSticker> {
   const pad = design.border + PAD;
   const width = design.w + pad * 2;
   const height = design.h + pad * 2;
@@ -765,6 +776,8 @@ export async function renderSticker(design: StickerDesign, fonts: Fonts, scale: 
     await yieldToMain();
   }
   ctx.drawImage(art, 0, 0);
+
+  if (opts.mask === false) return { canvas: out, width, height, mask: new Uint8ClampedArray(0), maskW: 0, maskH: 0 };
 
   // hit mask at ~1 sample per 2 logical px
   const maskW = Math.ceil(width / 2);
