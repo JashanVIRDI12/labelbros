@@ -1,6 +1,6 @@
 # Label Bros: design direction "Sticker table" (current, from 2026-11-02)
 
-Replaces everything before it. The industrial "Production spec" site and the earlier Pinterest sticker build were deleted on 2026-11-02 (backup: `qa/backups/pre-fresh-start-2026-11-02.tgz`). The site is being rebuilt section by section; only the hero exists so far.
+Replaces everything before it. The industrial "Production spec" site and the earlier Pinterest sticker build were deleted on 2026-11-02 (backup: `qa/backups/pre-fresh-start-2026-11-02.tgz`). The site is being rebuilt section by section; the hero and the five sections below it exist (see the end of this doc).
 
 ## Brief
 - Label Bros prints custom stickers and product labels for brands of every size (food and drink, coffee, beer, candles, cosmetics, packaging, plus business labels like warning and ID labels).
@@ -54,6 +54,8 @@ The hero is the table the stickers sit on. Every sticker is a real object: you c
 - `layout.ts`: desktop and phone placements.
 
 ## Rules learned
+- Sticker fonts load by their primary family only: next/font's "Fallback" faces point at a local Arial, which fails at once where Arial is missing (Linux, many Android phones) and used to end the wait before the real face arrived.
+- Hovering a peel must tween with `overwrite: "auto"`; `true` kills the card's scroll peel too.
 - The headline must be partly visible on the first frame (the rise starts at 62%, the fades at opacity 0.01), or Chrome records LCP late.
 - Tailwind runs through `@tailwindcss/postcss`; the Turbopack loader stopped picking up CSS edits.
 - Build stickers in small async steps (`yieldToMain`) and upload textures with `renderer.initTexture`; this took mobile TBT from 650 ms to ~60 ms.
@@ -61,5 +63,13 @@ The hero is the table the stickers sit on. Every sticker is a real object: you c
 ## Avoid
 Gradients on UI, glassmorphism, drop shadows on UI, pills as badges, eyebrows above headings, numbered section labels, monospace, Inter/Roboto/Space Grotesk/system fonts, generic fade-up on scroll, bento grids, invented numbers or claims (use `[[PLACEHOLDERS]]`).
 
-## Next sections
-Not designed yet. Decide each with the client, one at a time, and carry the sticker-table idea into it.
+## Sections below the hero (built 2026-11-02)
+Page order: hero, products, how it works, pricing, sample kit, footer. Each section's scroll motion lives in its own chunk (`src/components/sections/*-motion.ts`) and loads only when the section is within two screens (`site/Motion.tsx`), so GSAP never costs the first paint. Sample stickers from `art.ts` are drawn into page canvases by `stickers/StickerArt.tsx` (foil and glitter baked in; foil hue moves with scroll).
+
+- **Products, "Peel through what we print"** (`#stickers`, `#labels`). The range as a pad of five label-cards on a sticky stage. Scrolling peels the top card off from the bottom-right corner: a flat fold (`lib/peel.ts`), the paper back mirrored over with a curl shade and a shadow, then it leaves up and to the left while the next card squares up. At rest the top card's corner is lifted a little (hover lifts it more). Index list on desktop, progress bars on phones; index buttons, `#labels` and keyboard focus all jump the pad to the right card. The "Price these" link sits bottom-left so the peel never covers it, and preselects the product in the pricing builder.
+- **How it works, "See it before we print it"** (`#process`). A proof sheet sticks beside the steps (above them on phones) and builds itself: pencil sketch draws (DrawSVG), artwork fills in, the die-cut border and a magenta cut line draw round it, the approval seal slaps on, then printed copies stack up. The steps are plain text in the flow; the active one gets a strip of yellow tape. Sample art: "Peach Club" (`sections/peach.tsx`).
+- **Pricing, "Get your price"** (`#pricing`). The one cream (liner) band on the page, for rhythm. A real form of radio chips (product, shape, size, quantity, finish) beside a to-scale preview on a cutting mat (one square = one inch): the shape morphs (MorphSVG), measuring lines follow the edges, quantity stacks copies that slap on, finishes change the surface (sheen follows the pointer). The price and CTA sit under the mat and stay in view on desktop. Prices, sizes and quantities are `[[PLACEHOLDERS]]`.
+- **Sample kit, "Hold them before you order"** (`#samples`). A kraft envelope: on scroll the Label Bros seal peels off, the flap opens and six samples fan out like a hand of cards. Contents, price and delivery time are placeholders.
+- **Footer.** One more ask (both CTAs), the site map, and the wordmark as a giant die-cut sticker that swings into place.
+- **Cream surfaces:** focus is an ink ring with a yellow halo (yellow alone is too faint on cream). Selected chips on cream are ink with cream text.
+- **Reduced motion / no scripts:** the pad is a plain three-column grid of cards, the proof shows its approved state, the envelope is open, and nothing scrubs.

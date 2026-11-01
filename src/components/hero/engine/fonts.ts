@@ -12,15 +12,21 @@ export function stickerFonts(): Fonts {
   };
 }
 
+// Load by the primary family only. next/font lists a metric-matched "Fallback" face built
+// from a local font (Arial); where that font is missing (Linux, many Android phones) the face
+// fails at once and would reject the whole load before the real face has arrived.
+const primary = (family: string) => family.split(",")[0].trim();
+
 function specs(f: Fonts) {
+  const sans = primary(f.sans);
   return [
-    `900 40px ${f.sans}`,
-    `800 40px ${f.sans}`,
-    `700 40px ${f.sans}`,
-    `600 40px ${f.sans}`,
-    `400 40px ${f.anton}`,
-    `600 40px ${f.serif}`,
-    `400 40px ${f.script}`,
+    `900 40px ${sans}`,
+    `800 40px ${sans}`,
+    `700 40px ${sans}`,
+    `600 40px ${sans}`,
+    `400 40px ${primary(f.anton)}`,
+    `600 40px ${primary(f.serif)}`,
+    `400 40px ${primary(f.script)}`,
   ];
 }
 
@@ -29,8 +35,15 @@ let pending: Promise<void> | null = null;
 /** Start downloading the sticker faces now (safe to call more than once). */
 export function warmFonts() {
   if (!pending) {
-    const f = stickerFonts();
-    pending = Promise.all(specs(f).map((s) => document.fonts.load(s).catch(() => null))).then(() => undefined);
+    const list = specs(stickerFonts());
+    const loadAll = () => Promise.all(list.map((s) => document.fonts.load(s).catch(() => [] as FontFace[])));
+    pending = loadAll().then(async (found) => {
+      // no face matched yet: the font CSS is not in the document yet (dev CSS injection)
+      if (found.some((faces) => faces.length === 0)) {
+        await document.fonts.ready;
+        await loadAll();
+      }
+    });
   }
   return pending;
 }
