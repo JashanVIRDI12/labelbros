@@ -15,19 +15,29 @@ type Bay = {
   product: string;
   what: string;
   spec: string;
+  /** height on the shelf, as a share of the tallest product: a jar is shorter than a bottle */
+  size: number;
   photo: { w: number; h: number };
   label: { w: number; h: number; rot: number };
 };
 
 // photo / label sizes are the exported artwork in px (aspect only)
 const BAYS: Bay[] = [
-  { id: "olive", product: "Old Harbor olive oil", what: "Bottle label", spec: "Cream laid paper, arched cut, gold foil", photo: { w: 218, h: 900 }, label: { w: 301, h: 560, rot: -6 } },
-  { id: "jam", product: "Sunday Jam Co.", what: "Jar label", spec: "Gloss paper, scalloped circle", photo: { w: 705, h: 900 }, label: { w: 551, h: 560, rot: 7 } },
-  { id: "kombucha", product: "Tidewater kombucha", what: "Wrap-around label", spec: "White vinyl, rounded rectangle", photo: { w: 249, h: 900 }, label: { w: 560, h: 372, rot: -4 } },
-  { id: "fern", product: "Wild Fern face oil", what: "Cosmetics label", spec: "Uncoated sage paper", photo: { w: 278, h: 900 }, label: { w: 271, h: 560, rot: 5 } },
-  { id: "candle", product: "Ember & Oak candle", what: "Candle label", spec: "Matte paper, oval", photo: { w: 883, h: 810 }, label: { w: 560, h: 379, rot: -5 } },
-  { id: "coffee", product: "Night Shift coffee", what: "Bag label", spec: "Matte paper, arch die-cut", photo: { w: 547, h: 900 }, label: { w: 331, h: 560, rot: 6 } },
+  { id: "olive", product: "Old Harbor olive oil", what: "Bottle label", spec: "Cream laid paper, arched cut, gold foil", size: 1, photo: { w: 218, h: 900 }, label: { w: 301, h: 560, rot: -5 } },
+  { id: "jam", product: "Sunday Jam Co.", what: "Jar label", spec: "Gloss paper, scalloped circle", size: 0.62, photo: { w: 705, h: 900 }, label: { w: 551, h: 560, rot: 5 } },
+  { id: "kombucha", product: "Tidewater kombucha", what: "Wrap-around label", spec: "White vinyl, rounded rectangle", size: 0.94, photo: { w: 249, h: 900 }, label: { w: 560, h: 372, rot: -5 } },
+  { id: "fern", product: "Wild Fern face oil", what: "Cosmetics label", spec: "Uncoated sage paper", size: 0.62, photo: { w: 278, h: 900 }, label: { w: 271, h: 560, rot: 5 } },
+  { id: "candle", product: "Ember & Oak candle", what: "Candle label", spec: "Matte paper, oval", size: 0.58, photo: { w: 883, h: 810 }, label: { w: 560, h: 379, rot: -5 } },
+  { id: "coffee", product: "Night Shift coffee", what: "Bag label", spec: "Matte paper, arch die-cut", size: 0.84, photo: { w: 547, h: 900 }, label: { w: 331, h: 560, rot: 5 } },
 ];
+
+// Every flat label gets the same area (a share of the shelf height squared), whatever its shape,
+// so a tall label and a wide one carry the same weight.
+const LABEL_AREA = 0.09;
+const labelBox = (l: Bay["label"]) => {
+  const aspect = l.w / l.h;
+  return { w: Math.sqrt(LABEL_AREA * aspect), h: Math.sqrt(LABEL_AREA / aspect) };
+};
 
 export function Labels() {
   return (
@@ -47,29 +57,44 @@ export function Labels() {
 
           <ul className="shelf-row" aria-label="Sample labels">
             {BAYS.map((b, i) => (
-              <li key={b.id} className="shelf-bay" data-bay={i}>
+              <li
+                key={b.id}
+                className="shelf-bay"
+                data-bay={i}
+                style={
+                  {
+                    "--s": b.size,
+                    "--lw": labelBox(b.label).w.toFixed(4),
+                    "--lh": labelBox(b.label).h.toFixed(4),
+                  } as CSSProperties
+                }
+              >
                 <figure className="shelf-figure">
-                  <img
-                    className="shelf-label"
-                    data-label
-                    src={`/labels/${b.id}-label.webp`}
-                    alt=""
-                    width={b.label.w}
-                    height={b.label.h}
-                    loading="lazy"
-                    decoding="async"
-                    style={{ ["--r" as string]: `${b.label.rot}deg` } as CSSProperties}
-                  />
-                  <img
-                    className="shelf-photo"
-                    data-photo
-                    src={`/labels/${b.id}.webp`}
-                    alt={`${b.product}: ${b.what.toLowerCase()} (sample artwork)`}
-                    width={b.photo.w}
-                    height={b.photo.h}
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <div className="shelf-stand">
+                    <div className="shelf-unit">
+                      <img
+                        className="shelf-label"
+                        data-label
+                        src={`/labels/${b.id}-label.webp`}
+                        alt=""
+                        width={b.label.w}
+                        height={b.label.h}
+                        loading="lazy"
+                        decoding="async"
+                        style={{ ["--r" as string]: `${b.label.rot}deg` } as CSSProperties}
+                      />
+                      <img
+                        className="shelf-photo"
+                        data-photo
+                        src={`/labels/${b.id}.webp`}
+                        alt={`${b.product}: ${b.what.toLowerCase()} (sample artwork)`}
+                        width={b.photo.w}
+                        height={b.photo.h}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
                   <figcaption className="shelf-caption">
                     <span className="shelf-what">{b.what}</span>
                     <span className="shelf-spec">{b.spec}</span>
