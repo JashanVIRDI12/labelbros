@@ -1,5 +1,0 @@
-(globalThis["TURBOPACK_CHUNK_LISTS"] || (globalThis["TURBOPACK_CHUNK_LISTS"] = [])).push({
-    script: typeof document === "object" ? document.currentScript : undefined,
-    chunks: ["static/chunks/[root-of-the-server]__0an3cacm6-q9j._.css","static/chunks/017p_next_dist_15vxmbbq18z53._.js","static/chunks/src_components_1z3mjtt6cw2rd._.js","static/chunks/src_components_0y9a1901qf9ww._.js","static/chunks/017p_next_dist_01nllr5sdp7t9._.js","static/chunks/0gil_three_build_three_core_0pd_w6aujxhnq.js","static/chunks/0gil_three_build_three_module_124uhtgo1tegg.js","static/chunks/06zz_gsap_1ylladlf359kc._.js","static/chunks/0rce_@gsap_react_src_index_12pe3rf-fvx4i.js","static/chunks/src_18y2vhivbwe4t._.js","static/chunks/node_modules__pnpm_1if_tmc1tlgq6._.js","static/chunks/src_207fgs_l-_v48._.js","static/chunks/node_modules__pnpm_0md2h_hhsko40._.js","static/chunks/src_1i3y2ue5w-cys._.js","static/chunks/src_1v_44ov75sf0j._.js","static/chunks/src_1hd8d59vevx3m._.js","static/chunks/src_1g5fpy0tq2d05._.js","static/chunks/src_components_1k0-ybrgf6v-w._.js"],
-    source: "entry"
-});
