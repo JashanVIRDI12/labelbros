@@ -1,0 +1,46 @@
+[
+  {
+    "key": "1440-high",
+    "overflow": 0,
+    "errors": [],
+    "revealed": [
+      "$146$146$0.29 / label · 500 labels",
+      "Code [[CODE]] revealed.",
+      "",
+      ""
+    ]
+  },
+  {
+    "key": "390-high",
+    "overflow": 0,
+    "errors": [],
+    "revealed": [
+      "$146$146$0.29 / label · 500 labels",
+      "Code [[CODE]] revealed.",
+      "",
+      ""
+    ]
+  },
+  {
+    "key": "390-calm",
+    "overflow": 0,
+    "errors": [],
+    "revealed": [
+      "$146$0.29 / label · 500 labels",
+      "Code [[CODE]] revealed.",
+      "",
+      ""
+    ]
+  },
+  {
+    "key": "1440-low",
+    "overflow": 0,
+    "errors": [],
+    "revealed": [
+      "$146$146$0.29 / label · 500 labels",
+      "Code [[CODE]] revealed.",
+      "",
+      ""
+    ]
+  }
+]

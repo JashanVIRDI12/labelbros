@@ -1,0 +1,57 @@
+{
+  "fps": [
+    {
+      "id": "hero",
+      "frames": 180,
+      "avgMs": 16.66611111111111,
+      "p95": 16.700000000000728,
+      "over33": 0,
+      "longTasks": 0,
+      "maxLong": 0
+    },
+    {
+      "id": "how",
+      "frames": 180,
+      "avgMs": 16.66611111111111,
+      "p95": 16.700000000000728,
+      "over33": 0,
+      "longTasks": 0,
+      "maxLong": 0
+    },
+    {
+      "id": "wrap",
+      "frames": 180,
+      "avgMs": 16.665555555555553,
+      "p95": 16.700000000000728,
+      "over33": 0,
+      "longTasks": 0,
+      "maxLong": 0
+    },
+    {
+      "id": "products",
+      "frames": 180,
+      "avgMs": 16.665555555555553,
+      "p95": 16.799999999999272,
+      "over33": 0,
+      "longTasks": 0,
+      "maxLong": 0
+    },
+    {
+      "id": "materials",
+      "frames": 180,
+      "avgMs": 16.6661111111111,
+      "p95": 16.799999999999272,
+      "over33": 0,
+      "longTasks": 0,
+      "maxLong": 0
+    }
+  ],
+  "finishKeyboard": true,
+  "quoteValidation": true,
+  "dragPeel": true,
+  "clipboard": "[[CODE]]",
+  "peelAfterToggle": "0",
+  "headerTop": 20.15625,
+  "normalAxe": [],
+  "mobileMenu": true
+}

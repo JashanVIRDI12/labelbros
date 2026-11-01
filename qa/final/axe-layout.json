@@ -1,0 +1,52 @@
+[
+  {
+    "layout": {
+      "width": 390,
+      "overflow": 0,
+      "h1": 1,
+      "canvas": 0,
+      "pins": 0
+    },
+    "violations": []
+  },
+  {
+    "layout": {
+      "width": 768,
+      "overflow": 0,
+      "h1": 1,
+      "canvas": 0,
+      "pins": 0
+    },
+    "violations": []
+  },
+  {
+    "layout": {
+      "width": 1280,
+      "overflow": 0,
+      "h1": 1,
+      "canvas": 0,
+      "pins": 0
+    },
+    "violations": []
+  },
+  {
+    "layout": {
+      "width": 1440,
+      "overflow": 0,
+      "h1": 1,
+      "canvas": 0,
+      "pins": 0
+    },
+    "violations": []
+  },
+  {
+    "layout": {
+      "width": 1920,
+      "overflow": 0,
+      "h1": 1,
+      "canvas": 0,
+      "pins": 0
+    },
+    "violations": []
+  }
+]

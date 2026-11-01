@@ -1,0 +1,423 @@
+@import "tailwindcss";
+
+/*
+ * Label Bros: "Sticker table".
+ * One field colour (press blue), one light ink (liner cream), one signal (label yellow).
+ * Customer sticker artwork brings every other colour; the UI never does.
+ */
+@theme {
+  --color-*: initial;
+  --color-field: #1e3fd8; /* press blue: the table the stickers sit on */
+  --color-field-deep: #132a9e; /* pressed / shadowed blue */
+  --color-liner: #f5f1e8; /* liner cream: type on blue (6.7:1) */
+  --color-liner-soft: #c9d1ff; /* secondary notes on blue (5.0:1) */
+  --color-ink: #0d0d0c; /* type on yellow and cream */
+  --color-signal: #ffd21f; /* label yellow: the one action colour */
+  --color-backing: #ebe6da; /* the paper back of a peeled sticker */
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-sans: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+
+  --text-*: initial;
+  --text-13: 0.8125rem;
+  --text-14: 0.875rem;
+  --text-15: 0.9375rem;
+  --text-16: 1rem;
+  --text-18: 1.125rem;
+  --text-20: 1.25rem;
+  --text-hero: clamp(3.4rem, min(9.6vw, 17.5svh), 10.5rem);
+
+  --radius-*: initial;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-full: 999px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-slap: cubic-bezier(0.4, 0, 0.08, 1);
+}
+
+:root {
+  --gutter: clamp(16px, 2.6vw, 44px);
+  color-scheme: light;
+}
+
+html {
+  background: var(--color-field);
+  color: var(--color-liner);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100svh;
+  background: var(--color-field);
+  font-family: var(--font-sans);
+  font-size: var(--text-16);
+  line-height: 1.5;
+}
+
+::selection {
+  background: var(--color-signal);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: 16px;
+  z-index: 100;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--color-signal);
+  color: var(--color-ink);
+  font-weight: 650;
+  transform: translateY(-160%);
+}
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* ---------- Headline ---------- */
+
+.hero-title {
+  font-size: var(--text-hero);
+  font-weight: 900;
+  font-stretch: 112%;
+  line-height: 0.84;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+@media (max-width: 639px) {
+  .hero-title {
+    font-size: min(13.2vw, 8.6svh);
+    font-stretch: 100%;
+  }
+}
+
+/* Each line rises out of its own slot. Pure CSS, and it starts partly visible, so the H1 is
+   painted on the very first frame and counts for LCP straight away. */
+.title-line {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.06em;
+  padding-bottom: 0.04em;
+  margin-bottom: -0.04em;
+}
+.title-line > span {
+  display: inline-block;
+  animation: title-rise 1.05s var(--ease-out) both;
+  animation-delay: calc(0.08s + var(--i, 0) * 0.09s);
+}
+@keyframes title-rise {
+  from {
+    transform: translate3d(0, 62%, 0);
+  }
+}
+
+.hero-fade {
+  animation: hero-fade 0.9s var(--ease-out) both;
+  animation-delay: calc(0.35s + var(--i, 0) * 0.07s);
+}
+@keyframes hero-fade {
+  from {
+    opacity: 0.01; /* not 0: an invisible element would not count as painted */
+    transform: translate3d(0, 18px, 0);
+  }
+}
+
+/* ---------- Buttons: flat stickers whose corner peels on hover ---------- */
+
+@property --peel {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --peel-s {
+  syntax: "<number>";
+  inherits: true; /* the folded corner (::after) reads it from the button */
+  initial-value: 0;
+}
+
+.btn {
+  --peel: 0px;
+  --peel-s: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 0 24px;
+  border-radius: var(--radius-md) var(--radius-md) 2px var(--radius-md);
+  font-size: var(--text-16);
+  font-weight: 700;
+  font-stretch: 106%;
+  letter-spacing: -0.005em;
+  line-height: 1;
+  white-space: nowrap;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--peel)),
+    calc(100% - var(--peel)) 100%,
+    0 100%
+  );
+  transition:
+    --peel 0.42s var(--ease-out),
+    --peel-s 0.42s var(--ease-out),
+    transform 0.25s var(--ease-out);
+}
+.btn::after {
+  /* the folded-back corner: the sticker's paper back */
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+  background: var(--color-backing);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  transform: scale(var(--peel-s));
+  transform-origin: 100% 100%;
+  pointer-events: none;
+}
+.btn:hover,
+.btn:focus-visible {
+  --peel: 17px;
+  --peel-s: 0.85;
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn .arrow {
+  transition: transform 0.35s var(--ease-out);
+}
+.btn:hover .arrow {
+  transform: translateX(3px);
+}
+
+.btn-primary {
+  background: var(--color-signal);
+  color: var(--color-ink);
+}
+.btn-secondary {
+  background: var(--color-liner);
+  color: var(--color-ink);
+}
+.btn-sm {
+  min-height: 44px;
+  padding: 0 18px;
+  font-size: var(--text-15);
+}
+
+/* ---------- Header links ---------- */
+
+.nav-link {
+  position: relative;
+  padding: 10px 2px;
+  font-size: var(--text-15);
+  font-weight: 560;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: 4px;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 100% 50%;
+  transition: transform 0.4s var(--ease-out);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: 0 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title-line > span,
+  .hero-fade {
+    animation: none;
+  }
+  .btn,
+  .btn::after,
+  .nav-link::after {
+    transition: none;
+  }
+}
+
+/* ---------- Logo: the wordmark as a die-cut sticker ---------- */
+
+.logo {
+  --peel: 0px;
+  --peel-s: 0;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  padding: 7px 11px 6px;
+  border-radius: 9px 9px 2px 9px;
+  background: var(--color-signal);
+  color: var(--color-ink);
+  /* the white die-cut border (a solid ring, not a shadow) */
+  box-shadow: 0 0 0 3px var(--color-liner);
+  font-size: 15px;
+  font-weight: 900;
+  font-stretch: 125%;
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+  transition: transform 0.5s var(--ease-out);
+}
+.logo-link:hover .logo {
+  transform: rotate(0deg) scale(1.04);
+}
+.logo-link:focus-visible {
+  outline-offset: 8px;
+}
+
+/* ---------- Sticker stage ---------- */
+
+.sticker-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+[data-cursor="grab"],
+[data-cursor="grab"] * {
+  cursor: grab !important;
+}
+[data-cursor="grabbing"],
+[data-cursor="grabbing"] * {
+  cursor: grabbing !important;
+  user-select: none;
+}
+
+/* keyboard stand-ins: invisible until focused, then they frame their sticker */
+.sticker-proxy {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 14px;
+  transform-origin: 50% 50%;
+}
+.sticker-proxy:focus-visible {
+  opacity: 1;
+  outline: 3px solid var(--color-signal);
+  outline-offset: 6px;
+}
+
+.sticker-chip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 30;
+  padding: 9px 13px 10px;
+  border-radius: var(--radius-md);
+  background: var(--color-ink);
+  color: var(--color-liner);
+  font-size: var(--text-13);
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.sticker-chip[data-show="true"] {
+  opacity: 1;
+}
+
+.table-controls {
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out);
+}
+.table-controls[data-ready="true"] {
+  opacity: 1;
+}
+
+.reset-btn {
+  flex: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: var(--radius-md);
+  background: var(--color-field-deep);
+  color: var(--color-liner);
+  font-size: var(--text-14);
+  font-weight: 650;
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition:
+    opacity 0.35s var(--ease-out),
+    transform 0.35s var(--ease-out),
+    background-color 0.2s ease;
+}
+.reset-btn[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.reset-btn:hover {
+  background: var(--color-ink);
+}
+
+/* ---------- Mobile menu ---------- */
+
+.menu-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-liner);
+  color: var(--color-ink);
+}
+.menu-icon,
+.menu-icon::before {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  transition: transform 0.3s var(--ease-out);
+}
+.menu-icon {
+  position: relative;
+  transform: translateY(-3px);
+}
+.menu-icon::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+}
+.menu-icon[data-open="true"] {
+  transform: rotate(45deg);
+}
+.menu-icon[data-open="true"]::before {
+  transform: translateY(-6px) rotate(-90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo,
+  .reset-btn,
+  .table-controls {
+    transition: none;
+  }
+}

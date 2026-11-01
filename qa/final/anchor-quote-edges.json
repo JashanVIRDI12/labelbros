@@ -1,0 +1,44 @@
+[
+  {
+    "width": 390,
+    "tier": "low",
+    "reduce": false,
+    "quoteTop": 104.125,
+    "sampleTop": 103.75,
+    "fit": {
+      "price": "$36,288.00",
+      "priceRight": 230.5,
+      "boxRight": 350,
+      "overflow": 0
+    },
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "tier": "high",
+    "reduce": false,
+    "quoteTop": 104,
+    "sampleTop": 104.0625,
+    "fit": {
+      "price": "$36,288.00",
+      "priceRight": 1132.453125,
+      "boxRight": 1307.84375,
+      "overflow": 0
+    },
+    "errors": []
+  },
+  {
+    "width": 390,
+    "tier": "low",
+    "reduce": true,
+    "quoteTop": 103.640625,
+    "sampleTop": 104.453125,
+    "fit": {
+      "price": "$36,288.00",
+      "priceRight": 230.5,
+      "boxRight": 350,
+      "overflow": 0
+    },
+    "errors": []
+  }
+]
