@@ -16,7 +16,7 @@ import {
 } from "three";
 import { gsap } from "@/lib/gsap";
 import { DESIGNS, renderSticker, yieldToMain, type RenderedSticker, type StickerDesign } from "./art";
-import { loadFonts, type Fonts } from "./fonts";
+import { warmFonts } from "./fonts";
 import { pickLayout, type Layout, type Placement } from "./layout";
 import { shadowFragment, shadowVertex, stickerFragment, stickerVertex } from "./shaders";
 
@@ -84,7 +84,6 @@ export type StageOptions = {
   host: HTMLElement;
   mount: HTMLElement;
   proxies: HTMLElement;
-  chip: HTMLElement;
   reduceMotion: boolean;
   onMovedChange: (moved: boolean) => void;
   onReady: () => void;
@@ -142,11 +141,9 @@ export class StickerStage {
   private lastClickBlock = 0;
   private movedFlag = false;
   private time = 0;
-  private chipW = 0;
   private ro?: ResizeObserver;
   private io?: IntersectionObserver;
   private teaseCall?: gsap.core.Tween;
-  private fonts: Fonts | null = null;
   private texScale = 2;
   private building = false;
 
@@ -176,11 +173,8 @@ export class StickerStage {
     const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
     this.texScale = clamp(dpr * Math.max(base * 1.15, 0.8) * 1.15, 1.5, 2.8);
 
-    const fonts = await loadFonts();
-    this.fonts = fonts.fonts;
-    if (this.destroyed) return false;
-    // if the faces were late, redraw the art once they arrive instead of keeping fallbacks
-    if (!fonts.complete) void fonts.ready.then(() => this.refreshArt());
+    // the finished artwork is images; fonts only matter if one falls back to the drawn version
+    if (DESIGNS.some((d) => !d.image)) void warmFonts();
 
     // only the stickers this screen shows; others are made if the layout ever needs them
     await this.ensure(this.neededIds(rect.width, layout));
@@ -200,8 +194,6 @@ export class StickerStage {
 
   /** No WebGL: lay the same artwork out as still images so the table is never empty. */
   async fallback() {
-    const { fonts } = await loadFonts();
-    if (this.destroyed) return;
     const rect = this.o.host.getBoundingClientRect();
     const W = rect.width;
     const H = rect.height;
@@ -213,7 +205,7 @@ export class StickerStage {
       if (!this.fits(p, W, band.bottom - band.top)) continue;
       const design = DESIGNS.find((d) => d.id === p.id);
       if (!design) continue;
-      const art = await renderSticker(design, fonts, Math.min(window.devicePixelRatio || 1, 2));
+      const art = await renderSticker(design, Math.min(window.devicePixelRatio || 1, 2));
       if (this.destroyed) return;
       const k = base * (p.s ?? 1);
       const w = art.width * k;
@@ -240,11 +232,11 @@ export class StickerStage {
   /** Build any missing stickers, one short task at a time. */
   private async ensure(ids: string[]) {
     const r = this.renderer;
-    if (!this.fonts || !r) return;
+    if (!r) return;
     const aniso = r.capabilities.getMaxAnisotropy();
     for (const design of DESIGNS) {
       if (!ids.includes(design.id) || this.stickers.some((s) => s.design.id === design.id)) continue;
-      const art = await renderSticker(design, this.fonts, this.texScale);
+      const art = await renderSticker(design, this.texScale);
       if (this.destroyed) return;
       const s = this.build(design, art, this.texScale, aniso);
       s.active = false;
@@ -256,22 +248,6 @@ export class StickerStage {
       if (this.destroyed) return;
     }
     this.restack();
-  }
-
-  /** Redraw every built sticker (used when the art faces arrive late). */
-  private async refreshArt() {
-    if (!this.fonts || this.destroyed) return;
-    for (const s of this.stickers) {
-      const art = await renderSticker(s.design, this.fonts, s.texScale);
-      if (this.destroyed) return;
-      const tex = s.mesh.material.uniforms.map.value as Texture;
-      tex.image = art.canvas;
-      tex.needsUpdate = true;
-      s.art = art;
-      s.support = this.supportTable(art);
-      this.dirty = true;
-      await yieldToMain();
-    }
   }
 
   private build(design: StickerDesign, art: RenderedSticker, texScale: number, aniso: number): Sticker {
@@ -354,8 +330,6 @@ export class StickerStage {
       landing: null,
     };
     proxy.addEventListener("keydown", (e) => this.onKey(e, s));
-    proxy.addEventListener("focus", () => this.showChip(s, null));
-    proxy.addEventListener("blur", () => this.hideChip());
     return s;
   }
 
@@ -712,7 +686,6 @@ export class StickerStage {
       .to(st, { peel: clamp(m * 0.24, 30, 58), curl: Math.PI * 0.78, radius: clamp(m * 0.1, 10, 22), duration: 0.5, ease: "power2.out" });
     gsap.to(st, { lift: 1, scale: 1.06, opacity: 1, duration: 0.42, ease: "power3.out" });
     this.o.host.dataset.cursor = "grabbing";
-    this.showChip(s, p);
     this.dirty = true;
   };
 
@@ -732,7 +705,6 @@ export class StickerStage {
         d.s.moved = true;
         this.emitMoved();
       }
-      this.moveChip(p);
       return;
     }
     if (e.pointerType !== "mouse" || d) return;
@@ -746,10 +718,8 @@ export class StickerStage {
         s.state.pa = this.cornerBias(s, Math.atan2(lp.y, lp.x));
         s.hoverOn = false;
         this.o.host.dataset.cursor = "grab";
-        this.showChip(s, p);
       } else {
         delete this.o.host.dataset.cursor;
-        this.hideChip();
       }
     }
     if (s) {
@@ -768,7 +738,6 @@ export class StickerStage {
           overwrite: "auto",
         });
       }
-      this.moveChip(p);
     }
   };
 
@@ -784,7 +753,6 @@ export class StickerStage {
     if (this.hover) this.unhover(this.hover);
     this.hover = null;
     delete this.o.host.dataset.cursor;
-    this.hideChip();
     this.light.set(0, 0);
     this.dirty = true;
   };
@@ -840,10 +808,7 @@ export class StickerStage {
     this.hover = null;
     s.hoverOn = false;
     if (over) this.o.host.dataset.cursor = "grab";
-    else {
-      delete this.o.host.dataset.cursor;
-      this.hideChip();
-    }
+    else delete this.o.host.dataset.cursor;
   };
 
   /** Back onto the table: fast in, firm stop, a little squash. No bounce. */
@@ -886,35 +851,15 @@ export class StickerStage {
     e.preventDefault();
     this.toTop(s);
     const to = this.settle(s, st.x + dx, st.y + dy, st.rot);
-    gsap.to(st, { x: to.x, y: to.y, duration: this.o.reduceMotion ? 0 : 0.28, ease: "power2.out", onUpdate: () => this.showChip(s, null) });
+    gsap.to(st, { x: to.x, y: to.y, duration: this.o.reduceMotion ? 0 : 0.28, ease: "power2.out", onUpdate: () => {
+        this.dirty = true;
+      },
+    });
     if (!this.o.reduceMotion) gsap.to(st, { lift: 0.35, duration: 0.12, ease: "power2.out", onComplete: () => this.slap(s) });
     if (!s.moved) {
       s.moved = true;
       this.emitMoved();
     }
-  }
-
-  /* ------------------------------------------------------------ info chip */
-
-  private showChip(s: Sticker, p: { x: number; y: number } | null) {
-    const c = this.o.chip;
-    c.querySelector("[data-name]")!.textContent = s.design.name;
-    c.querySelector("[data-spec]")!.textContent = s.design.spec;
-    c.dataset.show = "true";
-    this.chipW = c.offsetWidth; // measured once per sticker, not per move
-    if (p) this.moveChip(p);
-    else this.moveChip({ x: s.state.x - 40, y: s.state.y + (s.art.height * this.k(s)) / 2 - 8 });
-  }
-
-  private moveChip(p: { x: number; y: number }) {
-    const x = clamp(p.x + 18, 8, this.W - this.chipW - 8);
-    const y = clamp(p.y + 22, 8, this.H - 60);
-    this.o.chip.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-  }
-
-  private hideChip() {
-    if (document.activeElement && this.stickers.some((s) => s.proxy === document.activeElement)) return;
-    this.o.chip.dataset.show = "false";
   }
 
   /* ------------------------------------------------------------ reset */

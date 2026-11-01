@@ -2,7 +2,7 @@
 
 Marketing homepage for Label Bros, a printer of custom stickers and product labels. Goal: a premium, Awwwards-level interactive homepage that gets visitors to "Get instant pricing" or "Order a sample kit", and makes clear that customers can send their own artwork or have Label Bros design it (free proof before print). **The design direction is `reference/DESIGN-DIRECTION.md` ("Sticker table", 2026-11-02).** Everything earlier was deleted on 2026-11-02; the old builds are only in `qa/backups/`.
 
-The site is being redesigned section by section. Built so far: header, hero, products (peel-off pad), how it works (proof), pricing (quote builder), sample kit, footer. Don't add sections the client hasn't asked for.
+The site is being redesigned section by section. Built so far: header, hero, products (peel-off pad), labels (shelf), how it works (proof), pricing (quote builder), sample kit, footer. Don't add sections the client hasn't asked for.
 
 ## Stack
 - Next.js 16 App Router, React 19, TypeScript strict, Tailwind CSS v4 through `@tailwindcss/postcss` (tokens in `src/app/globals.css` `@theme`).

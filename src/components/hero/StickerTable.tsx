@@ -29,7 +29,6 @@ export function StickerTable() {
         host,
         mount: el.querySelector<HTMLElement>("[data-mount]")!,
         proxies: el.querySelector<HTMLElement>("[data-proxies]")!,
-        chip: el.querySelector<HTMLElement>("[data-chip]")!,
         reduceMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
         onMovedChange: (moved) => {
           status.moved = moved;
@@ -66,10 +65,6 @@ export function StickerTable() {
         aria-label="Stickers on the table"
         className="pointer-events-none absolute inset-0 z-20"
       />
-      <div data-chip data-show="false" aria-hidden="true" className="sticker-chip">
-        <span data-name className="block font-semibold" />
-        <span data-spec className="block text-[#bdb8ad]" />
-      </div>
     </div>
   );
 }

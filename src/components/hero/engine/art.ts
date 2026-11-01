@@ -6,7 +6,7 @@
 
 export type Finish = "gloss" | "matte" | "holo" | "kraft" | "glitter";
 
-import type { Fonts } from "./fonts";
+import { loadFonts, type Fonts } from "./fonts";
 
 export type { Fonts };
 
@@ -18,6 +18,9 @@ export type StickerDesign = {
   w: number; // art box in logical px, before the die-cut border
   h: number;
   border: number; // die-cut border in logical px (0 = cut to the art edge)
+  /** Finished artwork (transparent WebP, die-cut border included), drawn at w × h logical px.
+   * When it is missing or fails to load, `draw` paints the simpler vector version instead. */
+  image?: { src: string; w: number; h: number };
   draw: (ctx: CanvasRenderingContext2D, f: Fonts) => void;
 };
 
@@ -178,6 +181,7 @@ const labelBros: StickerDesign = {
   w: 300,
   h: 172,
   border: 12,
+  image: { src: "/stickers/label-bros.webp", w: 340, h: 187 },
   draw(ctx, f) {
     const { w, h } = this;
     // silver base: the shader turns light, unsaturated areas into rainbow foil
@@ -207,6 +211,7 @@ const fireEscape: StickerDesign = {
   w: 224,
   h: 224,
   border: 11,
+  image: { src: "/stickers/fire-escape.webp", w: 243, h: 249 },
   draw(ctx, f) {
     const c = 112;
     // bottle-cap edge
@@ -268,6 +273,7 @@ const nightShift: StickerDesign = {
   w: 184,
   h: 240,
   border: 11,
+  image: { src: "/stickers/night-shift.webp", w: 179, h: 302 },
   draw(ctx, f) {
     const { w, h } = this;
     const r = w / 2;
@@ -323,6 +329,7 @@ const hopScotch: StickerDesign = {
   w: 196,
   h: 252,
   border: 10,
+  image: { src: "/stickers/hop-scotch.webp", w: 169, h: 347 },
   draw(ctx, f) {
     const { w, h } = this;
     ctx.save();
@@ -366,6 +373,7 @@ const beeline: StickerDesign = {
   w: 196,
   h: 226,
   border: 11,
+  image: { src: "/stickers/beeline.webp", w: 216, h: 251 },
   draw(ctx, f) {
     const { w, h } = this;
     const cx = w / 2;
@@ -447,6 +455,7 @@ const thankYou: StickerDesign = {
   w: 188,
   h: 188,
   border: 0,
+  image: { src: "/stickers/thank-you.webp", w: 186, h: 190 },
   draw(ctx, f) {
     const c = 94;
     ctx.save();
@@ -493,6 +502,7 @@ const fresh: StickerDesign = {
   w: 268,
   h: 132,
   border: 13,
+  image: { src: "/stickers/fresh.webp", w: 302, h: 154 },
   draw(ctx, f) {
     const { w, h } = this;
     ctx.save();
@@ -517,6 +527,7 @@ const newBurst: StickerDesign = {
   w: 176,
   h: 176,
   border: 9,
+  image: { src: "/stickers/new-burst.webp", w: 192, h: 196 },
   draw(ctx, f) {
     const c = 88;
     ctx.lineJoin = "round";
@@ -547,6 +558,7 @@ const emberOak: StickerDesign = {
   w: 236,
   h: 150,
   border: 0,
+  image: { src: "/stickers/ember-oak.webp", w: 229, h: 155 },
   draw(ctx, f) {
     const { w, h } = this;
     const cx = w / 2;
@@ -590,6 +602,7 @@ const caution: StickerDesign = {
   w: 266,
   h: 120,
   border: 0,
+  image: { src: "/stickers/caution.webp", w: 270, h: 118 },
   draw(ctx, f) {
     const { w, h } = this;
     ctx.save();
@@ -640,6 +653,7 @@ const approved: StickerDesign = {
   w: 156,
   h: 156,
   border: 9,
+  image: { src: "/stickers/approved.webp", w: 172, h: 176 },
   draw(ctx, f) {
     const c = 78;
     ctx.beginPath();
@@ -710,8 +724,40 @@ const PAD = 4;
 
 /** Logical size of a rendered sticker (art + die-cut border + padding), before any scale. */
 export function stickerSize(design: StickerDesign) {
+  if (design.image) return { width: design.image.w + PAD * 2, height: design.image.h + PAD * 2 };
   const pad = design.border + PAD;
   return { width: design.w + pad * 2, height: design.h + pad * 2 };
+}
+
+const images = new Map<string, Promise<HTMLImageElement>>();
+
+/** Fetch and decode a sticker image once; the hero and the sections share it. */
+function loadImage(src: string) {
+  let p = images.get(src);
+  if (!p) {
+    p = new Promise<HTMLImageElement>((resolve, reject) => {
+      const img = new Image();
+      img.decoding = "async";
+      img.onload = () => img.decode().then(() => resolve(img), () => resolve(img));
+      img.onerror = () => reject(new Error(`sticker image failed: ${src}`));
+      img.src = src;
+    });
+    images.set(src, p);
+  }
+  return p;
+}
+
+/** Low-res alpha of a rendered sticker, for hit testing. ~1 sample per 2 logical px. */
+function hitMask(out: HTMLCanvasElement, width: number, height: number) {
+  const maskW = Math.ceil(width / 2);
+  const maskH = Math.ceil(height / 2);
+  const m = makeCanvas(maskW, maskH);
+  const mctx = m.getContext("2d", { willReadFrequently: true })!;
+  mctx.drawImage(out, 0, 0, maskW, maskH);
+  const data = mctx.getImageData(0, 0, maskW, maskH).data;
+  const mask = new Uint8ClampedArray(maskW * maskH);
+  for (let i = 0; i < mask.length; i++) mask[i] = data[i * 4 + 3];
+  return { mask, maskW, maskH };
 }
 
 function makeCanvas(w: number, h: number) {
@@ -729,14 +775,47 @@ export function yieldToMain(): Promise<void> {
 }
 
 /**
- * Draw the art, grow a white die-cut border around its silhouette, and build a hit mask.
- * Each step runs in its own task.
+ * A sticker ready for a texture or a page canvas: the finished artwork when there is one,
+ * otherwise the drawn version. Builds a hit mask unless asked not to. Each step runs in its
+ * own task.
  */
 export async function renderSticker(
   design: StickerDesign,
-  fonts: Fonts,
   scale: number,
   opts: { mask?: boolean } = {},
+): Promise<RenderedSticker> {
+  if (design.image) {
+    const img = await loadImage(design.image.src).catch(() => null);
+    if (img) return renderImage(design, design.image, img, scale, opts);
+  }
+  const { fonts } = await loadFonts();
+  return renderDrawn(design, fonts, scale, opts);
+}
+
+/** The finished artwork, scaled into a canvas with the same padding as drawn stickers. */
+async function renderImage(
+  design: StickerDesign,
+  image: NonNullable<StickerDesign["image"]>,
+  img: HTMLImageElement,
+  scale: number,
+  opts: { mask?: boolean },
+): Promise<RenderedSticker> {
+  const { width, height } = stickerSize(design);
+  const out = makeCanvas(width * scale, height * scale);
+  const ctx = out.getContext("2d")!;
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(img, PAD * scale, PAD * scale, image.w * scale, image.h * scale);
+  await yieldToMain();
+  if (opts.mask === false) return { canvas: out, width, height, mask: new Uint8ClampedArray(0), maskW: 0, maskH: 0 };
+  return { canvas: out, width, height, ...hitMask(out, width, height) };
+}
+
+/** The vector version: art drawn in code, white die-cut border grown round its silhouette. */
+async function renderDrawn(
+  design: StickerDesign,
+  fonts: Fonts,
+  scale: number,
+  opts: { mask?: boolean },
 ): Promise<RenderedSticker> {
   const pad = design.border + PAD;
   const width = design.w + pad * 2;
@@ -778,16 +857,5 @@ export async function renderSticker(
   ctx.drawImage(art, 0, 0);
 
   if (opts.mask === false) return { canvas: out, width, height, mask: new Uint8ClampedArray(0), maskW: 0, maskH: 0 };
-
-  // hit mask at ~1 sample per 2 logical px
-  const maskW = Math.ceil(width / 2);
-  const maskH = Math.ceil(height / 2);
-  const m = makeCanvas(maskW, maskH);
-  const mctx = m.getContext("2d", { willReadFrequently: true })!;
-  mctx.drawImage(out, 0, 0, maskW, maskH);
-  const data = mctx.getImageData(0, 0, maskW, maskH).data;
-  const mask = new Uint8ClampedArray(maskW * maskH);
-  for (let i = 0; i < mask.length; i++) mask[i] = data[i * 4 + 3];
-
-  return { canvas: out, width, height, mask, maskW, maskH };
+  return { canvas: out, width, height, ...hitMask(out, width, height) };
 }

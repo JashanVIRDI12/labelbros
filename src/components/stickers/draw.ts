@@ -1,7 +1,6 @@
 "use client";
 
 import { DESIGNS, renderSticker, stickerSize, yieldToMain, type StickerDesign } from "@/components/hero/engine/art";
-import { loadFonts, type Fonts } from "@/components/hero/engine/fonts";
 
 /*
  * Draws a sample sticker into a page canvas. The hero's WebGL shader animates foil and
@@ -59,14 +58,15 @@ function bakeGlitter(c: HTMLCanvasElement, scale: number) {
   ctx.restore();
 }
 
-async function paint(canvas: HTMLCanvasElement, design: StickerDesign, fonts: Fonts) {
+async function paint(canvas: HTMLCanvasElement, design: StickerDesign) {
   const cssW = canvas.getBoundingClientRect().width || canvas.clientWidth || 200;
   const { width } = stickerSize(design);
   const scale = Math.min(3, Math.max(1, (cssW / width) * (window.devicePixelRatio || 1)));
-  const r = await renderSticker(design, fonts, scale, { mask: false });
+  const r = await renderSticker(design, scale, { mask: false });
   await yieldToMain();
-  if (design.finish === "holo") bakeHolo(r.canvas);
-  if (design.finish === "glitter") bakeGlitter(r.canvas, scale);
+  // the finished artwork already shows its finish; only the drawn version needs it baked in
+  if (!design.image && design.finish === "holo") bakeHolo(r.canvas);
+  if (!design.image && design.finish === "glitter") bakeGlitter(r.canvas, scale);
   canvas.width = r.canvas.width;
   canvas.height = r.canvas.height;
   canvas.getContext("2d")!.drawImage(r.canvas, 0, 0);
@@ -75,13 +75,6 @@ async function paint(canvas: HTMLCanvasElement, design: StickerDesign, fonts: Fo
 
 export async function drawSticker(canvas: HTMLCanvasElement, id: string, isCancelled: () => boolean) {
   const design = DESIGNS.find((d) => d.id === id);
-  if (!design) return;
-  const { fonts, complete, ready } = await loadFonts();
-  if (isCancelled()) return;
-  await paint(canvas, design, fonts);
-  // fonts were late: draw again once they arrive, so the lettering is right
-  if (!complete)
-    ready.then(() => {
-      if (!isCancelled()) void paint(canvas, design, fonts);
-    });
+  if (!design || isCancelled()) return;
+  await paint(canvas, design);
 }

@@ -321,26 +321,6 @@ body {
   outline-offset: 6px;
 }
 
-.sticker-chip {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 30;
-  padding: 9px 13px 10px;
-  border-radius: var(--radius-md);
-  background: var(--color-ink);
-  color: var(--color-liner);
-  font-size: var(--text-13);
-  line-height: 1.3;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-.sticker-chip[data-show="true"] {
-  opacity: 1;
-}
-
 .table-controls {
   opacity: 0;
   transition: opacity 0.6s var(--ease-out);
@@ -769,84 +749,262 @@ body {
   }
 }
 
-/* ---------- How it works: the proof ---------- */
+/* ---------- Labels: the shelf ---------- */
 
-.process {
+.shelf {
+  --ph: clamp(280px, 46svh, 540px); /* product photo height: every product stands on one line */
+  position: relative;
+}
+.shelf-stage {
+  padding: clamp(80px, 12svh, 150px) 0;
+}
+.shelf-head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "intro" "visual" "steps" "cta";
-  padding: clamp(80px, 12svh, 150px) var(--gutter);
+  gap: 18px 48px;
+  padding: 0 var(--gutter);
 }
-.process-intro {
-  grid-area: intro;
-  padding-bottom: 32px;
+.shelf-lede {
+  max-width: 40ch;
+  font-size: var(--text-16);
+  line-height: 1.45;
 }
-.process-visual {
-  grid-area: visual;
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  align-self: start;
+.shelf-row {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 54svh;
-  margin-inline: calc(var(--gutter) * -1);
-  padding: 12px var(--gutter);
-  background: var(--color-field);
+  align-items: flex-start;
+  gap: clamp(28px, 5vw, 96px);
+  margin-top: clamp(24px, 5svh, 56px);
+  padding: 8px var(--gutter) 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
-.process-steps {
-  grid-area: steps;
+.shelf-row::-webkit-scrollbar {
+  display: none;
 }
-/* phones: one step fills the space under the stuck proof */
-.process-step {
-  min-height: 46svh;
-  padding-top: 24px;
+.shelf-bay {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(240px, 26vw, 400px);
+  scroll-snap-align: center;
 }
-.process-step-title {
-  max-width: 20ch;
-  font-size: clamp(1.6rem, 2.5vw, 2.3rem);
-  font-weight: 750;
-  line-height: 1.04;
-  letter-spacing: -0.022em;
-  text-wrap: balance;
-}
-/* the step being shown on the proof gets a strip of yellow label tape */
-.process-step::before {
+/* the shelf under the products, running on through the gap to the next bay */
+.shelf-bay::before {
   content: "";
+  position: absolute;
+  left: 0;
+  right: calc(-1 * clamp(28px, 5vw, 96px));
+  top: calc(var(--ph) + 2px);
+  height: 12px;
+  border-radius: 2px;
+  background: var(--color-field-deep);
+}
+.shelf-figure {
+  position: relative;
+}
+.shelf-photo {
+  position: relative;
+  z-index: 1;
   display: block;
-  width: 64px;
-  height: 6px;
-  margin-bottom: 16px;
-  border-radius: 1px;
+  width: 100%;
+  height: var(--ph);
+  object-fit: contain;
+  object-position: 50% 100%;
+  filter: drop-shadow(0 16px 18px rgba(5, 10, 60, 0.35));
+}
+/* the flat label, peeled out beside its product (an object: it casts a shadow) */
+.shelf-label {
+  position: absolute;
+  z-index: 0;
+  right: -14%;
+  top: 6%;
+  width: 52%;
+  height: auto;
+  transform: rotate(var(--r));
+  filter: drop-shadow(0 2px 2px rgba(5, 10, 60, 0.25)) drop-shadow(0 12px 16px rgba(5, 10, 60, 0.2));
+}
+@media (max-width: 639px) {
+  .shelf-label {
+    right: -8%;
+    width: 44%;
+  }
+}
+.shelf-caption {
+  display: grid;
+  gap: 2px;
+  padding-top: 30px;
+}
+.shelf-what {
+  font-size: var(--text-18);
+  font-weight: 700;
+}
+.shelf-spec {
+  font-size: var(--text-15);
+  color: var(--color-liner-soft);
+}
+.shelf-end {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  height: var(--ph);
+  padding-left: clamp(36px, 6vw, 96px); /* clear of the last label */
+}
+.shelf-end::before {
+  display: none;
+}
+.shelf-end-title {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 900;
+  font-stretch: 112%;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+.shelf-rule {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .shelf-head {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    align-items: end;
+  }
+}
+
+/* scripts and motion: the page scrolls the shelf sideways under a pinned stage */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .shelf {
+    --ph: clamp(220px, 40svh, 520px);
+  }
+  .shelf-track {
+    position: relative;
+    /* the row's travel: seven bays (six products and the end), less one screen. Replaced by the
+       measured value once the scripts run; this estimate keeps the page from jumping. */
+    height: calc(100svh + 7 * (clamp(240px, 26vw, 400px) + clamp(28px, 5vw, 96px)) - 100vw + 2 * var(--gutter));
+  }
+  .shelf-stage {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100svh;
+    overflow: clip;
+    padding-block: clamp(20px, 4svh, 48px);
+  }
+  .shelf-row {
+    width: max-content;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+}
+
+/* ---------- How it works: one pinned proof ---------- */
+
+.proc {
+  position: relative;
+}
+.proc-stage {
+  display: grid;
+  grid-template-areas: "title" "proof" "rail";
+  gap: 24px;
+  padding: clamp(80px, 12svh, 150px) var(--gutter) 32px;
+}
+.proc-copy {
+  display: contents;
+}
+.proc-title {
+  grid-area: title;
+}
+.proc-lede {
+  display: none;
+  max-width: 38ch;
+  margin-top: 20px;
+  font-size: var(--text-18);
+  line-height: 1.45;
+}
+.proc-rail {
+  grid-area: rail;
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding-left: 20px;
+}
+/* the rail: a thin track with a yellow strip of label tape that grows with the steps */
+.proc-rail::before,
+.proc-rail::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--color-field-deep);
+}
+.proc-rail::after {
   background: var(--color-signal);
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-  transition: transform 0.45s var(--ease-slap);
+  transform: scaleY(var(--rail, 1));
+  transform-origin: 50% 0;
 }
-.process-step[data-active="true"]::before {
-  transform: scaleX(1);
+.proc-step {
+  padding: 6px 0;
 }
-.process-cta {
-  grid-area: cta;
+.proc-step-title {
+  font-size: clamp(1.05rem, 1.6vw, 1.55rem);
+  font-weight: 750;
+  line-height: 1.12;
+  letter-spacing: -0.018em;
+  color: var(--color-liner-soft);
+  transition: color 0.35s var(--ease-out);
+}
+.proc-step-body {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.5s var(--ease-out);
+}
+.proc-step-body > div {
+  overflow: hidden;
+}
+.proc-step-body p {
+  max-width: 40ch;
+  padding-top: 8px;
+  font-size: var(--text-16);
+  line-height: 1.45;
+}
+.proc-step-body .proc-note {
+  padding-top: 4px;
+  font-size: var(--text-14);
+  color: var(--color-liner-soft);
+}
+.proc-step[data-active="true"] .proc-step-title {
+  color: var(--color-liner);
+}
+.proc-after {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 16px 28px;
-  padding-top: 24px;
+  padding: 8px var(--gutter) clamp(80px, 12svh, 150px);
 }
 
+/* the proof: a sheet from the proofing tool, with the artwork on a transparency checkerboard */
 .proof {
-  --board: min(100%, calc(54svh - 24px - 74px));
-  width: var(--board);
-  padding: 10px 12px 12px;
+  --pw: min(100%, 640px);
+  grid-area: proof;
+  justify-self: center;
+  align-self: center;
+  position: relative;
+  width: var(--pw);
+  padding: 12px 14px 14px;
   border-radius: 10px 10px 2px 10px;
   background: var(--color-liner);
   color: var(--color-ink);
 }
 .proof-bar,
-.proof-status {
+.proof-foot {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
   font-size: var(--text-13);
@@ -855,7 +1013,7 @@ body {
   white-space: nowrap;
 }
 .proof-bar {
-  padding: 2px 2px 9px;
+  padding: 0 2px 10px;
 }
 .proof-bar span:last-child {
   color: #4a463d;
@@ -863,87 +1021,209 @@ body {
 }
 .proof-board {
   position: relative;
-  aspect-ratio: 1 / 0.94;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1.12 / 1;
   border-radius: 4px;
-  /* a transparency checkerboard, the way design tools show an empty artboard */
   background-color: var(--color-liner);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M0 0h8v8H0zM8 8h8v8H8z' fill='%23e9e4d7'/%3E%3C/svg%3E");
   background-size: 16px 16px;
-  overflow: hidden;
 }
-.proof-svg {
+.proof-art {
+  --ink: 100%;
+  --sk: 100%;
+  position: relative;
+  height: 84%;
+  aspect-ratio: var(--ratio);
+}
+.proof-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.proof-final {
+  clip-path: inset(0 calc(100% - var(--ink)) 0 0);
+  filter: drop-shadow(0 2px 2px rgba(30, 24, 10, 0.22)) drop-shadow(0 10px 16px rgba(30, 24, 10, 0.14));
+}
+.proof-sketch {
+  opacity: 0;
+  clip-path: inset(0 0 calc(100% - var(--sk)) 0);
+}
+.proof-copy {
+  opacity: 0;
+  transform: translate(var(--x), var(--y)) rotate(var(--r));
+  filter: drop-shadow(0 2px 3px rgba(30, 24, 10, 0.2));
+}
+/* the inking edge that sweeps across as the sketch becomes artwork */
+.proof-ink {
+  position: absolute;
+  top: -4%;
+  bottom: -4%;
+  left: var(--ink);
+  width: 3px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: var(--color-ink);
+  opacity: 0;
+}
+.proof-cut {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   overflow: visible;
 }
+.proof-cut-label {
+  position: absolute;
+  right: -4%;
+  top: 6%;
+  padding: 4px 8px;
+  border-radius: 4px 4px 1px 4px;
+  background: #e6007e;
+  color: #fff;
+  font-size: var(--text-13);
+  font-weight: 650;
+  opacity: 0;
+}
 .proof-seal {
   position: absolute;
-  right: 5%;
-  bottom: 5%;
-  width: 25%;
+  right: 6%;
+  bottom: 7%;
+  width: 22%;
   transform: rotate(-12deg);
-  --sticker-shadow: 30, 24, 10;
+}
+.proof-foot {
+  padding: 12px 2px 0;
 }
 .proof-status {
   display: grid;
-  padding: 10px 2px 0;
 }
-.proof-status span {
+.proof-status > span {
   grid-area: 1 / 1;
   opacity: 0;
 }
-/* without scripts (or with reduced motion) the proof shows its approved state */
-.proof-status span[data-status="3"] {
+.proof-status > span[data-status="3"] {
   opacity: 1;
 }
-.proof-svg [data-drop],
-.proof-svg [data-sketch],
-.proof-svg [data-note] {
+.proof-actions {
+  display: flex;
+  gap: 8px;
+}
+.proof-btn {
+  display: inline-grid;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1.5px solid #4a463d;
+  border-radius: 6px 6px 1px 6px;
+  font-size: var(--text-13);
+  font-weight: 650;
+}
+.proof-btn-approve {
+  border-color: var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-liner);
+}
+.proof-btn-approve > span {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.proof-btn-approve [data-approve-idle] {
   opacity: 0;
 }
+.proof-btn-approve [data-approve-done] svg {
+  color: var(--color-signal);
+}
+.proof-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  opacity: 0;
+  pointer-events: none;
+}
 
-/* nothing plays while you read: no need for the long scroll between steps */
-@media (prefers-reduced-motion: reduce) {
-  .process-step {
-    min-height: 0 !important;
-    padding-block: 40px !important;
+@media (max-width: 639px) {
+  .proof-btn:not(.proof-btn-approve) {
+    display: none;
+  }
+}
+
+/* scripts and motion: one pinned screen, the steps open one at a time */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .proc-track {
+    height: calc(100svh + 4 * 70svh);
+  }
+  .proc-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: clip;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    align-content: center;
+    gap: clamp(14px, 2.4svh, 24px);
+    padding-block: clamp(20px, 4svh, 48px);
+  }
+  .proof {
+    --pw: min(100%, 640px, calc((100svh - 330px) * 1.12));
+  }
+  .proc-step:not([data-active="true"]) .proc-step-body {
+    grid-template-rows: 0fr;
+  }
+  .proc-step-title {
+    font-size: clamp(0.95rem, 1.5vw, 1.55rem);
   }
 }
 
 @media (min-width: 1024px) {
-  .process {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-    grid-template-rows: auto auto auto 1fr;
-    grid-template-areas: "intro visual" "steps visual" "cta visual" ". visual";
+  .proc-stage {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-areas: "copy proof";
+    align-items: center;
     column-gap: clamp(40px, 6vw, 120px);
   }
-  .process-intro {
-    padding-top: 6svh;
-    padding-bottom: 10svh;
+  .proc-copy {
+    display: block;
+    grid-area: copy;
   }
-  .process-visual {
-    grid-row: 1 / -1;
-    height: 100svh;
-    margin: 0;
-    padding: 0;
-    background: none;
+  .proc-lede {
+    display: block;
+  }
+  .proc-rail {
+    margin-top: clamp(24px, 5svh, 48px);
+    gap: 6px;
   }
   .proof {
-    --board: min(100%, 560px, calc((100svh - 120px) / 1.08));
-    padding: 14px 16px 16px;
+    --pw: min(100%, 680px);
+    padding: 16px 18px 18px;
   }
   .proof-bar,
-  .proof-status {
+  .proof-foot {
     font-size: var(--text-14);
   }
-  .process-step {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 82svh;
-    padding-top: 0;
+  .proof-btn {
+    min-height: 36px;
+    padding: 0 14px;
+    font-size: var(--text-14);
+  }
+}
+@media (min-width: 1024px) and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .proc-stage {
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .proof {
+    --pw: min(100%, 680px, calc((100svh - 190px) * 1.12));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proc-step-body,
+  .proc-step-title {
+    transition: none;
   }
 }
 

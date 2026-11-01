@@ -1,4 +1,5 @@
 import { Hero } from "@/components/hero/Hero";
+import { Labels } from "@/components/sections/Labels";
 import { Pricing } from "@/components/sections/Pricing";
 import { Process } from "@/components/sections/Process";
 import { Products } from "@/components/sections/Products";
@@ -13,6 +14,7 @@ export default function Home() {
       <main id="main">
         <Hero />
         <Products />
+        <Labels />
         <Process />
         <Pricing />
         <SampleKit />

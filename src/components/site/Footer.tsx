@@ -9,7 +9,7 @@ const COLUMNS = [
       { label: "Holographic and glitter", href: "#stickers" },
       { label: "Packaging seals", href: "#stickers" },
       { label: "Product labels", href: "#labels" },
-      { label: "Business labels", href: "#labels" },
+      { label: "Business labels", href: "#product-labels" },
     ],
   },
   {

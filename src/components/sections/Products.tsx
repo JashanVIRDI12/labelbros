@@ -117,7 +117,7 @@ export function Products() {
     >
       <Motion name="deck" />
       <div className="deck-track">
-        <span id="labels" className="deck-anchor" style={{ ["--at" as string]: LABELS_AT }} />
+        <span id="product-labels" className="deck-anchor" style={{ ["--at" as string]: LABELS_AT }} />
         <div className="deck-stage">
           <div className="deck-intro">
             <h2 id="products-title" className="section-title">

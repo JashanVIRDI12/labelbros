@@ -1,13 +1,16 @@
+/* eslint-disable @next/next/no-img-element -- pre-sized WebP artwork layers that GSAP animates; next/image would add wrappers and nothing to optimise */
+import type { CSSProperties } from "react";
 import { Arrow } from "@/components/site/Arrow";
 import { Motion } from "@/components/site/Motion";
 import { StickerArt } from "@/components/stickers/StickerArt";
 import { stickerRatio } from "@/components/stickers/ratio";
-import { ProofArt } from "./ProofArt";
+import { LIFTOFF } from "./liftoff";
 
 /*
- * "How it works" as a proof that builds itself while you read: a sketch becomes artwork, the
- * cut line is drawn round it, the approval seal slaps on, then the stickers come off the press.
- * The steps are ordinary text in the page flow; the proof sticks beside (or above) them.
+ * "How it works" as one pinned screen: the steps on the left, a real-looking proof on the
+ * right that changes as you scroll. A pencil sketch is inked into finished artwork, the cut
+ * line is traced round it, a cursor approves the proof and the seal slaps on, then the printed
+ * stickers stack up. All step text is in the page; the active one is opened up.
  */
 
 const STEPS = [
@@ -36,53 +39,107 @@ const STEPS = [
 ];
 
 const STATUS = ["Waiting for artwork", "Artwork in", "Cut line added", "Approved by you", "Printed and on its way"];
+const COPIES = [
+  { x: -7, y: 5, r: -8 },
+  { x: 6, y: 4, r: 7 },
+  { x: -1, y: 8, r: -3 },
+];
 
 export function Process() {
+  const art = { "--ratio": LIFTOFF.w / LIFTOFF.h } as CSSProperties;
   return (
-    <section id="process" aria-labelledby="process-title" className="process" data-motion-root>
+    <section id="process" aria-labelledby="process-title" className="proc" data-motion-root>
       <Motion name="process" />
-
-      <div className="process-intro">
-        <h2 id="process-title" className="section-title">
-          See it before we print it.
-        </h2>
-        <p className="mt-5 max-w-[38ch] text-16 leading-[1.45] md:mt-7 md:text-18">
-          Send your own artwork or have our designers make it. Either way, you approve a free proof before
-          anything is printed.
-        </p>
-      </div>
-
-      <div className="process-visual" aria-hidden="true">
-        <figure className="proof">
-          <div className="proof-bar">
-            <span>Proof: Peach Club</span>
-            <span>3 × 3 in, gloss vinyl</span>
+      <div className="proc-track">
+        <div className="proc-stage">
+          <div className="proc-copy">
+            <h2 id="process-title" className="section-title proc-title">
+              See it before we print it.
+            </h2>
+            <p className="proc-lede">
+              Send your own artwork or have our designers make it. Either way, you approve a free proof before
+              anything is printed.
+            </p>
+            <ol className="proc-rail">
+              {STEPS.map((s, i) => (
+                <li key={s.key} data-step={i} data-active={i === 0 ? "true" : undefined} className="proc-step">
+                  <h3 className="proc-step-title">{s.title}</h3>
+                  <div className="proc-step-body">
+                    <div>
+                      <p>{s.body}</p>
+                      {s.note ? <p className="ph proc-note">{s.note}</p> : null}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
-          <div className="proof-board">
-            <ProofArt />
-            <StickerArt id="approved" ratio={stickerRatio("approved")} className="proof-seal" />
-          </div>
-          <div className="proof-status">
-            {STATUS.map((s, i) => (
-              <span key={s} data-status={i}>
-                {s}
+
+          <figure className="proof" aria-hidden="true">
+            <div className="proof-bar">
+              <span>Proof: Liftoff sticker</span>
+              <span>3 × 3 in, gloss vinyl</span>
+            </div>
+            <div className="proof-board">
+              <div className="proof-art" style={art}>
+                {COPIES.map((c, i) => (
+                  <img
+                    key={i}
+                    data-copy
+                    src={LIFTOFF.art}
+                    alt=""
+                    width={LIFTOFF.w}
+                    height={LIFTOFF.h}
+                    loading="lazy"
+                    decoding="async"
+                    className="proof-img proof-copy"
+                    style={{ ["--x" as string]: `${c.x}%`, ["--y" as string]: `${c.y}%`, ["--r" as string]: `${c.r}deg` }}
+                  />
+                ))}
+                <img data-sketch src={LIFTOFF.sketch} alt="" width={LIFTOFF.w} height={LIFTOFF.h} loading="lazy" decoding="async" className="proof-img proof-sketch" />
+                <img data-art src={LIFTOFF.art} alt="" width={LIFTOFF.w} height={LIFTOFF.h} loading="lazy" decoding="async" className="proof-img proof-final" />
+                <span data-ink className="proof-ink" />
+                <svg className="proof-cut" viewBox={`0 0 ${LIFTOFF.w} ${LIFTOFF.h}`}>
+                  <defs>
+                    <mask id="lift-cut" maskUnits="userSpaceOnUse" x="-40" y="-40" width={LIFTOFF.w + 80} height={LIFTOFF.h + 80}>
+                      <path data-cut-draw d={LIFTOFF.cut} fill="none" stroke="#fff" strokeWidth="14" />
+                    </mask>
+                  </defs>
+                  <path data-cut d={LIFTOFF.cut} fill="none" stroke="#e6007e" strokeWidth="4.5" strokeDasharray="16 11" mask="url(#lift-cut)" />
+                </svg>
+                <span data-cut-label className="proof-cut-label">Cut line</span>
+              </div>
+              <StickerArt id="approved" ratio={stickerRatio("approved")} className="proof-seal" />
+            </div>
+            <div className="proof-foot">
+              <span className="proof-status">
+                {STATUS.map((s, i) => (
+                  <span key={s} data-status={i}>
+                    {s}
+                  </span>
+                ))}
               </span>
-            ))}
-          </div>
-        </figure>
+              <span className="proof-actions">
+                <span className="proof-btn">Request changes</span>
+                <span data-approve className="proof-btn proof-btn-approve">
+                  <span data-approve-idle>Approve proof</span>
+                  <span data-approve-done>
+                    <svg width="14" height="14" viewBox="0 0 14 14">
+                      <path d="M2.5 7.5 5.6 10.5 11.5 3.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    Approved
+                  </span>
+                </span>
+              </span>
+            </div>
+            <svg data-cursor className="proof-cursor" width="26" height="30" viewBox="0 0 26 30">
+              <path d="M3 2 L3 24 L9 18.5 L13.2 27.5 L17.4 25.6 L13.3 16.8 L21.5 16.8 Z" fill="#0d0d0c" stroke="#fff" strokeWidth="2" strokeLinejoin="round" />
+            </svg>
+          </figure>
+        </div>
       </div>
 
-      <ol className="process-steps">
-        {STEPS.map((s) => (
-          <li key={s.key} data-step className="process-step">
-            <h3 className="process-step-title">{s.title}</h3>
-            <p className="mt-3 max-w-[40ch] text-16 leading-[1.45] text-liner md:text-18">{s.body}</p>
-            {s.note ? <p className="ph mt-3 text-14 text-liner-soft">{s.note}</p> : null}
-          </li>
-        ))}
-      </ol>
-
-      <div className="process-cta">
+      <div className="proc-after">
         <a href="#pricing" className="btn btn-primary">
           Get instant pricing
           <Arrow />

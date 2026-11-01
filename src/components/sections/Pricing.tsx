@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Arrow } from "@/components/site/Arrow";
-import { PeachArt } from "./peach";
+import { LIFTOFF } from "./liftoff";
 import {
   CENTER,
   CX,
@@ -197,7 +197,7 @@ export function Pricing() {
                   <stop offset="1" stopColor="#ffb3d9" />
                 </linearGradient>
                 <g id="q-art">
-                  <PeachArt />
+                  <image href={LIFTOFF.art} x={LIFTOFF.box.x} y={LIFTOFF.box.y} width={LIFTOFF.box.w} height={LIFTOFF.box.h} />
                 </g>
               </defs>
 

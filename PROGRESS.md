@@ -1,5 +1,13 @@
 # Progress
 
+## 2026-11-02 (evening): generated artwork, labels shelf, new proof section
+
+**Why.** The client found the drawn stickers unpolished, wanted the hover info chip gone, a redesigned "See it before we print it" (no Peach Club), and more focus on labels.
+
+**Built.** 25 pieces of artwork generated with Higgsfield (GPT Image 2.5, transparent): the 11 hero stickers, the Liftoff sticker and its pencil sketch, four product labels and six labelled product shots, all trimmed to WebP (`public/stickers`, `public/labels`, about 1.9 MB, all lazy). The sticker engine draws the images (drawn art kept as a fallback), so the hero no longer waits for sticker fonts. Info chip removed. New "Labels that sell the product" shelf (pinned sideways scroll, labels peel out beside each product); the header's Labels link goes there. "See it before we print it" rebuilt as one pinned screen (step rail plus a large proof: sketch, ink, traced cut line, cursor approves, seal, printed stack). Pricing preview now uses Liftoff with its traced outline.
+
+**Verified.** tsc, lint and build pass; screenshots at 375, 390, 768, 1280, 1440 and 1920 plus reduced motion: no broken images, no horizontal overflow, no console errors. Fixed on the way: the proof timeline lost its starting state when another section refreshed ScrollTrigger (now all `fromTo`).
+
 ## 2026-11-02 (later): five sections below the hero
 
 **Why.** The client asked for the next sections: card designs with strong GSAP scroll effects, plus the other sections the homepage needs, in the sticker-table language.

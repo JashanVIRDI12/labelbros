@@ -8,6 +8,7 @@ type Module = { init: (root: HTMLElement) => () => void };
 // within a couple of screens, so GSAP and ScrollTrigger never cost the first paint anything.
 const LOADERS = {
   deck: () => import("@/components/sections/deck-motion") as Promise<Module>,
+  labels: () => import("@/components/sections/labels-motion") as Promise<Module>,
   process: () => import("@/components/sections/process-motion") as Promise<Module>,
   kit: () => import("@/components/sections/kit-motion") as Promise<Module>,
   footer: () => import("@/components/sections/footer-motion") as Promise<Module>,

@@ -1,4 +1,4 @@
-import { HULL } from "./peach";
+import { LIFTOFF } from "./liftoff";
 
 /*
  * The pricing builder's options and the geometry of its live preview. No prices here:
@@ -32,13 +32,14 @@ export const FINISHES: { id: Finish; label: string }[] = [
 
 export const DEFAULT_QUOTE: Quote = { product: "stickers", shape: "die-cut", size: 3, qty: 100, finish: "gloss" };
 
-// The sample art is drawn in a 260 × 250 box centred on (130, 125); every shape shares it.
+// The sample sticker (Liftoff) sits in a 260 × 250 box centred on (130, 125); every shape shares
+// it, and every shape's longest side is SPAN units.
 export const CX = 130;
 export const CY = 125;
 const SPAN = 244; // the longest side of every shape, in art units
 
 const RECT_RATIO = 2 / 3;
-const DIE_RATIO = 236 / 244;
+const DIE_RATIO = LIFTOFF.h / LIFTOFF.w; // height / width of the die-cut sticker
 
 function rounded(w: number, h: number, r: number) {
   const x = CX - w / 2;
@@ -57,24 +58,26 @@ export const SHAPE_GEOMETRY: Record<
   Shape,
   { outer: string; inner: string; innerOn: boolean; art: number; ratio: number }
 > = {
-  "die-cut": { outer: HULL, inner: HULL, innerOn: false, art: 1, ratio: DIE_RATIO },
+  "die-cut": { outer: LIFTOFF.boxCut, inner: LIFTOFF.boxCut, innerOn: false, art: 1, ratio: DIE_RATIO },
   circle: { outer: circle(SPAN / 2), inner: circle(SPAN / 2 - INSET), innerOn: true, art: 0.78, ratio: 1 },
   square: { outer: rounded(SPAN, SPAN, 26), inner: rounded(SPAN - INSET * 2, SPAN - INSET * 2, 18), innerOn: true, art: 0.8, ratio: 1 },
   rectangle: {
     outer: rounded(SPAN, SPAN * RECT_RATIO, 18),
     inner: rounded(SPAN - INSET * 2, SPAN * RECT_RATIO - INSET * 2, 11),
     innerOn: true,
-    art: 0.6,
+    art: 0.56,
     ratio: RECT_RATIO,
   },
 };
 
 const fmt = (n: number) => (Math.round(n * 10) / 10).toString();
 
-/** Width and height in inches, as shown on the preview's measuring lines. */
+/** Width and height in inches (the size is the longest side), as on the measuring lines. */
 export function dimensions(q: Quote) {
-  const ratio = SHAPE_GEOMETRY[q.shape].ratio;
-  return { w: q.size, h: q.size * ratio, label: `${fmt(q.size)} × ${fmt(q.size * ratio)} in` };
+  const ratio = SHAPE_GEOMETRY[q.shape].ratio; // height / width
+  const w = ratio > 1 ? q.size / ratio : q.size;
+  const h = ratio > 1 ? q.size : q.size * ratio;
+  return { w, h, label: `${fmt(w)} × ${fmt(h)} in` };
 }
 
 export function summary(q: Quote) {
