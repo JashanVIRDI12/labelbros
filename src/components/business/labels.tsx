@@ -77,9 +77,20 @@ function Qr({ seed = 3 }: { seed?: number }) {
 
 export type Kind = "shipping" | "asset" | "warning" | "inspection" | "bin" | "badge";
 
+// what each sample shows, for screen readers: the label is a picture of a label, so its fine
+// print (sample data, set small as on a real label) is not read out as page text
+const NAMES: Record<Kind, string> = {
+  shipping: "Sample shipping label with a return address and a barcode",
+  asset: "Sample asset tag with a number, a barcode and a QR code",
+  warning: "Sample warning label: caution, hot surface",
+  inspection: "Sample inspection label: QC passed, with space to sign and date",
+  bin: "Sample bin label with a location code and a barcode",
+  badge: "Sample name badge: hello, my name is Sam",
+};
+
 export function PressLabel({ kind, children, style }: { kind: Kind; children: ReactNode; style?: CSSProperties }) {
   return (
-    <div className={`pl pl-${kind}`} data-label={kind} style={style}>
+    <div className={`pl pl-${kind}`} data-label={kind} style={style} role="img" aria-label={NAMES[kind]}>
       {/* the face is inside the container, so its corners, stripes and borders are sized by the
           label itself (a container's own properties would be sized by the page instead) */}
       <div className="pl-face">

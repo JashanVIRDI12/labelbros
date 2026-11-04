@@ -38,51 +38,112 @@ export function init(root: HTMLElement) {
   // only what is still below the fold waits to come in; what is on screen is simply there
   const below = (el: Element) => el.getBoundingClientRect().top > window.innerHeight * 0.92;
 
-  const ctx = gsap.context(() => {
+  const ctx = gsap.context((self) => {
     /* -------------------------------------------------------------- the hero */
     if (art) {
       const kind = art.dataset.kind;
       const pieces = [...art.querySelectorAll<HTMLElement>("[data-piece]")];
       const base = art.querySelector<HTMLElement>("[data-base]");
-      const tl = gsap.timeline({ delay: 0.15 });
-      const slapIn = (els: HTMLElement[], at: number, stagger = 0.14) =>
-        tl.fromTo(
-          els,
-          { opacity: 0, scale: 1.45, y: -24, rotation: (i: number) => (i % 2 ? 14 : -14) },
-          { opacity: 1, scale: 1, y: 0, rotation: 0, duration: 0.6, ease: "slap", stagger },
-          at,
-        );
+      // never fully invisible, so each piece is painted once, at rest
+      const SEEN = 0.01;
+      const intro = () => {
+        const tl = gsap.timeline({ delay: 0.15 });
+        const slapIn = (els: HTMLElement[], at: number, stagger = 0.14) =>
+          tl.fromTo(
+            els,
+            { opacity: SEEN, scale: 1.45, y: -24, rotation: (i: number) => (i % 2 ? 14 : -14) },
+            { opacity: 1, scale: 1, y: 0, rotation: 0, duration: 0.6, ease: "slap", stagger },
+            at,
+          );
 
-      if (kind === "collage") slapIn(pieces, 0);
-      if (kind === "sheet" && base) {
-        tl.fromTo(base, { opacity: 0, y: 70, rotation: 5 }, { opacity: 1, y: 0, rotation: 0, duration: 0.75, ease: "power3.out" }, 0);
-        slapIn(pieces, 0.35, 0.07);
-        // and one sticker comes off the sheet, as kiss-cut stickers do
-        tl.to(pieces[0], { y: "-9%", x: "-4%", rotation: -12, scale: 1.1, duration: 0.6, ease: "peel" }, 1.35);
-        tl.set(pieces[0], { zIndex: 2, filter: "drop-shadow(10px 22px 18px rgba(3, 8, 48, 0.38))" }, 1.35);
-      }
-      if (kind === "strip" && base) {
-        tl.fromTo(base, { opacity: 0, xPercent: 34 }, { opacity: 1, xPercent: 0, duration: 0.85, ease: "power3.out" }, 0);
-        slapIn(pieces, 0.4, 0.12);
-        tl.to(pieces[1], { y: "-14%", rotation: -6, scale: 1.08, duration: 0.6, ease: "peel" }, 1.45);
-      }
-      if (kind === "seal" && base) {
-        tl.fromTo(base, { opacity: 0, y: 50, rotation: -3 }, { opacity: 1, y: 0, rotation: 0, duration: 0.7, ease: "power3.out" }, 0);
-        tl.fromTo(pieces, { opacity: 0, scale: 1.8, rotation: -40, y: -80 }, { opacity: 1, scale: 1, rotation: 0, y: 0, duration: 0.55, ease: "slap" }, 0.45);
-      }
-      if (kind === "ink") {
-        const ink = art.querySelector<HTMLElement>("[data-ink]")!;
-        tl.fromTo(pieces, { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.6, ease: "expo.out" }, 0);
-        tl.fromTo(ink, { "--ink": "0%" }, { "--ink": "100%", duration: 1.3, ease: "power2.inOut" }, 0.45);
-        tl.fromTo(ink.querySelector(".ha-ink-edge"), { opacity: 0 }, { opacity: 1, duration: 0.2, yoyo: true, repeat: 1, repeatDelay: 0.9 }, 0.45);
-      }
-      if (kind === "fan") {
-        slapIn(pieces, 0, 0.16);
-        const labels = pieces.map((p) => p.querySelector<HTMLElement>("[data-label]")).filter((x): x is HTMLElement => !!x);
-        tl.fromTo(labels, { "--p": 0 }, { "--p": 1, duration: 0.9, ease: "power1.inOut", stagger: 0.22 }, 0.35);
-      }
-      // states are set: show it
-      art.dataset.in = "";
+        if (kind === "collage") slapIn(pieces, 0);
+        if (kind === "sheet" && base) {
+          tl.fromTo(
+            base,
+            { opacity: SEEN, y: 70, rotation: 5 },
+            { opacity: 1, y: 0, rotation: 0, duration: 0.75, ease: "power3.out" },
+            0,
+          );
+          slapIn(pieces, 0.35, 0.07);
+          // and one sticker comes off the sheet, as kiss-cut stickers do
+          tl.to(pieces[0], { y: "-9%", x: "-4%", rotation: -12, scale: 1.1, duration: 0.6, ease: "peel" }, 1.35);
+          tl.set(pieces[0], { zIndex: 2, filter: "drop-shadow(10px 22px 18px rgba(3, 8, 48, 0.38))" }, 1.35);
+        }
+        if (kind === "strip" && base) {
+          tl.fromTo(
+            base,
+            { opacity: SEEN, xPercent: 34 },
+            { opacity: 1, xPercent: 0, duration: 0.85, ease: "power3.out" },
+            0,
+          );
+          slapIn(pieces, 0.4, 0.12);
+          tl.to(pieces[1], { y: "-14%", rotation: -6, scale: 1.08, duration: 0.6, ease: "peel" }, 1.45);
+        }
+        if (kind === "seal" && base) {
+          tl.fromTo(
+            base,
+            { opacity: SEEN, y: 50, rotation: -3 },
+            { opacity: 1, y: 0, rotation: 0, duration: 0.7, ease: "power3.out" },
+            0,
+          );
+          tl.fromTo(
+            pieces,
+            { opacity: SEEN, scale: 1.8, rotation: -40, y: -80 },
+            { opacity: 1, scale: 1, rotation: 0, y: 0, duration: 0.55, ease: "slap" },
+            0.45,
+          );
+        }
+        if (kind === "ink") {
+          const ink = art.querySelector<HTMLElement>("[data-ink]")!;
+          tl.fromTo(
+            pieces,
+            { opacity: SEEN, scale: 1.12 },
+            { opacity: 1, scale: 1, duration: 0.6, ease: "expo.out" },
+            0,
+          );
+          tl.fromTo(ink, { "--ink": "0%" }, { "--ink": "100%", duration: 1.3, ease: "power2.inOut" }, 0.45);
+          tl.fromTo(
+            ink.querySelector(".ha-ink-edge"),
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, yoyo: true, repeat: 1, repeatDelay: 0.9 },
+            0.45,
+          );
+        }
+        if (kind === "fan") {
+          slapIn(pieces, 0, 0.16);
+          const labels = pieces
+            .map((p) => p.querySelector<HTMLElement>("[data-label]"))
+            .filter((x): x is HTMLElement => !!x);
+          tl.fromTo(labels, { "--p": 0 }, { "--p": 1, duration: 0.9, ease: "power1.inOut", stagger: 0.22 }, 0.35);
+        }
+        // states are set: show it
+        art.dataset.in = "";
+      };
+      // The intro waits for the art to load and paint at rest (at most 1.5 s): a phone records
+      // its largest paint at that size, not mid-slap at 1.45× and turned, which would beat the
+      // heading and the lede and make the page wait on an image.
+      const imgs = [...art.querySelectorAll<HTMLImageElement>("img")];
+      const loaded = Promise.all(
+        imgs.map((img) =>
+          img.complete
+            ? null
+            : new Promise<void>((done) => {
+                img.addEventListener("load", () => done(), { once: true });
+                img.addEventListener("error", () => done(), { once: true });
+              }),
+        ),
+      );
+      let gone = false;
+      offs.push(() => {
+        gone = true;
+      });
+      Promise.race([loaded, new Promise((done) => setTimeout(done, 1500))]).then(() =>
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            if (!gone) self.add(intro);
+          }),
+        ),
+      );
 
       // it follows the pointer: the art turns towards it, each piece floats at its own depth
       if (window.matchMedia(FINE).matches) {
@@ -100,7 +161,11 @@ export function init(root: HTMLElement) {
         });
       }
       // and drifts apart as the page scrolls on
-      gsap.fromTo(art, { "--sy": 0 }, { "--sy": 1, ease: "none", scrollTrigger: { trigger: art, start: "top top", end: "bottom top", scrub: 0.5 } });
+      gsap.fromTo(
+        art,
+        { "--sy": 0 },
+        { "--sy": 1, ease: "none", scrollTrigger: { trigger: art, start: "top top", end: "bottom top", scrub: 0.5 } },
+      );
     }
 
     /* -------------------------------------------------------------- arrivals */
@@ -136,12 +201,14 @@ export function init(root: HTMLElement) {
       });
     });
 
+    // across under the steps; on phones, where the steps stack, down behind their icons
+    const down = window.matchMedia("(max-width: 767px)").matches;
     gsap.utils.toArray<HTMLElement>("[data-tape]", root).forEach((tape) => {
-      gsap.fromTo(
-        tape,
-        { scaleX: 0 },
-        { scaleX: 1, ease: "none", transformOrigin: "0% 50%", scrollTrigger: { trigger: tape.parentElement, start: "top 80%", end: "bottom 55%", scrub: 0.6 } },
-      );
+      gsap.fromTo(tape, down ? { scaleY: 0 } : { scaleX: 0 }, {
+        ...(down ? { scaleY: 1, transformOrigin: "50% 0%" } : { scaleX: 1, transformOrigin: "0% 50%" }),
+        ease: "none",
+        scrollTrigger: { trigger: tape.parentElement, start: "top 80%", end: "bottom 55%", scrub: 0.6 },
+      });
     });
 
     gsap.utils.toArray<HTMLElement>("[data-print]", root).forEach((box) => {
@@ -168,7 +235,7 @@ export function init(root: HTMLElement) {
       let facing = true;
       const face = () => {
         // facing you while the turn is in its first or last quarter; the back shows in between
-        const a = ((gsap.getProperty(spin, "rotationY") as number) % 360 + 360) % 360;
+        const a = (((gsap.getProperty(spin, "rotationY") as number) % 360) + 360) % 360;
         const now = a < 90 || a > 270;
         if (now === facing) return;
         facing = now;
@@ -191,12 +258,21 @@ export function init(root: HTMLElement) {
       const fx = card.querySelector<HTMLElement>(".fin-art");
       if (!fx) return;
       if (look === "gloss" || look === "vinyl") {
-        const sweep = () => gsap.fromTo(fx, { "--gx": "130%" }, { "--gx": "-30%", duration: 1.2, ease: "power2.inOut", overwrite: true });
+        const sweep = () =>
+          gsap.fromTo(fx, { "--gx": "130%" }, { "--gx": "-30%", duration: 1.2, ease: "power2.inOut", overwrite: true });
         ScrollTrigger.create({ trigger: card, start: "top 75%", once: true, onEnter: () => void sweep() });
         on(card, "pointerenter", () => void sweep());
       }
       if (look === "holo") {
-        gsap.fromTo(fx, { "--holo": "0deg" }, { "--holo": "300deg", ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: 0.6 } });
+        gsap.fromTo(
+          fx,
+          { "--holo": "0deg" },
+          {
+            "--holo": "300deg",
+            ease: "none",
+            scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: 0.6 },
+          },
+        );
         const gx = gsap.quickTo(fx, "--gx", { duration: 0.6, ease: "power3.out" });
         on(card, "pointermove", (e) => {
           const r = card.getBoundingClientRect();
@@ -205,7 +281,12 @@ export function init(root: HTMLElement) {
       }
       if (look === "glitter") {
         const tw = gsap.to(fx, { "--tw": 1, duration: 0.45, ease: "steps(3)", repeat: -1, yoyo: true, paused: true });
-        ScrollTrigger.create({ trigger: card, start: "top bottom", end: "bottom top", onToggle: (self) => (self.isActive ? tw.play() : tw.pause()) });
+        ScrollTrigger.create({
+          trigger: card,
+          start: "top bottom",
+          end: "bottom top",
+          onToggle: (self) => (self.isActive ? tw.play() : tw.pause()),
+        });
       }
     });
   }, root);

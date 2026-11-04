@@ -15,8 +15,8 @@
 .crumbs ol {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 10px;
-  margin-bottom: clamp(18px, 3svh, 30px);
+  gap: 0 10px;
+  margin-bottom: clamp(10px, 2svh, 22px);
   font-size: var(--text-14);
   color: var(--color-liner-soft);
 }
@@ -29,7 +29,10 @@
   content: "/";
   opacity: 0.6;
 }
+/* padded to a comfortable tap target without growing the row's look */
 .crumbs a {
+  display: inline-block;
+  padding: 6px 0;
   text-decoration: underline;
   text-decoration-color: transparent;
   text-underline-offset: 4px;
@@ -118,6 +121,30 @@
      as painted only when it appears, late, and become the page's largest paint */
   .hero-art:not([data-in]) .ha-move {
     opacity: 0.01;
+  }
+  /* and no shadows yet: Chrome counts a drop-shadow's blur as part of an image's painted area
+     (about 3× the sticker), which made a phone's largest paint the art instead of the lede. The
+     art paints once, plain and invisible, then gets its shadows as it slaps in. */
+  .hero-art:not([data-in]) * {
+    filter: none !important;
+  }
+}
+/* phones: the product peeks in under the asks, a little smaller, so the lede stays the first
+   screen's largest paint (the page's LCP: each heading line counts on its own) and the art
+   follows. Sized per kind by its biggest piece. */
+@media (max-width: 639px) {
+  .hero-art {
+    width: min(78%, 320px);
+    margin-top: 18px;
+  }
+  .hero-art[data-kind="collage"] {
+    width: min(60%, 260px);
+  }
+  .hero-art[data-kind="ink"] {
+    width: min(62%, 270px);
+  }
+  .hero-art[data-kind="seal"] {
+    width: min(52%, 230px);
   }
 }
 .ha-pos {
@@ -602,17 +629,33 @@
   line-height: 1.45;
   color: var(--color-liner-soft);
 }
+/* phones: the tape runs down behind the icons, each step's words beside its icon */
 @media (max-width: 767px) {
   .steps-tape {
     left: 27px;
     right: auto;
-    top: 0;
-    bottom: 0;
+    top: 30px;
+    bottom: 30px;
     width: 6px;
     height: auto;
   }
   .steps-list {
     gap: 28px;
+  }
+  .step {
+    grid-template-columns: 60px minmax(0, 1fr);
+    column-gap: 18px;
+    row-gap: 4px;
+  }
+  .step-icon {
+    grid-row: 1 / span 2;
+  }
+  .step-title {
+    margin-top: 4px;
+    font-size: var(--text-18);
+  }
+  .step-body {
+    grid-column: 2;
   }
 }
 @media (min-width: 768px) {

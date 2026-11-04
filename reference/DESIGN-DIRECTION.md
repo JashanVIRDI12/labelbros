@@ -148,3 +148,9 @@ The client found the first version (a pinned WebGL specimen that exploded into i
 - **`/quote`, "Get your quote."** A short text hero (no buttons: the page is the ask), the builder on its cream band headed "Build it.", then "Send it to us." on the blue field: a cream ticket with the quote as built (it follows every change; sticky on desktop) beside the form on a cream card. Sending ends on a green "Sent" stamp that slaps on (CSS, the slap curve; none with reduced motion).
 - **`/contact`, "Talk to a person."** Short text hero, a cream form card (topic chips like the builder's, name, email, message) and "Faster answers" as outlined links on blue. Contact details appear only when they exist.
 - Forms: labels above fields, hints and errors under them (errors replace hints and describe the field), 50 px fields, the builder's chip corners (8 8 2 8), the ink ring with a yellow halo for focus on cream. Copy in plain words; no invented response times beyond the published proof time.
+
+## Phones (2026-11-05)
+
+- Every page is checked at 360, 375, 390 and 768 as a touch phone: no sideways scroll, tap targets at least 24 px (44 px in the footer on touch screens), body text at least 12 px outside artwork.
+- Service heroes on phones: the product peeks in under the asks, sized per kind (collage 60%, ink 62%, seal 52%, others 78%) so the lede stays the largest paint. Hero art paints once plain and invisible, without drop-shadows (Chrome counts a shadow's blur as image area), and gets its shadows as it slaps in; the intro waits until the art has loaded and painted.
+- "How ordering works" on phones: each step beside its icon, the tape running down behind the icons.

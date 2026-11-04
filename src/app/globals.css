@@ -2101,6 +2101,17 @@ body {
   font-size: var(--text-16);
   padding: 6px 0;
 }
+/* fingers: every footer link a full 44 px tall */
+@media (pointer: coarse) {
+  .footer-nav .nav-link {
+    padding: 10px 0;
+  }
+}
+@media (max-width: 767px) {
+  .site-footer {
+    padding-top: 64px;
+  }
+}
 .footer-nav .nav-link::after {
   left: 0;
   right: 0;

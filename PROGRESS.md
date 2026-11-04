@@ -1,5 +1,15 @@
 # Progress
 
+## 2026-11-05: the whole site, checked and tuned for phones
+
+**Why.** The client asked for the whole website to be checked and made mobile-optimised.
+
+**Checked.** Every page (home, stickers, labels, how it works, business, services and its six pages, quote, contact, 404) at 360, 375, 390 and 768 as a touch phone, scrolled top to bottom: page width, tap targets, text under 12 px, clipped text, image weight, console errors; every page screen by screen at 390 × 844 by eye; Lighthouse mobile on the production build.
+
+**Fixed.** The yellow tape in "How ordering works" ran through the step text on phones (services hub, every service page, business): on phones each step now sits beside its icon and the tape runs down behind the icons (it also now grows downward there, not sideways). Breadcrumb links were 21 px tall: padded to 33 px. Footer links: 44 px on touch screens, and less empty space above the footer on phones. The business label artwork reads as pictures (`role="img"` with a description), so its fine print is not read as page text. Four service pages (die-cut, holographic, packaging seals, custom design) had a mobile LCP of 3.2 to 3.4 s: Chrome counts a drop-shadow's blur as part of an image's painted area (about 3× the sticker), so the hero art beat the lede as the largest paint and the score waited on an image. The art now paints once plain and invisible (no shadows until it slaps in), the intro waits for the art to load and paint at rest, only the main piece loads eagerly (preloaded, quality 62), and on phones the hero art is a little smaller per kind (collage 60%, ink 62%, seal 52%) so the lede stays the largest paint.
+
+**Verified.** No horizontal overflow at any width; no tap targets under 24 px; no console errors. Lighthouse mobile (production): every page 100 performance (the four service pages up from 92–94, their LCP down from 3.2–3.4 s to 1.1 s; all pages 1.1 to 1.2 s), 100 accessibility, 100 best practices, 100 SEO.
+
 ## 2026-11-04 (late): a quote page and an easy contact page
 
 **Why.** The client asked for a quote page and an easy way to contact them; they use EmailJS, and the contact details are not decided yet.

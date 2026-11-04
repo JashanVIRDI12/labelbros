@@ -25,8 +25,12 @@ function Piece({ p, i, eager, depth, main }: { p: Placed; i: number; eager: bool
           height={p.art.h}
           alt={p.alt}
           sizes={`(max-width: 1023px) ${Math.round(p.w * 0.95)}vw, ${Math.round(p.w * 6.4)}px`}
+          // the main piece is often the largest thing on a phone's first screen: preloaded from the
+          // head, and a touch lighter (it moves and floats, so the difference does not show)
           loading={eager ? "eager" : "lazy"}
           fetchPriority={main ? "high" : "auto"}
+          preload={main}
+          quality={main ? 62 : 75}
           draggable={false}
         />
       </span>
@@ -37,7 +41,10 @@ function Piece({ p, i, eager, depth, main }: { p: Placed; i: number; eager: bool
 export function HeroArt({ kind, art }: { kind: HeroKind; art: Placed[] }) {
   // the last piece is the main one (the biggest, and the one other pages show for this service)
   const pieces = (from = 0) =>
-    art.map((p, i) => <Piece key={p.art.src + i} p={p} i={i + from} eager main={i === art.length - 1} depth={0.6 + (i % 3) * 0.35} />);
+    // only the main piece loads at once; the others follow, so on a phone the main one gets the bandwidth
+    art.map((p, i) => (
+      <Piece key={p.art.src + i} p={p} i={i + from} eager={i === art.length - 1} main={i === art.length - 1} depth={0.6 + (i % 3) * 0.35} />
+    ));
   return (
     <div className="hero-art" data-hero-art data-kind={kind}>
       {kind === "sheet" ? (
