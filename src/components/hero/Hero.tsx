@@ -15,6 +15,7 @@ export function Hero() {
               Make your
             </span>
           </span>
+{" "}
           <span className="title-line">
             <span data-keepout style={{ ["--i" as string]: 1 }}>
               brand stick.

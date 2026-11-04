@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- pre-sized WebP artwork layers that GSAP animates; next/image would add wrappers and nothing to optimise */
 import type { CSSProperties } from "react";
+import Link from "next/link";
 import { Arrow } from "@/components/site/Arrow";
 import { Motion } from "@/components/site/Motion";
 import { StickerArt } from "@/components/stickers/StickerArt";
@@ -28,13 +29,13 @@ const STEPS = [
     key: "proof",
     title: "You approve a free proof.",
     body: "We send you a proof to check. Ask for changes or approve it. Nothing prints until you say so.",
-    note: "[[Proof turnaround time]]",
+    note: "Free proof in 12–24 hours. Ask for changes until you are happy.",
   },
   {
     key: "print",
     title: "We print, cut and ship.",
     body: "Your stickers are printed, cut to shape and sent to you.",
-    note: "[[Production and delivery time]]",
+    note: "Ships 2–4 business days after you approve your proof. Free shipping in Canada on orders over $100.",
   },
 ];
 
@@ -67,7 +68,7 @@ export function Process() {
                   <div className="proc-step-body">
                     <div>
                       <p>{s.body}</p>
-                      {s.note ? <p className="ph proc-note">{s.note}</p> : null}
+                      {s.note ? <p className="proc-note">{s.note}</p> : null}
                     </div>
                   </div>
                 </li>
@@ -144,10 +145,14 @@ export function Process() {
           Get instant pricing
           <Arrow />
         </a>
-        <a href="#[[DESIGN_BRIEF_URL]]" className="text-link">
+        <Link href="/services/custom-design" className="text-link">
           Ask a designer
           <Arrow />
-        </a>
+        </Link>
+        <Link href="/how-it-works" className="text-link">
+          See every step
+          <Arrow />
+        </Link>
       </div>
     </section>
   );

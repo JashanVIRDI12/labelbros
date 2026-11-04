@@ -1,0 +1,325 @@
+/* ======================================================================
+   Business labels: the press, and the labels it prints
+   (imported by globals.css)
+   ====================================================================== */
+
+/* how far a label is printed, 0 blank to 1 done (inherited by its print layer and head) */
+@property --p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+/* ---------- The labels ---------- */
+
+.pl {
+  position: relative;
+  color: #0d0d0c;
+  container-type: inline-size;
+}
+.pl-face {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4cqi;
+  background: #fffefb;
+  box-shadow: inset 0 0 0 1px rgba(13, 13, 12, 0.06);
+}
+.pl-ink {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 calc((1 - var(--p)) * 100%) 0);
+}
+/* the print head: a warm line where the press is printing */
+.pl-head {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--p) * 100%);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ff9a4a 20%, #ffd7a8 50%, #ff9a4a 80%, transparent);
+  box-shadow: 0 0 10px 2px rgba(255, 140, 60, 0.6);
+  opacity: min(1, calc(var(--p) * (1 - var(--p)) * 14));
+}
+.pl-small {
+  display: block;
+  font-size: 3.6cqi;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+}
+.pl-bars {
+  display: block;
+  width: 100%;
+  height: 10cqi;
+}
+.pl-bars rect {
+  fill: currentColor;
+}
+
+/* shipping */
+.pl-shipping .pl-face {
+  aspect-ratio: 1 / 1.12;
+}
+.pl-shipping .pl-ink {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 8cqi 8cqi 7cqi;
+  gap: 4cqi;
+}
+.pl-ship-top {
+  display: grid;
+  gap: 0.6cqi;
+  padding-bottom: 4cqi;
+  border-bottom: 0.8cqi solid currentColor;
+  font-size: 4.2cqi;
+  line-height: 1.25;
+}
+.pl-ship-top b {
+  font-size: 5cqi;
+}
+.pl-ship-to {
+  display: grid;
+  align-content: start;
+  gap: 1cqi;
+  font-size: 5cqi;
+  line-height: 1.2;
+}
+.pl-ship-to b {
+  font-size: 9cqi;
+  font-weight: 900;
+  font-stretch: 112%;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.pl-ship-foot {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 4cqi;
+}
+.pl-ship-foot .pl-bars {
+  height: 14cqi;
+}
+.pl-ship-tag {
+  padding: 2cqi 3cqi;
+  background: #0d0d0c;
+  color: #fffefb;
+  font-size: 4.4cqi;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+/* asset tag: brushed silver */
+.pl-asset .pl-face {
+  aspect-ratio: 2 / 1;
+  background: linear-gradient(115deg, #e6e9ec 0%, #c3c9cf 34%, #eef1f3 52%, #b7bec5 78%, #dde1e4 100%);
+}
+.pl-asset .pl-ink {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 4cqi;
+  padding: 6cqi 7cqi;
+}
+.pl-asset-text {
+  display: grid;
+  gap: 1.2cqi;
+}
+.pl-asset-co {
+  font-size: 6cqi;
+  font-weight: 900;
+  font-stretch: 112%;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+.pl-asset-no {
+  font-size: 4.4cqi;
+  font-weight: 650;
+}
+.pl-asset-no strong {
+  font-size: 7cqi;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+.pl-asset .pl-bars {
+  height: 8cqi;
+}
+.pl-qr {
+  width: 30cqi;
+  height: 30cqi;
+  padding: 2cqi;
+  background: #fffefb;
+  border-radius: 1.5cqi;
+}
+.pl-qr rect {
+  fill: #0d0d0c;
+}
+.pl-qr .pl-qr-hole {
+  fill: #fffefb;
+}
+
+/* warning */
+.pl-warning .pl-face {
+  aspect-ratio: 1.6 / 1;
+  background: repeating-linear-gradient(135deg, #0d0d0c 0 4cqi, #ffd21f 4cqi 8cqi);
+}
+.pl-warning .pl-ink {
+  padding: 5cqi;
+}
+.pl-warn-in {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 4cqi;
+  height: 100%;
+  padding: 4cqi 6cqi;
+  border-radius: 2.4cqi;
+  background: #ffd21f;
+}
+.pl-warn-sign {
+  width: 24cqi;
+  height: auto;
+}
+.pl-warn-in b {
+  display: block;
+  font-size: 9.5cqi;
+  font-weight: 900;
+  font-stretch: 112%;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+.pl-warn-in strong {
+  display: block;
+  margin-top: 1cqi;
+  font-size: 6.2cqi;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.pl-warn-in span {
+  display: block;
+  margin-top: 1.4cqi;
+  font-size: 4cqi;
+  font-weight: 600;
+}
+
+/* inspection */
+.pl-inspection .pl-face {
+  aspect-ratio: 1.7 / 1;
+  box-shadow: inset 0 0 0 2cqi #2f9e62;
+}
+.pl-inspection .pl-ink {
+  padding: 7cqi 8cqi;
+}
+.pl-insp-in {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 5cqi;
+  height: 100%;
+}
+.pl-insp-stamp {
+  display: grid;
+  place-items: center;
+  width: 24cqi;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #2f9e62;
+  color: #fff;
+  box-shadow: 0 0 0 1.2cqi #fffefb, 0 0 0 1.8cqi #2f9e62;
+  transform: rotate(-10deg);
+}
+.pl-insp-stamp svg {
+  width: 60%;
+}
+.pl-insp-in b {
+  display: block;
+  font-size: 4.4cqi;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #1d7444; /* 5.6:1 on the label (the brighter green is for shapes only) */
+}
+.pl-insp-in strong {
+  display: block;
+  font-size: 9cqi;
+  font-weight: 900;
+  font-stretch: 112%;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.pl-insp-field {
+  display: block;
+  margin-top: 2.2cqi;
+  font-size: 4cqi;
+  font-weight: 600;
+  color: #4a463d;
+}
+
+/* bin */
+.pl-bin .pl-face {
+  aspect-ratio: 1.9 / 1;
+}
+.pl-bin .pl-ink {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: 6cqi 8cqi;
+}
+.pl-bin-code {
+  align-self: center;
+  white-space: nowrap;
+  font-size: 17cqi;
+  font-weight: 900;
+  font-stretch: 112%;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+}
+.pl-bin-foot {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 4cqi;
+  font-size: 3.8cqi;
+  font-weight: 650;
+}
+
+/* name badge */
+.pl-badge .pl-face {
+  aspect-ratio: 1.45 / 1;
+}
+.pl-badge .pl-ink {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+.pl-badge-top {
+  display: grid;
+  justify-items: center;
+  padding: 3.6cqi 0 3cqi;
+  background: #c8321c; /* white type on it: 5.3:1 */
+  color: #fff;
+}
+.pl-badge-top b {
+  font-size: 11cqi;
+  font-weight: 900;
+  font-stretch: 112%;
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.pl-badge-top span {
+  font-size: 4.6cqi;
+  font-weight: 700;
+}
+.pl-badge-name {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-yellowtail), cursive;
+  font-size: 19cqi;
+  line-height: 1;
+  color: #1a2a8a;
+}

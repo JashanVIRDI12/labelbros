@@ -2,7 +2,7 @@
 
 Marketing homepage for Label Bros, a printer of custom stickers and product labels. Goal: a premium, Awwwards-level interactive homepage that gets visitors to "Get instant pricing" or "Order a sample kit", and makes clear that customers can send their own artwork or have Label Bros design it (free proof before print). **The design direction is `reference/DESIGN-DIRECTION.md` ("Sticker table", 2026-11-02).** Everything earlier was deleted on 2026-11-02; the old builds are only in `qa/backups/`.
 
-The site is being redesigned section by section. Built so far: header, hero, products (peel-off pad), labels (shelf), how it works (proof), pricing (quote builder), sample kit, footer. Don't add sections the client hasn't asked for.
+The site is being redesigned section by section. Built so far: header, hero, products (peel-off pad), labels (shelf), how it works (proof), pricing (quote builder), sample kit, footer, a `/stickers` page (the sticker sheet), a `/labels` page (the label web), a `/how-it-works` page (one sticker across the table, plus questions), a `/business` page and `/services` with six service pages (simple, text-first pages built for SEO, one GSAP module), a `/quote` page (the builder plus a send form) and a `/contact` page. Both forms send through EmailJS (`src/lib/emailjs.ts`, setup in `reference/EMAILJS.md`); contact details live in `CONTACT` in `src/lib/site.ts` and stay off the page while empty. Shared pieces live in `src/components/sheet/` (product pages) and `src/components/service/` (service and business pages). Don't add sections the client hasn't asked for.
 
 ## Stack
 - Next.js 16 App Router, React 19, TypeScript strict, Tailwind CSS v4 through `@tailwindcss/postcss` (tokens in `src/app/globals.css` `@theme`).
@@ -20,7 +20,7 @@ The site is being redesigned section by section. Built so far: header, hero, pro
 - Press blue field (#1E3FD8), liner cream type (#F5F1E8), label yellow (#FFD21F) as the one action colour. Archivo is the only UI font; the H1 is 900 weight, 112% width, uppercase.
 - The stickers carry all other colour. Sticker artwork (`src/components/hero/engine/art.ts`) may use any colour and its own faces; the UI may not.
 - Buttons are flat stickers whose corner peels on hover. Shadows only on stickers.
-- Avoid: gradients, glassmorphism or drop shadows on UI; pill badges; eyebrows; numbered labels; monospace; Inter/Roboto/Space Grotesk/system fonts; italic accent words; generic fade-up on scroll; bento grids.
+- Avoid: gradients, glassmorphism or drop shadows on UI; pill badges; eyebrows; numbered labels; monospace; Inter/Roboto/Space Grotesk/system fonts; italic accent words; generic fade-up on scroll; bento grids (the exceptions, asked for by the client, are the `/stickers` sheet and the `/labels` web, where every cell is a sticker or label on its liner).
 
 ## Motion and engineering
 - Eases: `slap` (lands, no overshoot), `peel`, `expo.out` reveals, `power2.inOut` travels, `power3.out` throws, `none` on scrubs. Full rules in the `labelbros-motion` skill.
@@ -40,7 +40,7 @@ The site is being redesigned section by section. Built so far: header, hero, pro
 3. Fix, re-screenshot, and only then move on. Report what you ran and show the screenshots.
 
 ## Content
-Real copy, pricing, reviews and the logo are placeholders. Never invent real-looking numbers or claims; mark unknowns as visible `[[PLACEHOLDERS]]`. The sticker brands (Fire Escape, Night Shift, Beeline...) are sample artwork, not customers.
+Prices and service facts (quantities, sizes, turnaround, shipping, files, the sample kit, reprints) follow what Sticker Bros (stickerbros.com) publishes, at the client's request on 2026-11-04, written in our own words, converted to Canadian dollars at one rate (`CAD_PER_USD`, free shipping in Canada over $100) and kept in `src/lib/facts.ts` (the builder's price model is there too); change them there when Label Bros has its own list. Reviews and the logo are still placeholders. Beyond those facts, never invent real-looking numbers or claims; mark unknowns as visible `[[PLACEHOLDERS]]` (the `Ph` helper shows them). The sticker brands (Fire Escape, Night Shift, Beeline...) are sample artwork, not customers.
 
 ## Safety
 Don't push, deploy, or delete files outside this folder without asking. Never read `.env*`.

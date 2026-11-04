@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { MobileMenu } from "./MobileMenu";
 
+// Absolute paths, so the same header works on every page (on the homepage they only scroll).
 export const NAV = [
-  { label: "Stickers", href: "#stickers" },
-  { label: "Labels", href: "#labels" },
-  { label: "Sample kit", href: "#samples" },
-  { label: "How it works", href: "#process" },
+  { label: "Stickers", href: "/stickers" },
+  { label: "Labels", href: "/labels" },
+  { label: "Business", href: "/business" },
+  { label: "Services", href: "/services" },
+  { label: "How it works", href: "/how-it-works" },
+  { label: "Contact", href: "/contact" },
 ];
 
 /** The wordmark is itself a die-cut sticker: yellow face, white cut border. */
@@ -17,7 +20,8 @@ export function Logo() {
   );
 }
 
-export function Header() {
+/** `current`: the path of the page being shown, so its nav link is marked. */
+export function Header({ current }: { current?: string }) {
   return (
     <header className="absolute inset-x-0 top-0 z-40 flex h-[clamp(64px,9svh,84px)] items-center justify-between gap-6 px-[var(--gutter)]">
       <Link href="/" aria-label="Label Bros, home" className="logo-link rounded-[10px]">
@@ -26,21 +30,23 @@ export function Header() {
 
       <nav aria-label="Main" className="hidden items-center gap-[clamp(18px,2.2vw,34px)] md:flex">
         {NAV.map((item) => (
-          <a key={item.href} href={item.href} className="nav-link">
+          <Link
+            key={item.href}
+            href={item.href}
+            className="nav-link"
+            aria-current={item.href === current ? "page" : undefined}
+          >
             {item.label}
-          </a>
+          </Link>
         ))}
       </nav>
 
       <div className="flex items-center gap-3 md:gap-6">
-        <a href="#signin" className="nav-link hidden lg:inline-block">
-          Sign in
-        </a>
-        <a href="#pricing" className="btn btn-primary btn-sm">
+        <Link href="/quote" className="btn btn-primary btn-sm">
           <span className="sm:hidden">Pricing</span>
           <span className="hidden sm:inline">Get instant pricing</span>
-        </a>
-        <MobileMenu items={NAV} />
+        </Link>
+        <MobileMenu items={NAV} current={current} />
       </div>
     </header>
   );

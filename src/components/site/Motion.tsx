@@ -12,6 +12,10 @@ const LOADERS = {
   process: () => import("@/components/sections/process-motion") as Promise<Module>,
   kit: () => import("@/components/sections/kit-motion") as Promise<Module>,
   footer: () => import("@/components/sections/footer-motion") as Promise<Module>,
+  sheet: () => import("@/components/stickers-page/sheet-motion") as Promise<Module>,
+  web: () => import("@/components/labels-page/web-motion") as Promise<Module>,
+  how: () => import("@/components/how-page/how-motion") as Promise<Module>,
+  page: () => import("@/components/service/page-motion") as Promise<Module>,
 };
 
 export type MotionName = keyof typeof LOADERS;

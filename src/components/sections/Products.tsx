@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { Arrow } from "@/components/site/Arrow";
+import { FROM, money } from "@/lib/facts";
 import { Motion } from "@/components/site/Motion";
 import { StickerArt } from "@/components/stickers/StickerArt";
 import { stickerRatio } from "@/components/stickers/ratio";
@@ -18,6 +19,7 @@ type Product = {
   line: string;
   options: string;
   quote: { product: "stickers" | "labels"; shape: string };
+  from: number; // 50 at 3 inches (src/lib/facts.ts)
   art: Art[];
 };
 
@@ -25,6 +27,7 @@ type Product = {
 const PRODUCTS: Product[] = [
   {
     key: "die-cut",
+    from: FROM.dieCut,
     name: "Die-cut stickers",
     line: "Cut right around your design, so the sticker is the shape of your art.",
     options: "Gloss, matte, holographic or glitter vinyl",
@@ -36,6 +39,7 @@ const PRODUCTS: Product[] = [
   },
   {
     key: "holo",
+    from: FROM.holo,
     name: "Holographic and glitter",
     line: "Foil that shifts colour as it moves, and glitter that catches the light.",
     options: "Any shape, cut to your design",
@@ -47,6 +51,7 @@ const PRODUCTS: Product[] = [
   },
   {
     key: "seals",
+    from: FROM.seals,
     name: "Packaging seals",
     line: "Seals and stickers for boxes, bags, mailers and coffee bags.",
     options: "Kraft, matte or gloss paper",
@@ -58,6 +63,7 @@ const PRODUCTS: Product[] = [
   },
   {
     key: "product-labels",
+    from: FROM.labels,
     name: "Product labels",
     line: "Labels for jars, bottles, cans, tins and candles, in the size your packaging needs.",
     options: "Paper or vinyl, any shape",
@@ -70,6 +76,7 @@ const PRODUCTS: Product[] = [
   },
   {
     key: "business-labels",
+    from: FROM.labels,
     name: "Business and safety labels",
     line: "Warning, ID, address and approval labels for the work behind the brand.",
     options: "Gloss vinyl or paper, any size",
@@ -198,7 +205,7 @@ export function Products() {
                         <Arrow />
                       </a>
                       <p>
-                        From <span className="ph">[[PRICE]]</span>
+                        From <b>{money(p.from)}</b>
                       </p>
                     </div>
                   </div>

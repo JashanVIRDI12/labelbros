@@ -32,6 +32,7 @@ export function create(svg: SVGSVGElement, reduce: boolean) {
   const dimV = $<SVGLineElement>("[data-dim-v]");
   const dimHLabel = $<SVGGElement>("[data-dim-h-label]");
   const dimVLabel = $<SVGGElement>("[data-dim-v-label]");
+  const mat = $<SVGPatternElement>("#q-mat");
 
   const ctx = gsap.context(() => {});
   let prev: View | null = null;
@@ -59,6 +60,8 @@ export function create(svg: SVGSVGElement, reduce: boolean) {
       gsap.to(inner, { opacity: v.innerOn ? 1 : 0, duration: d(0.35), ease: "power2.inOut" });
       gsap.to(art, { scale: v.art, duration: d(TRAVEL), ease: "power2.inOut", overwrite: "auto" });
       gsap.to(scaler, { scale: v.k, duration: d(TRAVEL), ease: "power2.inOut", overwrite: "auto" });
+      // big sizes zoom the mat out with the sticker, so a square stays an inch
+      gsap.to(mat, { attr: { patternTransform: v.mat }, duration: d(TRAVEL), ease: "power2.inOut", overwrite: "auto" });
 
       // measuring lines follow the sticker's edges
       const m = dimsFor(v);
@@ -110,7 +113,7 @@ export function create(svg: SVGSVGElement, reduce: boolean) {
     },
     destroy() {
       ctx.revert();
-      gsap.killTweensOf([outer, inner, art, scaler, lift, shadow, ...copies, foil, matte, sheen, dimH, dimV, dimHLabel, dimVLabel]);
+      gsap.killTweensOf([outer, inner, art, scaler, lift, shadow, ...copies, foil, matte, sheen, dimH, dimV, dimHLabel, dimVLabel, mat]);
     },
   };
 }

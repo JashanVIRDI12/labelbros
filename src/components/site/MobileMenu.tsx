@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-export function MobileMenu({ items }: { items: { label: string; href: string }[] }) {
+export function MobileMenu({ items, current }: { items: { label: string; href: string }[]; current?: string }) {
   const [open, setOpen] = useState(false);
   const button = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
@@ -47,19 +48,20 @@ export function MobileMenu({ items }: { items: { label: string; href: string }[]
           <ul className="flex flex-col gap-1">
             {items.map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   href={item.href}
                   onClick={() => setOpen(false)}
+                  aria-current={item.href === current ? "page" : undefined}
                   className="block py-2 text-[2.6rem] font-black uppercase leading-none tracking-[-0.03em] [font-stretch:112%]"
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
             <li className="mt-6">
-              <a href="#signin" onClick={() => setOpen(false)} className="text-18 font-semibold underline underline-offset-4">
-                Sign in
-              </a>
+              <Link href="/quote" onClick={() => setOpen(false)} className="text-18 font-semibold underline underline-offset-4">
+                Get a quote
+              </Link>
             </li>
           </ul>
         </nav>
