@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
-import { FROM, money } from "@/lib/facts";
+import { FROM_USD } from "@/lib/facts";
+import { Price } from "@/components/site/Price";
 import { Cell } from "@/components/sheet/Cell";
 import { Arrow } from "@/components/site/Arrow";
 import { Motion } from "@/components/site/Motion";
@@ -9,6 +10,8 @@ import { ART } from "@/components/stickers-page/art";
 import { LABELS, maskOf, quoteHref } from "./art";
 import { LabelArt } from "./LabelArt";
 import { LabelSizeCell } from "./LabelSizeCell";
+import { SAMPLE_KIT_ON } from "@/lib/site";
+import { DESIGN_HREF } from "@/components/site/SecondAsk";
 
 /*
  * The labels page as one web of labels on their liner. Each label is put on the way labels are:
@@ -52,7 +55,7 @@ export function LabelWeb() {
                 </p>
               </div>
               <Link href={quoteHref({ shape: "rectangle" })} className="text-link cell-link">
-                Price wrap-around labels
+                Order wrap-around labels
                 <Arrow />
               </Link>
               <div className="cell-art" data-art aria-hidden="true">
@@ -111,7 +114,7 @@ export function LabelWeb() {
                 <p className="cell-text">Gold foil on textured laid paper, or a soft uncoated stock.</p>
               </div>
               <Link href={quoteHref({ shape: "rectangle" })} className="text-link cell-link">
-                Price these labels
+                Order these labels
                 <Arrow />
               </Link>
               <div className="cell-art" data-art aria-hidden="true">
@@ -179,7 +182,9 @@ export function LabelWeb() {
             </Cell>
 
             <Cell area="kit" tone="ink">
-              <div className="cell-copy">
+              {SAMPLE_KIT_ON ? (
+                <>
+                  <div className="cell-copy">
                 <h3 className="cell-title">Feel them first</h3>
                 <p className="cell-text">A pack of real stickers and labels, sent to your door.</p>
               </div>
@@ -187,7 +192,7 @@ export function LabelWeb() {
                 Order a sample kit
                 <Arrow />
               </Link>
-              <div className="cell-art" aria-hidden="true">
+                  <div className="cell-art" aria-hidden="true">
                 <div className="mini-kit">
                   <span className="mini-kit-back" />
                   <LabelArt id="coffee-label" className="mini-kit-a" />
@@ -196,22 +201,35 @@ export function LabelWeb() {
                   <span className="mini-kit-front" />
                 </div>
               </div>
+                </>
+              ) : (
+                <>
+                  <div className="cell-copy">
+                    <h3 className="cell-title">We design it</h3>
+                    <p className="cell-text">No artwork? Send an idea and our designers draw it. You approve a proof, and we call if anything needs changing.</p>
+                  </div>
+                  <Link href={DESIGN_HREF} className="text-link cell-link">
+                    Start your design
+                    <Arrow />
+                  </Link>
+                </>
+              )}
             </Cell>
 
             {/* ------------------------------------------------------------ do it */}
             <Cell area="price" tone="signal">
-              <h3 className="cell-title price-title">Price your labels</h3>
+              <h3 className="cell-title price-title">Order your labels</h3>
               <p className="price-ticket">
                 <span className="price-ticket-what">Product labels</span>
                 <span className="price-ticket-spec">Your shape, size and material. Free proof included.</span>
                 <span className="price-ticket-price">
-                  From <span className="price-amount">{money(FROM.labels)}</span>
+                  From <span className="price-amount"><Price usd={FROM_USD.labels} /></span>
                 </span>
               </p>
               <div className="price-foot">
-                <p className="cell-text">Pick a shape, size, quantity and finish and see your price straight away.</p>
+                <p className="cell-text">Upload your design, pick a shape, size and finish, and pay. Free proof before we print.</p>
                 <Link href={quoteHref({ shape: "rectangle" })} className="price-cta">
-                  Get instant pricing
+                  Upload and order
                   <Arrow />
                 </Link>
               </div>

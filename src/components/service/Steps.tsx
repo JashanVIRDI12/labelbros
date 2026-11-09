@@ -13,7 +13,7 @@ const STEPS = [
   },
   {
     title: "Approve your free proof",
-    body: "Check the size, the colours and the cut line. Nothing prints until you say yes.",
+    body: "Check the size, the colours and the cut line. If your design needs changes, we call you. Nothing prints until you say yes.",
     icon: "M5 10.5 8.5 14 15 6.5",
   },
   {

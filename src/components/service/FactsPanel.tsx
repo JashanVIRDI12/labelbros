@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { orderLabel } from "@/components/sheet/quote";
 import { Arrow } from "@/components/site/Arrow";
 import { Ph } from "./Ph";
 
@@ -25,7 +26,7 @@ export function FactsPanel({ id, name, panel, priceHref }: Props) {
         </p>
         <div className="facts-ctas">
           <Link href={priceHref} className="btn btn-primary">
-            Get instant pricing
+            {orderLabel(priceHref)}
             <Arrow />
           </Link>
           <Link href="/how-it-works" className="text-link">

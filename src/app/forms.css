@@ -174,7 +174,7 @@
 .qs {
   display: grid;
   gap: 32px;
-  padding: clamp(80px, 12svh, 150px) var(--gutter);
+  padding: var(--sy) var(--gutter);
 }
 .qs-lede {
   max-width: 40ch;
@@ -249,7 +249,7 @@
 .cp {
   display: grid;
   gap: 40px;
-  padding: clamp(24px, 4svh, 48px) var(--gutter) clamp(80px, 12svh, 150px);
+  padding: clamp(24px, 4svh, 48px) var(--gutter) var(--sy);
 }
 .cp-title {
   margin-bottom: 20px;
@@ -321,4 +321,97 @@
   .cp-link {
     transition: none;
   }
+}
+
+/* a button that reads as a text link (the quieter of two submit buttons) */
+.text-button {
+  padding: 10px 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+.text-button[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+}
+.form-note-wide {
+  flex-basis: 100%;
+  max-width: 52ch;
+}
+
+/* ---------- The business page: tell us what you label ---------- */
+
+.bq {
+  display: grid;
+  gap: 32px;
+  padding: var(--sy) var(--gutter);
+}
+.bq-lede {
+  max-width: 40ch;
+  margin-top: 18px;
+  font-size: var(--text-16);
+  line-height: 1.45;
+}
+/* our sample tag, printing their company name as they type: a label slapped on the table */
+.bq-tag {
+  width: min(88%, 360px);
+  margin-top: 32px;
+  rotate: -3deg;
+  filter: drop-shadow(0 10px 14px rgba(5, 10, 58, 0.35));
+}
+.bq-tag .pl-asset-co {
+  overflow-wrap: anywhere;
+}
+.bq-points {
+  display: grid;
+  gap: 8px;
+  margin-top: 32px;
+  font-size: var(--text-15);
+}
+.bq-points li {
+  position: relative;
+  padding-left: 22px;
+}
+.bq-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 10px;
+  height: 3px;
+  background: var(--color-signal);
+}
+@media (min-width: 640px) {
+  .bq-lede {
+    font-size: var(--text-18);
+  }
+}
+@media (min-width: 1024px) {
+  .bq {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: start;
+    column-gap: clamp(40px, 5vw, 96px);
+  }
+  .bq-intro {
+    position: sticky;
+    top: 28px;
+  }
+}
+
+/* ---------- Back from checkout ---------- */
+
+.ty {
+  display: grid;
+  place-items: start center;
+  min-height: 70svh;
+  padding: calc(clamp(64px, 9svh, 84px) + clamp(24px, 6svh, 72px)) var(--gutter) var(--sy);
+}
+.ty-card {
+  width: min(100%, 720px);
+}
+.ty .sent-body + .sent-body {
+  margin-top: 8px;
 }

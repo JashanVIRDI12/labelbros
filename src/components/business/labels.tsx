@@ -122,11 +122,11 @@ export const Shipping = () => (
   </PressLabel>
 );
 
-export const Asset = ({ n }: { n: number }) => (
+export const Asset = ({ n, company = "Your company" }: { n: number; company?: string }) => (
   <PressLabel kind="asset">
     <div className="pl-asset-text">
       <span className="pl-small">Property of</span>
-      <b className="pl-asset-co">Your company</b>
+      <b className="pl-asset-co">{company}</b>
       <span className="pl-asset-no">
         Asset <strong data-number={n}>{String(n).padStart(6, "0")}</strong>
       </span>

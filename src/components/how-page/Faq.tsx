@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { quoteHref } from "@/components/sheet/quote";
 import { Arrow } from "@/components/site/Arrow";
+import { SecondAsk } from "@/components/site/SecondAsk";
+import { SAMPLE_KIT_ON } from "@/lib/site";
 
 /*
  * "Questions, answered": the doubts people have before they order, each a cream label you open
@@ -12,9 +14,9 @@ const QUESTIONS: { q: string; a: React.ReactNode }[] = [
     q: "How much will it cost?",
     a: (
       <>
-        Pick a shape, size, quantity and finish and you see the price straight away.{" "}
+        Upload your design, pick a shape, size, quantity and finish, and you see the price straight away.{" "}
         <Link href={quoteHref("stickers", { shape: "die-cut" })} className="faq-link">
-          Get instant pricing
+          Upload your design
         </Link>
       </>
     ),
@@ -27,7 +29,8 @@ const QUESTIONS: { q: string; a: React.ReactNode }[] = [
     q: "Can I change the proof?",
     a: (
       <>
-        Yes. Tell us what to change and we send a new proof. Ask for changes until you are happy with it.
+        Yes. Tell us what to change and we send a new proof, and if we spot something in your design that needs fixing,
+        we call you to talk it through. Ask for changes until you are happy with it.
       </>
     ),
   },
@@ -61,17 +64,21 @@ const QUESTIONS: { q: string; a: React.ReactNode }[] = [
     q: "What if something is wrong when it arrives?",
     a: "Tell us within 72 hours of delivery, with your order number and photos, and we reprint it free. Custom prints cannot be refunded once production starts, and errors in artwork you approved on the proof are not counted as defects.",
   },
-  {
-    q: "Can I feel the materials first?",
-    a: (
-      <>
-        Yes. Order a sample kit: real stickers and labels in our finishes, sent to your door.{" "}
-        <Link href="/#samples" className="faq-link">
-          Order a sample kit
-        </Link>
-      </>
-    ),
-  },
+  ...(SAMPLE_KIT_ON
+    ? [
+        {
+          q: "Can I feel the materials first?",
+          a: (
+            <>
+              Yes. Order a sample kit: real stickers and labels in our finishes, sent to your door.{" "}
+              <Link href="/#samples" className="faq-link">
+                Order a sample kit
+              </Link>
+            </>
+          ),
+        },
+      ]
+    : []),
 ];
 
 export function Faq() {
@@ -81,15 +88,13 @@ export function Faq() {
         <h2 id="faq-title" className="section-title">
           Questions, answered.
         </h2>
-        <p className="faq-lede">Still not sure? Feel the finishes first, or see your price in a minute.</p>
+        <p className="faq-lede">Still not sure? Upload your design and see your price in a minute, or let us design it for you.</p>
         <div className="faq-ctas">
           <Link href={quoteHref("stickers", { shape: "die-cut" })} className="btn btn-primary">
-            Get instant pricing
+            Upload your design
             <Arrow />
           </Link>
-          <Link href="/#samples" className="btn btn-secondary">
-            Order a sample kit
-          </Link>
+          <SecondAsk />
         </div>
       </div>
       <div className="faq-list">

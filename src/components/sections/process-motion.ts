@@ -13,6 +13,8 @@ import { gsap, ScrollTrigger } from "@/lib/scroll";
  */
 
 const MODE = "(scripting: enabled) and (prefers-reduced-motion: no-preference)";
+// tablets and up: pinned and scrubbed; phones: no pin, the same timeline plays once it is in view
+const PIN = "(min-width: 768px)";
 
 export function init(root: HTMLElement) {
   if (!window.matchMedia(MODE).matches) return () => {};
@@ -24,6 +26,8 @@ export function init(root: HTMLElement) {
   const status = q<HTMLElement>("[data-status]");
   const rail = q<HTMLElement>(".proc-rail")[0];
   if (!track || !proof) return () => {};
+  const pinned = window.matchMedia(PIN).matches;
+  if (!pinned) root.dataset.autoplay = "";
 
   const ctx = gsap.context(() => {
     const artBox = q<HTMLElement>(".proof-art")[0];
@@ -109,14 +113,23 @@ export function init(root: HTMLElement) {
       steps.forEach((s, k) => s.setAttribute("data-active", String(k === i)));
     });
 
-    ScrollTrigger.create({
-      trigger: track,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 0.6,
-      animation: tl,
-    });
+    if (pinned) {
+      ScrollTrigger.create({
+        trigger: track,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.6,
+        animation: tl,
+      });
+    } else {
+      // about six seconds, start to finish, when the proof is well on screen
+      tl.pause(0).timeScale(0.65);
+      ScrollTrigger.create({ trigger: proof, start: "top 70%", once: true, onEnter: () => tl.play() });
+    }
   }, root);
 
-  return () => ctx.revert();
+  return () => {
+    delete root.dataset.autoplay;
+    ctx.revert();
+  };
 }

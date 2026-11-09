@@ -4,10 +4,13 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { DimInput } from "@/components/sheet/DimInput";
-import { CURRENCY, FILES, RUSH, SHIPPING, SHIPS, money, quotePrice } from "@/lib/facts";
+import { CURRENCY, FILES, RUSH, SHIPPING, SHIPS, money, priceSize, quotePrice, type Currency } from "@/lib/facts";
+import { useCurrency } from "@/lib/currency";
+import { ShipTo } from "@/components/site/ShipTo";
 import { Arrow } from "@/components/site/Arrow";
 import { ACCEPT, accepted, extOf, prepare } from "./artwork";
 import { carryFile, takeCarriedFile } from "./quote-carry";
+import { SAMPLE_KIT_ON } from "@/lib/site";
 import {
   ARTWORKS,
   SAMPLE_ART,
@@ -45,7 +48,7 @@ import {
 } from "./pricing-model";
 
 /*
- * "Get your price": a quote builder whose preview is to scale. Every square on the mat is an
+ * "Upload your design": the order builder, whose preview is to scale. Every square on the mat is an
  * inch; the sticker morphs between shapes, grows with the size, stacks up with the quantity and
  * catches the light for the finish. Upload a design and it takes the sample's place, with a
  * die-cut line traced round it (artwork.ts, all in the browser); or pick "Design it for me".
@@ -61,6 +64,7 @@ export type QuoteSnapshot = {
   summary: string;
   total: number;
   each: number;
+  currency: Currency;
   file: File | null;
 };
 
@@ -134,7 +138,7 @@ const INITIAL = view(DEFAULT_QUOTE);
 const INITIAL_DIMS = dimsFor(INITIAL);
 
 /**
- * `variant`: "home" sends "Continue with this quote" to the quote page, carrying the choices and
+ * `variant`: "home" sends "Continue to checkout" to the order page, carrying the choices and
  * the file; "quote" (on that page) leads down to its form, and reports every change in `onQuote`.
  */
 export function Pricing({ variant = "home", onQuote }: { variant?: "home" | "quote"; onQuote?: (s: QuoteSnapshot) => void }) {
@@ -143,6 +147,16 @@ export function Pricing({ variant = "home", onQuote }: { variant?: "home" | "quo
   const [error, setError] = useState<string | null>(null);
   const [over, setOver] = useState(false);
   const root = useRef<HTMLElement>(null);
+  // phones: a price bar stays in reach while the options scroll, until the real total is on screen
+  const totalRef = useRef<HTMLDivElement>(null);
+  const [totalSeen, setTotalSeen] = useState(false);
+  useEffect(() => {
+    const el = totalRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setTotalSeen(e.isIntersecting), { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   const svg = useRef<SVGSVGElement>(null);
   const fileInput = useRef<HTMLInputElement>(null);
   const motion = useRef<Motion | null>(null);
@@ -219,7 +233,7 @@ export function Pricing({ variant = "home", onQuote }: { variant?: "home" | "quo
     if (uploadedHref) URL.revokeObjectURL(uploadedHref);
   }, [uploadedHref]);
 
-  // "Price these" on a product card preselects that product and shape
+  // "Order these" on a product card preselects that product and shape
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       const a = (e.target as HTMLElement).closest<HTMLElement>("[data-quote-product]");
@@ -314,7 +328,9 @@ export function Pricing({ variant = "home", onQuote }: { variant?: "home" | "quo
   }, [q, art]);
 
   const dims = dimensions(q, art);
-  const price = quotePrice(quantity(q), Math.max(dims.w, dims.h), q.finish);
+  const cur = useCurrency();
+  // bigger costs more, smaller less: a preset by its size, a custom size by its area
+  const price = quotePrice(quantity(q), priceSize(q.shape, dims.w, dims.h), q.finish, cur);
   const fmt = (n: number) => `${Math.round(n * 100) / 100} in`;
   const line = `${summary(q, art)}${q.artwork === "design" ? ", designed for you" : upload ? ", your design" : ""}`;
 
@@ -333,20 +349,19 @@ export function Pricing({ variant = "home", onQuote }: { variant?: "home" | "quo
     report.current = onQuote;
   }, [onQuote]);
   useEffect(() => {
-    report.current?.({ quote: q, summary: line, total: price.total, each: price.each, file: upload?.file ?? null });
-  }, [q, line, price.total, price.each, upload?.file]);
+    report.current?.({ quote: q, summary: line, total: price.total, each: price.each, currency: cur, file: upload?.file ?? null });
+  }, [q, line, price.total, price.each, cur, upload?.file]);
 
   return (
     <section id="pricing" ref={root} aria-labelledby="pricing-title" className="quote">
       <div className="quote-grid">
         <div className="quote-head">
           <h2 id="pricing-title" className="section-title">
-            {variant === "quote" ? "Build it." : "Get your price."}
+            Upload your design.
           </h2>
           <p className="mt-5 max-w-[40ch] text-16 leading-[1.45] md:mt-7 md:text-18">
-            {variant === "quote"
-              ? "Add your artwork, pick a shape, size and quantity, and watch it change. The preview is to scale: every square on the mat is one inch."
-              : "Pick a shape, size and quantity and watch your sticker change. The preview is to scale: every square on the mat is one inch."}
+            Drop in your artwork, pick a shape, size, quantity and finish, and see your price. No design yet? Pick
+            &ldquo;Design it for me&rdquo; and we make it. The preview is to scale: every square on the mat is one inch.
           </p>
         </div>
 
@@ -465,16 +480,17 @@ export function Pricing({ variant = "home", onQuote }: { variant?: "home" | "quo
             </svg>
           </div>
 
-          <div className="quote-total">
+          <div className="quote-total" ref={totalRef}>
             <p className="quote-summary" aria-live="polite">
               {line}
             </p>
             <p className="quote-price" aria-live="polite">
-              {money(price.total)} <span className="quote-cur">CAD</span>
+              {money(price.total, cur)} <span className="quote-cur">{cur.toUpperCase()}</span>
             </p>
             <p className="quote-muted text-14">
-              {money(price.each)} each, free proof included. {SHIPS}.
+              {money(price.each, cur)} each, free proof included. {SHIPS}.
             </p>
+            <ShipTo className="quote-ship" />
             <div className="mt-5 flex flex-wrap items-center gap-x-7 gap-y-3">
               {variant === "home" ? (
                 // to the quote page: the choices in the URL, the file carried across
@@ -483,7 +499,7 @@ export function Pricing({ variant = "home", onQuote }: { variant?: "home" | "quo
                   className="btn btn-primary"
                   onClick={() => carryFile(q.artwork === "upload" ? (upload?.file ?? null) : null)}
                 >
-                  Continue with this quote
+                  Continue to checkout
                   <Arrow />
                 </Link>
               ) : (
@@ -492,13 +508,19 @@ export function Pricing({ variant = "home", onQuote }: { variant?: "home" | "quo
                   className="btn btn-primary"
                   onClick={() => requestAnimationFrame(() => document.getElementById("qf-name")?.focus({ preventScroll: true }))}
                 >
-                  Send this quote
+                  Checkout
                   <Arrow />
                 </a>
               )}
-              <Link href="/#samples" className="text-link">
-                Feel the finishes first
-              </Link>
+              {SAMPLE_KIT_ON ? (
+                <Link href="/#samples" className="text-link">
+                  Feel the finishes first
+                </Link>
+              ) : (
+                <Link href="/how-it-works" className="text-link">
+                  How it works
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -577,11 +599,18 @@ export function Pricing({ variant = "home", onQuote }: { variant?: "home" | "quo
                 )}
               </div>
             ) : (
-              <p className="art-design quote-muted text-14">
-                No file yet? Tell us your idea when you order and a designer draws it for you, with a free proof and
-                changes until you are happy. Design is billed separately from printing. The sticker on the mat is a
-                sample. <Link href="/services/custom-design">How custom design works</Link>
-              </p>
+              <div className="art-design">
+                <p className="art-design-title">We design it for you.</p>
+                <ol className="art-design-steps">
+                  <li>Tell us your idea when you order: what it says, the colours, the feel.</li>
+                  <li>A designer draws it and emails you a proof to approve.</li>
+                  <li>If anything needs changing, we call you and fix it. Nothing prints until you say yes.</li>
+                </ol>
+                <p className="quote-muted text-14">
+                  Design is billed separately from printing. The sticker on the mat is a sample.{" "}
+                  <Link href="/services/custom-design">How custom design works</Link>
+                </p>
+              </div>
             )}
           </Options>
           <Options legend="Shape" name="shape" options={SHAPES} value={q.shape} onChange={(v) => set("shape", v)} icon={(id) => <ShapeIcon shape={id} />} />
@@ -658,6 +687,37 @@ export function Pricing({ variant = "home", onQuote }: { variant?: "home" | "quo
         <p id="quote-note" className="quote-note quote-muted text-14">
           {CURRENCY}, free proof included. {SHIPPING}. {RUSH}.
         </p>
+      </div>
+
+      {/* phones: the live price and the next step, in reach while the options scroll */}
+      <div className="quote-bar" data-hidden={totalSeen || undefined} aria-hidden={totalSeen} inert={totalSeen}>
+        <p className="quote-bar-price">
+          <b>
+            {money(price.total, cur)} <span>{cur.toUpperCase()}</span>
+          </b>
+          <small>
+            {quantity(q).toLocaleString("en-CA")} × {dims.label}, free proof
+          </small>
+        </p>
+        {variant === "home" ? (
+          <Link
+            href={`/quote?${quoteSearch(q)}#send`}
+            className="btn btn-primary quote-bar-cta"
+            onClick={() => carryFile(q.artwork === "upload" ? (upload?.file ?? null) : null)}
+          >
+            Checkout
+            <Arrow />
+          </Link>
+        ) : (
+          <a
+            href="#send"
+            className="btn btn-primary quote-bar-cta"
+            onClick={() => requestAnimationFrame(() => document.getElementById("qf-name")?.focus({ preventScroll: true }))}
+          >
+            Checkout
+            <Arrow />
+          </a>
+        )}
       </div>
     </section>
   );

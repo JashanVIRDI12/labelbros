@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { CURRENCY, SHIPPING } from "@/lib/facts";
 import { Arrow } from "./Arrow";
+import { BuyBar } from "./BuyBar";
 import { Motion } from "./Motion";
+import { SecondAsk } from "@/components/site/SecondAsk";
+import { SAMPLE_KIT_ON } from "@/lib/site";
 
 const COLUMNS = [
   {
@@ -19,11 +22,12 @@ const COLUMNS = [
   {
     title: "Ordering",
     links: [
+      { label: "Shop", href: "/shop" },
       { label: "How it works", href: "/how-it-works" },
       { label: "Custom design", href: "/services/custom-design" },
       { label: "All services", href: "/services" },
-      { label: "Get a quote", href: "/quote" },
-      { label: "Sample kit", href: "/#samples" },
+      { label: "Order now", href: "/quote#pricing" },
+      ...(SAMPLE_KIT_ON ? [{ label: "Sample kit", href: "/#samples" }] : []),
     ],
   },
   {
@@ -45,13 +49,11 @@ export function Footer() {
         <div>
           <h2 className="section-title max-w-[12ch]">Got something to stick?</h2>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link href="/quote" className="btn btn-primary">
-              Get instant pricing
+            <Link href="/quote#pricing" className="btn btn-primary">
+              Upload your design
               <Arrow />
             </Link>
-            <Link href="/#samples" className="btn btn-secondary">
-              Order a sample kit
-            </Link>
+            <SecondAsk />
           </div>
         </div>
         <nav aria-label="Footer" className="footer-nav">
@@ -82,6 +84,7 @@ export function Footer() {
           {CURRENCY}. {SHIPPING}.
         </p>
       </div>
+      <BuyBar />
     </footer>
   );
 }

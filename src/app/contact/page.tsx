@@ -5,18 +5,21 @@ import { PageHero } from "@/components/sheet/PageHero";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { CONTACT } from "@/lib/site";
+import { SAMPLE_KIT_ON } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact · Label Bros",
   description:
-    "Ask Label Bros about a file, a size, a finish or an order. Send a message and a person writes back by email, or get a quote in a minute.",
+    "Ask Label Bros about a file, a size, a finish or an order. Send a message and a person writes back by email, or upload your design and order online in two minutes.",
 };
 
 // the quickest answers, before writing to us
 const SHORTCUTS = [
-  { href: "/quote", title: "Get a quote", body: "Price it, add your artwork and send it in one go." },
+  { href: "/quote#pricing", title: "Order online", body: "Upload your design, see your price and pay in one go." },
   { href: "/how-it-works#faq", title: "Questions, answered", body: "Files, proofs, timing, shipping and reprints." },
-  { href: "/#samples", title: "Order a sample kit", body: "Feel the finishes before you choose." },
+  SAMPLE_KIT_ON
+    ? { href: "/#samples", title: "Order a sample kit", body: "Feel the finishes before you choose." }
+    : { href: "/quote?artwork=design#pricing", title: "We design it", body: "No artwork? Send an idea and our designers draw it." },
   { href: "/services/custom-design", title: "Ask a designer", body: "No artwork yet? We draw it for you." },
 ];
 
@@ -35,7 +38,7 @@ export default function ContactPage() {
           id="contact-title"
           lines={["Talk to", "a person."]}
           lede="A question about a file, a size, a finish or an order? Send it here and a person writes back by email."
-          facts={["Free proof before print", "Proof in 12–24 hours", "Prices in Canadian dollars"]}
+          facts={["Free proof before print", "Proof in 12–24 hours", "CAD in Canada, USD elsewhere"]}
         />
         <section aria-label="Contact us" className="cp">
           <div className="cp-card form-card">

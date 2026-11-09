@@ -1,6 +1,7 @@
 import { Arrow } from "@/components/site/Arrow";
 import { StickerControls } from "./StickerControls";
 import { StickerTable } from "./StickerTable";
+import { SecondAsk } from "@/components/site/SecondAsk";
 
 export function Hero() {
   return (
@@ -25,18 +26,22 @@ export function Hero() {
 
         <div className="mt-[clamp(18px,3.2svh,36px)] flex flex-col gap-5 lg:flex-row lg:items-end lg:gap-[clamp(24px,3vw,56px)]">
           <p data-keepout className="hero-fade max-w-[34ch] text-16 leading-[1.45] md:text-18" style={{ ["--i" as string]: 0 }}>
-            Custom stickers and product labels, cut to any shape. Send your artwork or let our designers make
-            it. You approve a free proof before we print.
+            Custom stickers and product labels, cut to any shape. Upload your design or let us design it. We send a
+            proof to approve and call you if anything needs changing.
           </p>
           <div data-keepout className="hero-fade flex flex-col gap-3 sm:flex-row" style={{ ["--i" as string]: 1 }}>
             <a href="#pricing" className="btn btn-primary">
-              Get instant pricing
+              Upload your design
               <Arrow />
             </a>
-            <a href="#samples" className="btn btn-secondary">
-              Order a sample kit
-            </a>
+            <SecondAsk />
           </div>
+          {/* phones: the three reasons to trust the order, right under the buttons */}
+          <ul data-keepout className="hero-fade hero-trust md:hidden" style={{ ["--i" as string]: 2 }}>
+            <li>Free proof</li>
+            <li>From 10 stickers</li>
+            <li>Ships in 2–4 business days</li>
+          </ul>
           <StickerControls />
         </div>
       </div>

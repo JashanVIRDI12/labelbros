@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
-import { Arrow } from "@/components/site/Arrow";
-import { SAMPLE_KIT, money } from "@/lib/facts";
+import { SAMPLE_KIT } from "@/lib/facts";
+import { Price } from "@/components/site/Price";
+import { KitButton } from "./KitButton";
 import { Motion } from "@/components/site/Motion";
 import { StickerArt } from "@/components/stickers/StickerArt";
 import { stickerRatio } from "@/components/stickers/ratio";
@@ -59,17 +60,15 @@ export function SampleKit() {
       <div className="kit-action">
         <ul className="kit-facts">
           <li>15 sample stickers, in 2, 3 or 4 inches</li>
-          <li>{money(SAMPLE_KIT.price)} for the kit</li>
+          <li>
+            <Price usd={SAMPLE_KIT.usd} /> for the kit
+          </li>
           <li>Ships in 2–4 business days</li>
         </ul>
         <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3">
-          {/* no checkout yet: the kit is ordered through the pricing builder */}
-          <a href="#pricing" className="btn btn-primary">
-            Order a sample kit
-            <Arrow />
-          </a>
+          <KitButton />
           <a href="#pricing" className="text-link">
-            Or get instant pricing
+            Or upload your design
           </a>
         </div>
       </div>

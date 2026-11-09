@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BusinessForm } from "@/components/business/BusinessForm";
 import { BusinessHero } from "@/components/business/BusinessHero";
 import { BusinessKinds } from "@/components/business/BusinessKinds";
 import { FactsPanel } from "@/components/service/FactsPanel";
@@ -32,7 +33,7 @@ const FACTS = {
     ["Quantity", "From 25"],
     ["Proof", "Free, before we print"],
   ] as [string, string][],
-  foot: "Prices depend on size, material and quantity. See yours in the pricing builder.",
+  foot: "Prices depend on size, material and quantity. See yours as you order.",
 };
 
 const FAQS = [
@@ -55,6 +56,7 @@ export default function BusinessPage() {
         <BusinessKinds />
         <FactsPanel id="facts-title" name="Business labels" panel={FACTS} priceHref={price} />
         <Steps />
+        <BusinessForm />
         <Questions id="faq-title" items={FAQS} priceHref={price} />
         <RelatedServices slugs={["roll-labels", "kiss-cut-sheets", "custom-design"]} />
       </main>

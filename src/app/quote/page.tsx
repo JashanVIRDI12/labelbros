@@ -6,9 +6,9 @@ import { Header } from "@/components/site/Header";
 import { PROOF, SHIPS } from "@/lib/facts";
 
 export const metadata: Metadata = {
-  title: "Get a quote · Label Bros",
+  title: "Order custom stickers and labels · Label Bros",
   description:
-    "Price custom stickers and labels in Canadian dollars as you build them, then send the quote with your artwork, or ask us to design it. Free proof in 12–24 hours.",
+    "Upload your design, pick a shape, size and finish, see your price and pay (CAD in Canada, USD everywhere else). Free proof in 12–24 hours before anything prints.",
 };
 
 export default function QuotePage() {
@@ -18,9 +18,9 @@ export default function QuotePage() {
       <main id="main">
         <PageHero
           id="quote-title"
-          lines={["Get your", "quote."]}
-          lede="Build it and see the price as you go, in Canadian dollars. Then send it to us with your artwork, or ask us to design it."
-          facts={[PROOF, "Prices in Canadian dollars", SHIPS]}
+          lines={["Upload.", "Pay. Done."]}
+          lede="Upload your design, pick a shape, size and finish, and pay. We check your artwork and email a free proof before anything prints. No file? We design it for you."
+          facts={[PROOF, "CAD in Canada, USD elsewhere", SHIPS]}
         />
         <QuoteFlow />
       </main>

@@ -1,13 +1,15 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { orderLabel } from "@/components/sheet/quote";
 import { Arrow } from "@/components/site/Arrow";
+import { SecondAsk } from "@/components/site/SecondAsk";
 
 type Props = {
   id: string;
   /** the H1, one string per line (lines wrap on phones) */
   lines: [string, string];
   lede: string;
-  /** where "Get instant pricing" goes; leave it out on pages that are themselves the ask */
+  /** where "Upload your design" goes; leave it out on pages that are themselves the ask */
   priceHref?: string;
   facts: ReactNode[];
 };
@@ -35,12 +37,10 @@ export function PageHero({ id, lines, lede, priceHref, facts }: Props) {
         {priceHref && (
           <div className="hero-fade flex flex-col gap-3 sm:flex-row" style={{ ["--i" as string]: 1 }}>
             <Link href={priceHref} className="btn btn-primary">
-              Get instant pricing
+              {orderLabel(priceHref)}
               <Arrow />
             </Link>
-            <Link href="/#samples" className="btn btn-secondary">
-              Order a sample kit
-            </Link>
+            <SecondAsk />
           </div>
         )}
         <ul className="hero-fade sh-facts" style={{ ["--i" as string]: 2 }}>

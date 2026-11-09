@@ -1,5 +1,71 @@
 # Progress
 
+## 2026-11-09 (late): a shop, Sticker Bros style
+
+**Why.** The client asked for e-commerce like stickerbros.com (product pages with finish, upload, notes, quantity and Add to cart; all their products at their prices in CAD), keeping the design language.
+
+**Built.** `src/lib/products.ts`: the catalogue in one file, read by the pages, the cart and the server. Five deal packs from Sticker Bros' published deals (50 × 3 in $29 from the client's screenshot; the other four from search snapshots, to be checked against their site) and six build-your-own products priced by the builder's model. `/shop` (packs, then build your own), `/shop/[slug]` (picture left; name, price with the regular price struck, finish, size and quantity, upload or "Design it for me", notes, packs, Add to cart / Buy now; what's included, how ordering works, more products; Product structured data), a cart in the browser (lines in localStorage, artwork in IndexedDB) with a bag and count in the header and a drawer, `/cart` (lines, name, email, phone, ship-to, total, Pay) and `POST /api/checkout` (every line checked and priced on the server, one order with all lines and their files, one Stripe Checkout with a line each). Product pictures drawn from our sample stickers on house-colour cards with a "Save" burst and price tag. Home: "Shop the packs" under the hero (a yellow trust strip, the packs, build-your-own chips). Header: Shop first, the bag, "Order now" → /shop. Admin: shop orders listed item by item; emails carry every item and every file. The thank-you page empties the cart.
+
+**Verified.** tsc, lint, build (product pages prerendered). A whole cart paid in Stripe test mode on a local database: two lines (one with an uploaded file, one "design it for me"), "Pay $204 CAD", Stripe showed both lines, the order saved as paid with both items, the file and the address; the cart emptied; the admin shows both items and the board says "2 items". Phone: no sideways scrolling.
+
+**Added later the same night.** Embossed stickers and embossed labels (Sticker Bros: from $78.32 for 50 × 3 in → $108 CAD), glitter stickers (from $68.50), and clear, chrome, kiss-cut, bumper (long rectangles, 8–12 in), reflective and QR code stickers, whose prices are NOT yet confirmed against Sticker Bros (`priceToConfirm` in products.ts; clear priced as vinyl, chrome and reflective as foil, in facts.ts). New finishes: glitter, embossed, clear, chrome, reflective (the server accepts exactly `FINISH_IDS`). Product pictures show the material (raised, sparkle, see-through, mirror); headlines size themselves to fit. 20 products in all.
+
+**Next.** Sticker Bros' full catalogue (their site refused automated reads): add the rest to `products.ts` once the client pastes it, and confirm whether to sell banners, magnets and signs.
+
+## 2026-11-09 (night): sample kit off for now
+
+**Why.** The client asked to remove the sample kit for now.
+
+**Changed.** One switch, `SAMPLE_KIT_ON = false` in `src/lib/site.ts`. Off: the homepage section is not rendered, its checkout (`/api/sample-kit`) answers 404, the order bar has just "Upload your design", and every "Order a sample kit" second button became "We design it" (`site/SecondAsk.tsx`, opens the builder on "Design it for me"). The "Feel them first" cells on the stickers and labels pages became "We design it"; the samples FAQ is hidden; footer, contact, builder, journey and service FAQs no longer mention it. The kit's code, admin section and orders stay; set the switch to true to bring it all back.
+
+**Verified.** tsc, lint; 11 pages scanned in the browser with no mention of the kit or links to it; the kit checkout returns 404.
+
+## 2026-11-09 (evening): phones, built to convert
+
+**Why.** The client found the site poor on phones and asked for it beautiful and conversion-worthy.
+
+**Found.** Scrolling the homepage at 390 × 844: 22 screens (16,433 px), 13 of them three pinned scroll sections (peel-off pad, labels shelf, proof) where the same heading sat for 4–5 screens and the page curl covered it; no order button in reach for ~15 screens (the header doesn't stick); the builder's price below every option; tall gaps between sections everywhere.
+
+**Built (phones under 768 px; tablets and desktops unchanged).** A sticky order bar ("Upload your design" + "Sample kit", `site/BuyBar.tsx`) that slides up after the first screen and steps aside over the builder, the order form and the footer's buttons. A live price bar in the builder (price, quantity × size, "Checkout") until the real total is on screen. Products as a swipeable row (scroll-snap, next card peeking, "Swipe for more"); the labels shelf as its still two-column grid; the proof plays by itself once in view (~6 s), steps opening as it goes. Section spacing as shared values that tighten on phones (`--sy`, `--sy-sm`, `--sy-svc`); a trust line under the hero buttons; a shorter footer; the last "Price …" links on the stickers and labels pages now say "Order …".
+
+**Verified.** tsc, lint, build. Phone captures of home, order page, stickers, labels, business, how it works, a service page: homepage 22 → 12 screens (9,006 px), no sideways scrolling, no page errors; the swipe row snaps card to card; desktop keeps the pinned sections (products 4,266 px, labels 3,915 px, proof 3,594 px).
+
+## 2026-11-09 (later): buy now, we design it, we call you
+
+**Why.** The client asked for "Get instant pricing" to become buy-now wording everywhere ("upload your design and pay"), for "we design it for you" to be a clear option, and for the promise that we send a proof to approve and call if the design needs changes.
+
+**Built.** Every "Get instant pricing" became "Upload your design" (header: "Order now"); product links now land on the builder's upload area (`quoteHref` adds `#pricing`). Builder: "Upload your design.", "Continue to checkout" / "Checkout"; choosing "Design it for me" shows how it works (tell us your idea, a designer draws it and sends a proof, we call if anything needs changing). Order page: "Upload. Pay. Done." and "Pay and we start."; phone is now required ("We call if your design needs changes"), and a design order asks for "Your idea" (checked on the server too). Links that open the builder on design say "Start your design" (`orderLabel`), e.g. the custom design page; the homepage's process section links "No design? We make it". The promise (`APPROVAL`, `CALL` in facts.ts) is in the hero, process, steps, FAQ, the thank-you page and the confirmation email. Admin: a Call button on every job, and a "We design it" flag on design jobs.
+
+**Verified.** tsc and lint pass; in the browser at 1440 and 390 the design panel, the order form's phone and idea errors, the custom design page's "Start your design" link, and the server refusing an order without a phone or a design order without an idea.
+
+## 2026-11-09: the back office, redesigned
+
+**Why.** The client found the admin plain and asked for a more specialised, sectioned, world-class back office.
+
+**Built.** A press-blue sidebar with sections (Overview; Production: Orders, Sample kits; Sales: Quotes, Business leads, Messages; Everything) and a yellow count of what is waiting in each; search in the top bar; setup progress at the foot. Overview: money this month per currency, proofs to send, in production (late jobs in red), new enquiries, the production line as labels along a roll, paid orders per day for 30 days (single series, hover tooltips, a screen-reader table), "Needs you" and an activity feed. Orders: a production board (Send proof → Proof sent → Approved → Printing → Shipped), each job a ticket with its sticker drawn in shape and finish and a tear-off "next step" button; a list view with status filters. Quotes, leads, messages and kits: lists with their own columns. A job's page: stepper with the next step one click away, the job ticket (sticker on its cutting mat, every spec), the customer's message, artwork, shop notes, customer, payment and address, history. Narrow screens: sections across the top, tiles two to a row, the line runs down. Code: `src/app/admin/ui.tsx` (shell and pieces), one folder per section, `overview()` and next-step rules in `src/server/inbox.ts`.
+
+**Verified.** tsc, lint, build. Against a local database seeded with 36 realistic jobs: every section at 1440 × 900 and 390 × 844, one job of each kind, the board's one-click next step (Send proof 4 → 3); no console errors and no sideways scrolling at either width.
+
+## 2026-11-08 (later): Sticker Bros prices, CAD in Canada, USD everywhere else
+
+**Why.** The client asked for Sticker Bros' prices on everything, in CAD for Canada and USD for the US and other countries.
+
+**Built.** Prices are now kept in US dollars (`src/lib/facts.ts`): Sticker Bros' listed prices (`LISTED_USD`) are used exactly, the fitted model fills the rest, and CAD is USD × `CAD_PER_USD`. The visitor's currency comes from their location on the first visit (proxy, Vercel/Cloudflare headers; no location: CAD) and a "Shipping to: Canada · CAD / Elsewhere · USD" switch under the builder's price; every price on the site follows it (builder, quote ticket, pay button, product cards, sticker and label pages, sample kit). Server prices, Stripe Checkout, emails and the admin use the order's currency; CAD orders ship to Canada only (free over $100 CAD), USD orders everywhere else Stripe ships (`SHIP_COUNTRIES_USD` narrows it), each with its own shipping rate.
+
+**Verified.** tsc, lint, build. End to end on the production build: 32 checks pass (new: a USD order is saved at Sticker Bros' USD price, $89.69 for 100 × 3 in; an unknown currency falls back to CAD; US and UK visitors get USD, Canada and unknown get CAD, a visitor's own choice is kept). In the browser at 1440 and 390: switching to USD changes the builder ($123.77 CAD → $89.69 USD), the quote ticket, the pay button and the stickers page; a US visitor sees "From $60.75 USD" and "$5.00 USD for the kit"; no console errors.
+
+**Not done.** Sticker Bros' full price table: stickerbros.com refused automated requests (HTTP 429), so only the prices already known are listed exactly (50 × 3 in $60.75, 250 × 3 in $150, 200 × 4 in $178, holographic 50 × 3 in $68.50). Add the rest to `LISTED_USD`.
+
+## 2026-11-08: backend, payments, business enquiry form, admin
+
+**Why.** The client asked for a backend with a payment gateway, plus a contact form on the business page with its own backend: easy to use and secure. Decisions (client, 2026-11-08): Stripe; pay at checkout, free proof after; Postgres plus an admin inbox; hosting on GoDaddy cPanel or Vercel, so nothing host-specific.
+
+**Built.** Server code in `src/server/` (settings, Postgres via postgres.js with tables made on first use, inbox with statuses and history, Stripe Checkout, SMTP email, admin sign-in, rate limits, form checks and server-side prices). Endpoints: `/api/orders` (pay or send as a quote, artwork up to 4 MB), `/api/sample-kit`, `/api/messages` (contact and business), `/api/stripe/webhook`. `/order/thanks` after paying. `/admin`: To do / per-kind inbox, search, order page (customer, payment and shipping, details, artwork download, status, notes, history), setup checklist. The quote page's form now ends in "Pay $X and order" with "Or send it as a quote first"; the sample kit button goes to checkout; the contact form uses the backend. `/business` gets "Tell us what you label.": label kinds, volume and frequency as chips, and our sample asset tag prints the visitor's company name as they type. EmailJS removed. Security headers, robots rules, `.env*` ignored. Setup guide: `reference/BACKEND.md`; settings: `.env.example`.
+
+**Verified.** tsc, lint and build pass (marketing pages still static). End to end against a local Postgres (PGlite) and an SMTP sink: 25 checks pass (forms saved; bad input, header injection, other-site posts, honeypot, too-fast sends and the 6th message in 10 minutes refused; quote saved with its file; the server's price kept when the browser sent $0.01; webhook signature checked, event handled once, order marked paid with its address; thank-you page shown only for the right session; admin, artwork downloads and forged cookies turned away), plus emails to the shop (artwork attached) and the paid customer, and sign-in rate limiting. Screenshots at 1440 × 900 and 390 × 844 of the business form (empty, errors, sent), quote form, cancelled checkout, thank-you page and admin (sign-in, error, inbox, order, after a status change and notes); no console errors. Not yet run against live Stripe (needs the shop's test keys).
+
+**Next.** The shop's Neon, Stripe and SMTP settings; decide shipping under $100 and GST/HST (Stripe Tax); a test order in Stripe test mode, then live keys.
+
 ## 2026-11-05: the whole site, checked and tuned for phones
 
 **Why.** The client asked for the whole website to be checked and made mobile-optimised.

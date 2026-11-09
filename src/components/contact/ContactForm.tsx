@@ -1,42 +1,34 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { Arrow } from "@/components/site/Arrow";
-import { Field, Honeypot, EMAIL, describedBy } from "@/components/forms/Field";
-import { NotConnected, canSend, sendEmail } from "@/lib/emailjs";
-import { CONTACT } from "@/lib/site";
+import { Field, FormAlert, Honeypot, EMAIL, describedBy, type Status } from "@/components/forms/Field";
+import { send } from "@/lib/api";
+import { CONTACT_TOPICS as TOPICS, type ContactTopic as Topic } from "@/lib/forms";
 
 /*
  * The contact form, kept short: what it is about (a quote points to the quote page, the
- * quickest way), name, email, the message. Sent by EmailJS; without it set up it says so.
+ * quickest way), name, email, the message. Saved and emailed to the shop by /api/messages;
+ * without the backend set up it says so.
  */
-
-const TOPICS = [
-  { id: "quote", label: "A quote" },
-  { id: "artwork", label: "My artwork" },
-  { id: "order", label: "An order" },
-  { id: "other", label: "Something else" },
-] as const;
-type Topic = (typeof TOPICS)[number]["id"];
-
-type Status = "idle" | "sending" | "sent" | "error" | "offline";
 
 export function ContactForm() {
   const [topic, setTopic] = useState<Topic>("artwork");
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState<{ name: string; email: string } | null>(null);
+  // when they started filling it in (a form sent within seconds of that is a bot)
+  const started = useRef(0);
+  const start = () => {
+    if (!started.current) started.current = Date.now();
+  };
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
     const v = (k: string) => String(data.get(k) ?? "").trim();
-    if (v("website")) {
-      setStatus("sent");
-      return;
-    }
     const errs: Record<string, string> = {};
     if (!v("name")) errs.name = "Tell us your name.";
     if (!EMAIL.test(v("email"))) errs.email = "We need your email to write back.";
@@ -47,26 +39,25 @@ export function ContactForm() {
       form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
       return;
     }
-    if (!canSend("contact")) {
-      setStatus("offline");
-      return;
-    }
     setStatus("sending");
-    try {
-      await sendEmail("contact", {
-        topic: TOPICS.find((t) => t.id === topic)!.label,
-        name: v("name"),
-        email: v("email"),
-        reply_to: v("email"),
-        order: v("order") || "none",
-        message: v("message"),
-        page: window.location.href,
-      });
+    const res = await send("/api/messages", {
+      kind: "contact",
+      topic,
+      name: v("name"),
+      email: v("email"),
+      order: v("order"),
+      message: v("message"),
+      website: v("website"),
+      t: started.current,
+      page: window.location.pathname,
+    });
+    if (res.ok) {
       setSent({ name: v("name"), email: v("email") });
       setStatus("sent");
-    } catch (err) {
-      setStatus(err instanceof NotConnected ? "offline" : "error");
+      return;
     }
+    if (res.fields) setErrors(res.fields);
+    setStatus(res.reason);
   }
 
   if (status === "sent")
@@ -78,8 +69,8 @@ export function ContactForm() {
         <p className="sent-title">Thanks{sent ? `, ${sent.name.split(" ")[0]}` : ""}.</p>
         <p className="sent-body">Your message is with us. We write back by email{sent ? ` to ${sent.email}` : ""}.</p>
         <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3">
-          <Link href="/quote" className="btn btn-primary">
-            Get a quote
+          <Link href="/quote#pricing" className="btn btn-primary">
+            Order online
             <Arrow />
           </Link>
           <Link href="/how-it-works#faq" className="text-link">
@@ -90,7 +81,7 @@ export function ContactForm() {
     );
 
   return (
-    <form noValidate onSubmit={onSubmit}>
+    <form noValidate onSubmit={onSubmit} onFocus={start}>
       <fieldset className="quote-field">
         <legend>What is it about?</legend>
         <div className="chips">
@@ -105,8 +96,8 @@ export function ContactForm() {
 
       {topic === "quote" && (
         <p className="form-tip">
-          Quickest: price it yourself, upload your artwork and send it in one go.{" "}
-          <Link href="/quote">Get a quote</Link>
+          Quickest: upload your design, see your price and order in one go.{" "}
+          <Link href="/quote#pricing">Order online</Link>
         </p>
       )}
 
@@ -132,22 +123,7 @@ export function ContactForm() {
       </div>
       <Honeypot />
 
-      {status === "offline" && (
-        <p className="form-alert" role="alert">
-          We can&apos;t send messages from the site yet.
-          {CONTACT.email && (
-            <>
-              {" "}
-              Email us at <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
-            </>
-          )}
-        </p>
-      )}
-      {status === "error" && (
-        <p className="form-alert" role="alert">
-          That didn&apos;t go through. Check your connection and try again.
-        </p>
-      )}
+      <FormAlert status={status} />
 
       <div className="form-foot">
         <button type="submit" className="btn btn-primary" disabled={status === "sending"}>

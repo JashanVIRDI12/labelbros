@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { orderLabel } from "@/components/sheet/quote";
 import { Ph } from "@/components/service/Ph";
 import { Arrow } from "@/components/site/Arrow";
+import { SecondAsk } from "@/components/site/SecondAsk";
 
 type Props = {
   id: string;
@@ -18,15 +20,13 @@ export function Questions({ id, title = "Questions, answered.", lede, items, pri
         <h2 id={id} className="section-title">
           {title}
         </h2>
-        <p className="faq-lede">{lede ?? "Still not sure? Feel the finishes first, or see your price in a minute."}</p>
+        <p className="faq-lede">{lede ?? "Still not sure? Upload your design and see your price in a minute, or let us design it for you."}</p>
         <div className="faq-ctas">
           <Link href={priceHref} className="btn btn-primary">
-            Get instant pricing
+            {orderLabel(priceHref)}
             <Arrow />
           </Link>
-          <Link href="/#samples" className="btn btn-secondary">
-            Order a sample kit
-          </Link>
+          <SecondAsk />
         </div>
       </div>
       <div className="faq-list">

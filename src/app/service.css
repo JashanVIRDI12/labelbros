@@ -280,7 +280,7 @@
 .ov {
   display: grid;
   gap: 48px;
-  padding: clamp(64px, 10svh, 130px) var(--gutter);
+  padding: var(--sy-svc) var(--gutter);
   border-top: 1.5px solid rgba(201, 209, 255, 0.22);
 }
 .ov-title {
@@ -413,7 +413,7 @@
 /* ---------- Finishes ---------- */
 
 .fin {
-  padding: clamp(56px, 9svh, 120px) var(--gutter);
+  padding: var(--sy-svc) var(--gutter);
 }
 .fin-list {
   display: grid;
@@ -500,7 +500,7 @@
 /* ---------- Where it goes ---------- */
 
 .uses {
-  padding: clamp(56px, 9svh, 120px) var(--gutter);
+  padding: var(--sy-svc) var(--gutter);
   overflow-x: clip;
 }
 .uses-list {
@@ -574,7 +574,7 @@
 /* ---------- How ordering works ---------- */
 
 .steps {
-  padding: clamp(56px, 9svh, 120px) var(--gutter);
+  padding: var(--sy-svc) var(--gutter);
 }
 .steps-head {
   display: flex;
@@ -668,7 +668,7 @@
 /* ---------- Business: every kind of label ---------- */
 
 .kinds {
-  padding: clamp(64px, 10svh, 130px) var(--gutter);
+  padding: var(--sy-svc) var(--gutter);
   border-top: 1.5px solid rgba(201, 209, 255, 0.22);
 }
 .kinds-head {
@@ -766,7 +766,7 @@
   display: grid;
   gap: 48px;
   align-items: center;
-  padding: clamp(60px, 10svh, 130px) var(--gutter);
+  padding: var(--sy-svc) var(--gutter);
 }
 .facts-lede {
   max-width: 38ch;
@@ -896,7 +896,7 @@
 /* ---------- More we print ---------- */
 
 .more {
-  padding: clamp(60px, 10svh, 130px) var(--gutter) clamp(80px, 12svh, 150px);
+  padding: var(--sy-svc) var(--gutter) var(--sy);
 }
 .more-list {
   display: grid;

@@ -1,12 +1,15 @@
 import type { CSSProperties } from "react";
 import { Cell } from "@/components/sheet/Cell";
 import Link from "next/link";
-import { FROM, money } from "@/lib/facts";
+import { FROM_USD } from "@/lib/facts";
+import { Price } from "@/components/site/Price";
 import { Arrow } from "@/components/site/Arrow";
 import { Motion } from "@/components/site/Motion";
 import { maskOf, quoteHref } from "./art";
 import { SizeCell } from "./SizeCell";
 import { Sticker } from "./Sticker";
+import { SAMPLE_KIT_ON } from "@/lib/site";
+import { DESIGN_HREF } from "@/components/site/SecondAsk";
 
 /*
  * The stickers page as one kiss-cut sheet: every cell of the grid is a sticker on the sheet's
@@ -40,7 +43,7 @@ export function StickerSheet() {
               </p>
             </div>
             <Link href={quoteHref({ shape: "die-cut" })} className="text-link cell-link">
-              Price die-cut stickers
+              Order die-cut stickers
               <Arrow />
             </Link>
             <div className="cell-art" data-art aria-hidden="true">
@@ -60,7 +63,7 @@ export function StickerSheet() {
               <p className="cell-text">Foil that changes colour as it moves. Glitter that catches the light.</p>
             </div>
             <Link href={quoteHref({ finish: "holo" })} className="text-link cell-link">
-              Price holographic
+              Order holographic
               <Arrow />
             </Link>
             <div className="cell-art" data-art aria-hidden="true">
@@ -81,7 +84,7 @@ export function StickerSheet() {
               <p className="cell-text">Kraft or vinyl seals that close boxes, bags and mailers.</p>
             </div>
             <Link href={quoteHref({ shape: "circle" })} className="text-link cell-link">
-              Price seals
+              Order seals
               <Arrow />
             </Link>
             <div className="cell-art" data-art aria-hidden="true">
@@ -99,7 +102,7 @@ export function StickerSheet() {
               </p>
             </div>
             <Link href={quoteHref({ finish: "matte" })} className="text-link cell-link">
-              Pick your finish
+              Order in your finish
               <Arrow />
             </Link>
             <div className="cell-art" data-art aria-hidden="true">
@@ -171,7 +174,9 @@ export function StickerSheet() {
           </Cell>
 
           <Cell area="kit" tone="ink">
-            <div className="cell-copy">
+            {SAMPLE_KIT_ON ? (
+              <>
+                <div className="cell-copy">
               <h3 className="cell-title">Feel them first</h3>
               <p className="cell-text">A pack of real stickers and labels, sent to your door.</p>
             </div>
@@ -179,7 +184,7 @@ export function StickerSheet() {
               Order a sample kit
               <Arrow />
             </Link>
-            <div className="cell-art" aria-hidden="true">
+                <div className="cell-art" aria-hidden="true">
               <div className="mini-kit">
                 <span className="mini-kit-back" />
                 <Sticker id="hop-scotch" className="mini-kit-a" />
@@ -188,24 +193,37 @@ export function StickerSheet() {
                 <span className="mini-kit-front" />
               </div>
             </div>
+              </>
+            ) : (
+              <>
+                <div className="cell-copy">
+                  <h3 className="cell-title">We design it</h3>
+                  <p className="cell-text">No artwork? Send an idea and our designers draw it. You approve a proof, and we call if anything needs changing.</p>
+                </div>
+                <Link href={DESIGN_HREF} className="text-link cell-link">
+                  Start your design
+                  <Arrow />
+                </Link>
+              </>
+            )}
           </Cell>
 
           {/* ---------------------------------------------------------------- do it */}
           <Cell area="price" tone="signal">
-            <h3 className="cell-title price-title">Price your stickers</h3>
+            <h3 className="cell-title price-title">Order your stickers</h3>
             {/* a price label stuck on the yellow: what the click gives you */}
             <p className="price-ticket">
               <span className="price-ticket-what">Die-cut stickers</span>
               <span className="price-ticket-spec">Your shape, size and finish. Free proof included.</span>
               <span className="price-ticket-price">
-                From <span className="price-amount">{money(FROM.dieCut)}</span>
+                From <span className="price-amount"><Price usd={FROM_USD.dieCut} /></span>
               </span>
             </p>
             <div className="price-foot">
-              <p className="cell-text">Pick a shape, size, quantity and finish and see your price straight away.</p>
+              <p className="cell-text">Upload your design, pick a shape, size and finish, and pay. Free proof before we print.</p>
               {/* the whole yellow sticker is this link (its ::after covers the cell) */}
               <Link href={quoteHref()} className="price-cta">
-                Get instant pricing
+                Upload and order
                 <Arrow />
               </Link>
             </div>

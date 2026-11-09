@@ -6,6 +6,7 @@ import { Products } from "@/components/sections/Products";
 import { SampleKit } from "@/components/sections/SampleKit";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
+import { SAMPLE_KIT_ON } from "@/lib/site";
 
 export default function Home() {
   return (
@@ -17,7 +18,7 @@ export default function Home() {
         <Labels />
         <Process />
         <Pricing />
-        <SampleKit />
+        {SAMPLE_KIT_ON && <SampleKit />}
       </main>
       <Footer />
     </>

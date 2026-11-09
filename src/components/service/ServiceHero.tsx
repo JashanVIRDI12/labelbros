@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { quoteHref } from "@/components/sheet/quote";
+import { quoteHref, orderLabel } from "@/components/sheet/quote";
 import { Arrow } from "@/components/site/Arrow";
 import { Crumbs } from "./Crumbs";
 import { HeroArt } from "./HeroArt";
 import { Ph } from "./Ph";
 import type { Service } from "./services";
+import { SecondAsk } from "@/components/site/SecondAsk";
 
 /* A service page's first screen: where it sits, what it is (the H1 names it), both asks, the product. */
 export function ServiceHero({ service }: { service: Service }) {
@@ -25,12 +26,10 @@ export function ServiceHero({ service }: { service: Service }) {
         </p>
         <div className="hero-fade svc-ctas" style={{ ["--i" as string]: 1 }}>
           <Link href={quoteHref(product, params)} className="btn btn-primary">
-            Get instant pricing
+            {orderLabel(quoteHref(product, params))}
             <Arrow />
           </Link>
-          <Link href="/#samples" className="btn btn-secondary">
-            Order a sample kit
-          </Link>
+          <SecondAsk />
         </div>
         <ul className="hero-fade svc-facts" style={{ ["--i" as string]: 2 }}>
           {service.facts.map((f) => (

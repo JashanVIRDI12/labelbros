@@ -17,7 +17,7 @@ export type ServiceSlug =
   | "custom-design";
 
 export type Art = { src: string; w: number; h: number };
-type QuoteParams = { product: "stickers" | "labels"; shape?: string; finish?: string };
+type QuoteParams = { product: "stickers" | "labels"; shape?: string; finish?: string; artwork?: "upload" | "design" };
 
 /** A piece of hero art: centre (x, y) and width as % of the hero's art box, turn in degrees. */
 export type Placed = { art: Art; alt: string; x: number; y: number; w: number; r: number };
@@ -113,12 +113,12 @@ export const SERVICES: Service[] = [
         ["Proof", "Free, before we print"],
         ["Turnaround", "2–4 business days after proof approval"],
       ],
-      foot: "Prices depend on size, quantity and finish. See yours in the pricing builder.",
+      foot: "Prices depend on size, quantity and finish. See yours as you order.",
     },
     faqs: [
       { q: "What does die-cut mean?", a: "The sticker is cut right round your design, so its edge follows the shape of your art instead of a square or a circle." },
       { q: "Can it be any shape?", a: "Yes, as long as the outline is one piece. We draw the cut line for you and you see it on your proof." },
-      { q: "Gloss or matte?", a: "Gloss makes colours look brighter and catches the light. Matte is softer and has no glare. Order a sample kit to see both." },
+      { q: "Gloss or matte?", a: "Gloss makes colours look brighter and catches the light. Matte is softer and has no glare. You see your choice on your free proof before anything prints." },
       { q: "Will they survive water and sun?", a: "Yes. The vinyl is laminated, which makes it waterproof, scratch-resistant and UV-resistant, with an outdoor life of 4 years or more. Hand washing keeps them looking new for longest." },
       { q: "How small can the details be?", a: "Keep each sticker at least 1 inch across. Our designers check every file before it prints and tell you on your proof if any line or text is too fine to cut cleanly." },
     ],
@@ -177,12 +177,12 @@ export const SERVICES: Service[] = [
         ["Proof", "Free, before we print"],
         ["Turnaround", "2–4 business days after proof approval"],
       ],
-      foot: "Prices depend on size, quantity and finish. See yours in the pricing builder.",
+      foot: "Prices depend on size, quantity and finish. See yours as you order.",
     },
     faqs: [
       { q: "How does the foil show through?", a: "We print your artwork on top of the foil. Anywhere we leave out ink, the foil shines through, so you choose which parts of the design shine." },
       { q: "Can part of the design be holographic?", a: "Yes. Tell us which parts should shine and we set that up in the file. You see it on your proof." },
-      { q: "Holographic or glitter?", a: "Holographic shifts through the rainbow as it moves. Glitter sparkles in points of light. The sample kit has both." },
+      { q: "Holographic or glitter?", a: "Holographic shifts through the rainbow as it moves. Glitter sparkles in points of light. Pick either in the builder and see it on your proof." },
       { q: "Does the glitter come off?", a: "No. The glitter film is sealed under a clear laminate that also screens out UV light, so it stays put and keeps its sparkle outdoors." },
     ],
     related: ["die-cut-stickers", "kiss-cut-sheets", "packaging-seals"],
@@ -243,7 +243,7 @@ export const SERVICES: Service[] = [
         ["Proof", "Free, before we print"],
         ["Turnaround", "2–4 business days after proof approval"],
       ],
-      foot: "Prices depend on sheet size, quantity and finish. See yours in the pricing builder.",
+      foot: "Prices depend on sheet size, quantity and finish. See yours as you order.",
     },
     faqs: [
       { q: "What is kiss-cut?", a: "The blade cuts through the sticker but not through the backing. Each sticker peels off on its own while the sheet stays in one piece." },
@@ -307,7 +307,7 @@ export const SERVICES: Service[] = [
         ["Quantity", "From 25"],
         ["Proof", "Free, before we print"],
       ],
-      foot: "Prices depend on size, stock and quantity. See yours in the pricing builder.",
+      foot: "Prices depend on size, stock and quantity. See yours as you order.",
     },
     faqs: [
       { q: "Will the rolls fit my labelling machine?", a: "Tell us your machine's core size and wind direction when you order, and we wind the rolls to match." },
@@ -365,7 +365,7 @@ export const SERVICES: Service[] = [
         ["Proof", "Free, before we print"],
         ["Turnaround", "2–4 business days after proof approval"],
       ],
-      foot: "Prices depend on size, quantity and material. See yours in the pricing builder.",
+      foot: "Prices depend on size, quantity and material. See yours as you order.",
     },
     faqs: [
       { q: "Will they hold a box shut?", a: "Yes. Seals use a permanent adhesive made to stay put on card, paper and plastic mailers. For heavy boxes, use a bigger seal or two." },
@@ -379,11 +379,11 @@ export const SERVICES: Service[] = [
     name: "Custom design",
     short: "No artwork? Our designers draw it, cut line and all.",
     h1: ["Sticker and", "label design."],
-    lede: "No artwork? Send a sketch, a photo or a few words and our designers draw your sticker or label, cut line and all. You see a free proof before anything prints.",
+    lede: "No artwork? Send a sketch, a photo or a few words and our designers draw your sticker or label, cut line and all. We email a proof to approve and call you if anything needs changing.",
     description:
       "Custom sticker and label design: send a sketch, a photo or an idea and our designers make print-ready artwork, cut line and all. Free proof before we print.",
-    facts: ["Free proof before print", "Changes until you are happy", "Design billed separately from printing"],
-    quote: { product: "stickers", shape: "die-cut" },
+    facts: ["Free proof before print", "We call to talk through changes", "Design billed separately from printing"],
+    quote: { product: "stickers", shape: "die-cut", artwork: "design" },
     hero: {
       kind: "ink",
       art: [

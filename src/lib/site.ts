@@ -14,3 +14,9 @@ export const CONTACT = {
   phone: "", // as it should be written, e.g. "604 555 0100"
   city: "", // e.g. "Vancouver, BC"
 };
+
+/*
+ * The sample kit is switched off for now (client, 2026-11-09): its section, buttons and links are
+ * hidden and its checkout is closed. Set this to true to bring it all back.
+ */
+export const SAMPLE_KIT_ON = true;

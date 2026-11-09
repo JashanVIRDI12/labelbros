@@ -3,6 +3,7 @@ import { Crumbs } from "@/components/service/Crumbs";
 import { quoteHref } from "@/components/sheet/quote";
 import { Arrow } from "@/components/site/Arrow";
 import { Asset, Inspection, Warning } from "./labels";
+import { SecondAsk } from "@/components/site/SecondAsk";
 
 /*
  * Business labels, first screen: the H1 names it, both asks, and three labels fanned out that
@@ -30,12 +31,10 @@ export function BusinessHero() {
         </p>
         <div className="hero-fade svc-ctas" style={{ ["--i" as string]: 1 }}>
           <Link href={quoteHref("labels", { shape: "rectangle" })} className="btn btn-primary">
-            Get instant pricing
+            Upload your design
             <Arrow />
           </Link>
-          <Link href="/#samples" className="btn btn-secondary">
-            Order a sample kit
-          </Link>
+          <SecondAsk />
         </div>
         <ul className="hero-fade svc-facts" style={{ ["--i" as string]: 2 }}>
           <li>Free proof before print</li>

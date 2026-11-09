@@ -94,7 +94,7 @@ export function Labels() {
               <p className="shelf-you-title">Your product next.</p>
               <span className="shelf-you-move" data-you-move>
                 <a href="#pricing" className="btn btn-primary" data-quote-product="labels" data-quote-shape="rectangle">
-                  Price your labels
+                  Order your labels
                   <Arrow />
                 </a>
               </span>

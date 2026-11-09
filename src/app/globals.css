@@ -2,6 +2,7 @@
 @import "./service.css";
 @import "./business.css";
 @import "./forms.css";
+@import "./shop.css";
 
 /*
  * Label Bros: "Sticker table".
@@ -42,7 +43,18 @@
 
 :root {
   --gutter: clamp(16px, 2.6vw, 44px);
+  /* space above and below a section: roomy on big screens, tighter on phones */
+  --sy: clamp(80px, 12svh, 150px);
+  --sy-sm: clamp(56px, 9svh, 110px);
+  --sy-svc: clamp(60px, 10svh, 130px);
   color-scheme: light;
+}
+@media (max-width: 767px) {
+  :root {
+    --sy: 64px;
+    --sy-sm: 44px;
+    --sy-svc: 52px;
+  }
 }
 
 html {
@@ -482,7 +494,7 @@ body {
 .deck-stage {
   display: grid;
   gap: 40px;
-  padding: clamp(80px, 12svh, 150px) var(--gutter) clamp(56px, 9svh, 110px);
+  padding: var(--sy) var(--gutter) var(--sy-sm);
 }
 .deck-pile {
   display: grid;
@@ -570,7 +582,7 @@ body {
   display: none;
 }
 
-@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 768px) and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   .deck-track {
     position: relative;
     height: calc(100svh + var(--lead) + (var(--n) - 1) * var(--step) + var(--tail));
@@ -742,6 +754,48 @@ body {
   transform: rotate(-8deg) scale(1);
 }
 
+/* phones: the labels as a row you swipe, one at a time with the next peeking in */
+@media (max-width: 767px) {
+  .deck-stage {
+    gap: 22px;
+    padding: 64px 0 56px;
+  }
+  .deck-intro {
+    padding: 0 var(--gutter);
+  }
+  .deck-pile {
+    display: flex;
+    gap: 12px;
+    padding: 4px var(--gutter) 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .deck-pile::-webkit-scrollbar {
+    display: none;
+  }
+  .deck-card {
+    flex: 0 0 84%;
+    scroll-snap-align: start;
+  }
+  .deck-art {
+    height: 220px;
+  }
+  .deck-swipe {
+    display: flex;
+  }
+}
+.deck-swipe {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: var(--text-14);
+  color: var(--color-liner-soft);
+}
+
 /* short cards (small phones): keep the name, art and price */
 @container (max-width: 360px) {
   .deck-options {
@@ -764,7 +818,7 @@ body {
   position: relative;
 }
 .shelf-stage {
-  padding: clamp(80px, 12svh, 150px) 0;
+  padding: var(--sy) 0;
 }
 .shelf-head {
   display: grid;
@@ -984,7 +1038,7 @@ body {
 }
 
 /* scripts and motion: a pinned stage; the page's scroll labels the products one by one */
-@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 768px) and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   .shelf-track {
     position: relative;
     /* six labels and the end, half a screen each; set exactly by the scripts */
@@ -1129,7 +1183,7 @@ body {
   display: grid;
   grid-template-areas: "title" "proof" "rail";
   gap: 24px;
-  padding: clamp(80px, 12svh, 150px) var(--gutter) 32px;
+  padding: var(--sy) var(--gutter) 32px;
 }
 .proc-copy {
   display: contents;
@@ -1206,7 +1260,7 @@ body {
   flex-wrap: wrap;
   align-items: center;
   gap: 16px 28px;
-  padding: 8px var(--gutter) clamp(80px, 12svh, 150px);
+  padding: 8px var(--gutter) var(--sy);
 }
 
 /* the proof: a sheet from the proofing tool, with the artwork on a transparency checkerboard */
@@ -1373,9 +1427,13 @@ body {
     display: none;
   }
 }
+/* phones: the proof plays by itself once it is in view; the steps open as it goes */
+.proc[data-autoplay] .proc-step:not([data-active="true"]) .proc-step-body {
+  grid-template-rows: 0fr;
+}
 
 /* scripts and motion: one pinned screen, the steps open one at a time */
-@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 768px) and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   .proc-track {
     height: calc(100svh + 4 * 70svh);
   }
@@ -1467,7 +1525,7 @@ body {
 
 .quote {
   --muted: #4a463d; /* 8.6:1 on liner */
-  padding: clamp(80px, 12svh, 150px) var(--gutter);
+  padding: var(--sy) var(--gutter);
   background: var(--color-liner);
   color: var(--color-ink);
 }
@@ -1676,8 +1734,36 @@ body {
   color: #9b1c1c; /* 6.9:1 on liner */
 }
 .art-design {
-  max-width: 52ch;
+  display: grid;
+  gap: 10px;
+  max-width: 54ch;
   margin-top: 12px;
+  padding: 14px 16px;
+  border: 1.5px dashed var(--muted);
+  border-radius: 8px 8px 2px 8px;
+}
+.art-design-title {
+  font-size: var(--text-16);
+  font-weight: 800;
+}
+.art-design-steps {
+  display: grid;
+  gap: 6px;
+  font-size: var(--text-15);
+  line-height: 1.4;
+}
+.art-design-steps li {
+  position: relative;
+  padding-left: 20px;
+}
+.art-design-steps li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 10px;
+  height: 3px;
+  background: var(--color-ink);
 }
 .art-design a {
   font-weight: 700;
@@ -1756,7 +1842,7 @@ body {
   grid-template-areas: "intro" "scene" "action";
   gap: clamp(28px, 5svh, 56px);
   align-items: center;
-  padding: clamp(80px, 12svh, 150px) var(--gutter);
+  padding: var(--sy) var(--gutter);
 }
 .kit-intro {
   grid-area: intro;
@@ -2085,7 +2171,7 @@ body {
 
 .site-footer {
   overflow: clip;
-  padding: clamp(80px, 12svh, 150px) var(--gutter) 20px;
+  padding: var(--sy) var(--gutter) 20px;
   border-top: 1.5px solid rgba(201, 209, 255, 0.35);
 }
 .footer-top {
@@ -2253,7 +2339,7 @@ body {
 
 .sheet-stage {
   position: relative;
-  padding: 0 var(--gutter) clamp(80px, 12svh, 150px);
+  padding: 0 var(--gutter) var(--sy);
   /* tilted, the sheet's near edge projects wider than the screen and (on long phone sheets) far
      below its own box, over the footer: keep it inside the section */
   overflow: clip;
@@ -3311,7 +3397,7 @@ body {
 
 .web-stage {
   position: relative;
-  padding: 0 var(--gutter) clamp(80px, 12svh, 150px);
+  padding: 0 var(--gutter) var(--sy);
   overflow-x: clip;
 }
 .web-wrap {
@@ -4463,7 +4549,7 @@ body {
 .faq {
   display: grid;
   gap: 40px;
-  padding: clamp(80px, 12svh, 150px) var(--gutter);
+  padding: var(--sy) var(--gutter);
   interpolate-size: allow-keywords;
 }
 .faq .section-title {
@@ -4593,6 +4679,456 @@ body {
   .ticket-tick::after,
   .faq-mark,
   .faq-item::details-content {
+    transition: none;
+  }
+}
+
+/* the sample kit button's note (why it couldn't go to checkout); empty takes no room */
+.kit-note {
+  flex-basis: 100%;
+  font-size: var(--text-15);
+  font-weight: 600;
+}
+.kit-note:empty {
+  display: none;
+}
+
+/* "Shipping to": Canada (CAD) or elsewhere (USD), under the builder's total */
+.ship-to {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.ship-to legend {
+  margin-bottom: 8px;
+  padding: 0;
+  font-size: var(--text-14);
+  font-weight: 650;
+}
+.ship-to .chip span {
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: var(--text-14);
+}
+.quote-ship {
+  margin-top: 16px;
+}
+.price-code {
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+/* ---------- Phones: the order button in reach (BuyBar.tsx) ---------- */
+
+.buybar {
+  display: none;
+}
+@media (max-width: 767px) {
+  .buybar {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 45;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+    border-top: 1.5px solid rgba(13, 13, 12, 0.12);
+    background: var(--color-liner);
+    transform: translateY(110%);
+    transition: transform 0.35s var(--ease-out);
+  }
+  .buybar[data-show] {
+    transform: none;
+  }
+  .buybar-main {
+    flex: 1;
+    min-height: 50px;
+  }
+  .buybar-kit {
+    display: inline-flex;
+    align-items: center;
+    min-height: 50px;
+    padding: 0 6px;
+    color: var(--color-ink);
+    font-size: var(--text-15);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .buybar {
+    transition: none;
+  }
+}
+
+/* ---------- Phones: the builder's live price, in reach (Pricing.tsx) ---------- */
+
+.quote-bar {
+  display: none;
+}
+@media (max-width: 767px) {
+  .quote-bar {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+    background: var(--color-ink);
+    color: var(--color-liner);
+    transition:
+      transform 0.3s var(--ease-out),
+      opacity 0.3s var(--ease-out);
+  }
+  .quote-bar[data-hidden] {
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .quote-bar-price {
+    display: grid;
+    min-width: 0;
+  }
+  .quote-bar-price b {
+    font-size: 22px;
+    font-weight: 900;
+    font-stretch: 106%;
+    line-height: 1.1;
+  }
+  .quote-bar-price b span {
+    font-size: 12px;
+    font-weight: 750;
+  }
+  .quote-bar-price small {
+    overflow: hidden;
+    font-size: 13px;
+    color: var(--color-liner-soft);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .quote-bar-cta {
+    flex: none;
+    min-height: 48px;
+  }
+}
+
+/* phones: the hero's trust line, under its buttons */
+.hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-size: var(--text-14);
+  font-weight: 600;
+}
+.hero-trust li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.hero-trust li::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--color-signal);
+}
+
+/* phones: a shorter footer (links still 40px tall for fingers), room for the order bar under it */
+@media (max-width: 767px) {
+  .footer-top {
+    gap: 40px;
+  }
+  .footer-nav {
+    gap: 24px 16px;
+  }
+  .site-footer .footer-nav .nav-link {
+    padding: 8px 0;
+  }
+  .footer-mark {
+    margin-top: 48px;
+  }
+  .footer-legal {
+    margin-top: 28px;
+    padding-bottom: 76px; /* the order bar can sit over the last screen */
+  }
+}
+
+/* ---------- Header: the services dropdown (ServicesMenu.tsx) ---------- */
+
+/* static: the sheet hangs from the header itself, centred on the page, never off its edges */
+.svcmenu {
+  position: static;
+}
+.svcmenu-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: inherit;
+  font: inherit;
+  font-size: var(--text-15);
+  font-weight: 560;
+  cursor: pointer;
+}
+.svcmenu-chev {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.35s var(--ease-out);
+}
+.svcmenu[data-open] .svcmenu-chev {
+  transform: rotate(180deg);
+}
+/* the sheet: a cream label hung under the header, its corner cut like a sticker's */
+.svcmenu-panel {
+  position: absolute;
+  top: calc(100% - 4px);
+  left: 50%;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px;
+  gap: 14px;
+  width: min(880px, calc(100vw - 2 * var(--gutter)));
+  padding: 14px;
+  border: 1.5px solid rgba(13, 13, 12, 0.1);
+  border-radius: 16px 16px 4px 16px;
+  background: var(--color-liner);
+  color: var(--color-ink);
+  translate: -50% 0;
+  transform-origin: 50% 0;
+  animation: svcmenu-in 0.42s var(--ease-slap) both;
+}
+/* a bridge over the gap, so moving down from the word keeps it open */
+.svcmenu-panel::before {
+  content: "";
+  position: absolute;
+  inset: -30px 0 auto;
+  height: 30px;
+}
+@keyframes svcmenu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.97) rotate(-0.6deg);
+  }
+}
+.svcmenu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+}
+.svcmenu-tile {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  height: 100%;
+  padding: 10px 12px;
+  border-radius: 10px 10px 2px 10px;
+  transition: background-color 0.2s var(--ease-out);
+}
+.svcmenu-tile:hover,
+.svcmenu-tile:focus-visible {
+  background: #fffdf8;
+}
+.svcmenu-tile:focus-visible,
+.svcmenu-biz:focus-visible,
+.svcmenu-all:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--color-signal);
+}
+/* each sticker slaps down in turn, then lifts and turns under the pointer (stickers carry shadows) */
+.svcmenu-art {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  rotate: var(--tilt);
+  filter: drop-shadow(0 2px 2px rgba(30, 24, 10, 0.22)) drop-shadow(0 6px 10px rgba(30, 24, 10, 0.14));
+  animation: svcmenu-slap 0.5s var(--ease-slap) both;
+  animation-delay: calc(60ms + var(--i) * 45ms);
+  transition:
+    rotate 0.45s var(--ease-out),
+    scale 0.45s var(--ease-out),
+    filter 0.45s var(--ease-out);
+}
+.svcmenu .svcmenu-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+@keyframes svcmenu-slap {
+  from {
+    opacity: 0;
+    scale: 1.45;
+    rotate: calc(var(--tilt) * -3);
+  }
+  70% {
+    opacity: 1;
+    scale: 0.94;
+  }
+}
+.svcmenu-tile:hover .svcmenu-art,
+.svcmenu-tile:focus-visible .svcmenu-art {
+  rotate: calc(var(--tilt) * -1.4);
+  scale: 1.1;
+  filter: drop-shadow(0 4px 4px rgba(30, 24, 10, 0.2)) drop-shadow(0 14px 18px rgba(30, 24, 10, 0.18));
+}
+.svcmenu-text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.svcmenu-text b {
+  font-size: var(--text-16);
+  font-weight: 800;
+  line-height: 1.15;
+}
+.svcmenu-text span {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #4a463d; /* 8.6:1 on liner */
+  font-size: var(--text-14);
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.svcmenu-tile[aria-current="page"] .svcmenu-text b {
+  text-decoration: underline;
+  text-decoration-color: var(--color-signal);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+.svcmenu-side {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+/* business labels: a yellow label of its own, its corner peeling on hover */
+.svcmenu-biz {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  padding: 16px 16px 18px;
+  border-radius: 12px 12px 3px 12px;
+  background: var(--color-signal);
+  color: var(--color-ink);
+  overflow: hidden;
+  animation: svcmenu-slap 0.5s var(--ease-slap) both;
+  animation-delay: 300ms;
+  --tilt: 2deg;
+}
+.svcmenu-biz b {
+  font-size: var(--text-18);
+  font-weight: 900;
+  font-stretch: 108%;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+.svcmenu-biz span {
+  font-size: var(--text-14);
+  line-height: 1.35;
+}
+.svcmenu-biz::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 18px;
+  height: 18px;
+  background: var(--color-backing);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  transform: scale(0);
+  transform-origin: 100% 100%;
+  transition: transform 0.35s var(--ease-out);
+}
+.svcmenu-biz:hover::after {
+  transform: scale(1);
+}
+.svcmenu-cta {
+  justify-content: space-between;
+}
+.svcmenu-all {
+  justify-self: start;
+  color: var(--color-ink);
+}
+
+/* phones: Services opens its list in the menu */
+.mm-svc-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-align: left;
+}
+.mm-svc-chev {
+  width: 26px;
+  height: 26px;
+  transition: transform 0.35s var(--ease-out);
+}
+.mm-svc-chev[data-open] {
+  transform: rotate(180deg);
+}
+.mm-svc {
+  display: grid;
+  gap: 2px;
+  margin: 6px 0 14px;
+}
+.mm-svc li {
+  animation: mm-svc-in 0.4s var(--ease-out) both;
+  animation-delay: calc(var(--i) * 40ms);
+}
+@keyframes mm-svc-in {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+}
+.mm-svc-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 52px;
+  font-size: var(--text-18);
+  font-weight: 700;
+}
+.mm-svc-art {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  filter: drop-shadow(0 3px 5px rgba(3, 8, 48, 0.35));
+}
+.mm-svc .mm-svc-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.mm-svc-all {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  font-size: var(--text-16);
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svcmenu-panel,
+  .svcmenu-art,
+  .svcmenu-biz,
+  .mm-svc li {
+    animation: none;
+  }
+  .svcmenu-art,
+  .svcmenu-chev,
+  .mm-svc-chev {
     transition: none;
   }
 }

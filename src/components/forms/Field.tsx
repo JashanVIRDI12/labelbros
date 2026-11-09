@@ -1,4 +1,7 @@
 import type { ReactNode } from "react";
+import { CONTACT } from "@/lib/site";
+
+export { EMAIL } from "@/lib/forms";
 
 /*
  * One form field: its label, the control, and a hint or an error under it (the error replaces
@@ -53,4 +56,32 @@ export function Honeypot() {
   );
 }
 
-export const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+/** Where a form is: typing, sending, off to Stripe, sent, or why it could not be sent. */
+export type Status = "idle" | "sending" | "paying" | "sent" | "error" | "offline" | "busy";
+
+/** The message under a form when it could not be sent (or `children`, for a message of its own). */
+export function FormAlert({ status, children }: { status?: Status; children?: ReactNode }) {
+  const text =
+    children ??
+    (status === "offline" ? (
+      <>
+        We can&apos;t take orders or messages from the site yet.
+        {CONTACT.email && (
+          <>
+            {" "}
+            Email us at <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+          </>
+        )}
+      </>
+    ) : status === "busy" ? (
+      "That's a lot of sending in a short time. Wait a few minutes and try again."
+    ) : status === "error" ? (
+      "That didn't go through. Check the form and your connection, and try again."
+    ) : null);
+  if (!text) return null;
+  return (
+    <p className="form-alert" role="alert">
+      {text}
+    </p>
+  );
+}

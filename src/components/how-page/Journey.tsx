@@ -6,6 +6,7 @@ import { DESERT_BLOOM, PENCIL } from "./desert-bloom";
 import { ART } from "@/components/stickers-page/art";
 import { Arrow } from "@/components/site/Arrow";
 import { Motion } from "@/components/site/Motion";
+import { SecondAsk } from "@/components/site/SecondAsk";
 
 /*
  * "Follow one sticker": the order, start to finish, as one pinned scene. The table is a cutting
@@ -135,12 +136,10 @@ export function Journey() {
               {/* the tear-off stub: both asks, in reach the whole way */}
               <div className="ticket-stub">
                 <Link href={quoteHref("stickers", { shape: "die-cut" })} className="btn btn-primary btn-sm">
-                  Get instant pricing
+                  Upload your design
                   <Arrow />
                 </Link>
-                <Link href="/#samples" className="text-link">
-                  Order a sample kit
-                </Link>
+                <SecondAsk className="text-link" />
               </div>
             </div>
           </div>

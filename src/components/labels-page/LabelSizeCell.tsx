@@ -67,7 +67,7 @@ export function LabelSizeCell() {
           </div>
         )}
         <Link href={href} className="text-link cell-link">
-          Price this size
+          Order this size
           <Arrow />
         </Link>
       </div>

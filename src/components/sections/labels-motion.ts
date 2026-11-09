@@ -12,7 +12,8 @@ import { gsap, ScrollTrigger } from "@/lib/scroll";
  * firms up and its button slaps down: "Your product next".
  */
 
-const MODE = "(scripting: enabled) and (prefers-reduced-motion: no-preference)";
+// phones get the still layout (a swipeable row / a grid): pinned scrolling is too long there
+const MODE = "(min-width: 768px) and (scripting: enabled) and (prefers-reduced-motion: no-preference)";
 const WIDE = "(min-width: 1024px)";
 const STEP = 0.5; // screens of scroll per product
 const END = 0.7; // and for the finale, in steps

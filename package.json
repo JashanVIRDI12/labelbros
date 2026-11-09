@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --experimental-strip-types --test tests/*.test.mjs"
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "db:setup": "node --experimental-strip-types scripts/db-setup.ts",
+    "admin:password": "node --experimental-strip-types scripts/admin-password.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -17,13 +19,19 @@
     "lenis": "^1.3.27",
     "lucide-react": "^1.66.0",
     "next": "16.4.3",
+    "nodemailer": "^10.3.1",
+    "postgres": "^4.1.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "three": "^0.187.0"
+    "server-only": "^0.0.1",
+    "stripe": "^23.1.0",
+    "three": "^0.187.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "^20",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.187.0",

@@ -28,8 +28,8 @@ const STEPS = [
   {
     key: "proof",
     title: "You approve a free proof.",
-    body: "We send you a proof to check. Ask for changes or approve it. Nothing prints until you say so.",
-    note: "Free proof in 12–24 hours. Ask for changes until you are happy.",
+    body: "We email you a proof to check. If your design needs changes, we call you and fix them. Nothing prints until you say so.",
+    note: "Free proof in 12–24 hours. Changes until you are happy.",
   },
   {
     key: "print",
@@ -142,11 +142,11 @@ export function Process() {
 
       <div className="proc-after">
         <a href="#pricing" className="btn btn-primary">
-          Get instant pricing
+          Upload your design
           <Arrow />
         </a>
-        <Link href="/services/custom-design" className="text-link">
-          Ask a designer
+        <Link href="/quote?artwork=design#pricing" className="text-link">
+          No design? We make it
           <Arrow />
         </Link>
         <Link href="/how-it-works" className="text-link">

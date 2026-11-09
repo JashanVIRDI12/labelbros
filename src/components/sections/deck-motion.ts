@@ -18,7 +18,8 @@ const HOVER = 26; // extra lift while the pointer is on it
 const OFF = 1.16; // how far past "fully peeled" the fold goes, so the label clears the screen
 
 // Same query as the CSS that turns the list into a pad.
-const MODE = "(scripting: enabled) and (prefers-reduced-motion: no-preference)";
+// phones get the still layout (a swipeable row / a grid): pinned scrolling is too long there
+const MODE = "(min-width: 768px) and (scripting: enabled) and (prefers-reduced-motion: no-preference)";
 
 type Card = {
   el: HTMLElement;

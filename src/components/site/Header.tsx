@@ -1,8 +1,24 @@
 import Link from "next/link";
+import { SERVICES, serviceArt, serviceHref } from "@/components/service/services";
+import { ART } from "@/components/stickers-page/art";
+import { CartDrawer } from "@/components/shop/CartDrawer";
 import { MobileMenu } from "./MobileMenu";
+import { ServicesMenu, type MenuService } from "./ServicesMenu";
+
+// what the services dropdown needs (only this reaches the browser, not the whole service pages)
+// kiss-cut sheets get a sticker of their own (their hero shares the seal with packaging seals)
+const THUMB: Partial<Record<string, MenuService["art"]>> = { "kiss-cut-sheets": ART["new-burst"] };
+const MENU: MenuService[] = SERVICES.map((s) => ({
+  slug: s.slug,
+  name: s.name,
+  short: s.short,
+  href: serviceHref(s.slug),
+  art: THUMB[s.slug] ?? serviceArt(s).art,
+}));
 
 // Absolute paths, so the same header works on every page (on the homepage they only scroll).
 export const NAV = [
+  { label: "Shop", href: "/shop" },
   { label: "Stickers", href: "/stickers" },
   { label: "Labels", href: "/labels" },
   { label: "Business", href: "/business" },
@@ -29,24 +45,29 @@ export function Header({ current }: { current?: string }) {
       </Link>
 
       <nav aria-label="Main" className="hidden items-center gap-[clamp(18px,2.2vw,34px)] md:flex">
-        {NAV.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="nav-link"
-            aria-current={item.href === current ? "page" : undefined}
-          >
-            {item.label}
-          </Link>
-        ))}
+        {NAV.map((item) =>
+          item.href === "/services" ? (
+            <ServicesMenu key={item.href} items={MENU} current={current} />
+          ) : (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="nav-link"
+              aria-current={item.href === current ? "page" : undefined}
+            >
+              {item.label}
+            </Link>
+          ),
+        )}
       </nav>
 
       <div className="flex items-center gap-3 md:gap-6">
-        <Link href="/quote" className="btn btn-primary btn-sm">
-          <span className="sm:hidden">Pricing</span>
-          <span className="hidden sm:inline">Get instant pricing</span>
+        <CartDrawer />
+        <Link href="/shop" className="btn btn-primary btn-sm">
+          <span className="sm:hidden">Order</span>
+          <span className="hidden sm:inline">Order now</span>
         </Link>
-        <MobileMenu items={NAV} current={current} />
+        <MobileMenu items={NAV} services={MENU} current={current} />
       </div>
     </header>
   );

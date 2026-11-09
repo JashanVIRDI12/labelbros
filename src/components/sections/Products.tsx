@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { Arrow } from "@/components/site/Arrow";
-import { FROM, money } from "@/lib/facts";
+import { FROM_USD } from "@/lib/facts";
+import { Price } from "@/components/site/Price";
 import { Motion } from "@/components/site/Motion";
 import { StickerArt } from "@/components/stickers/StickerArt";
 import { stickerRatio } from "@/components/stickers/ratio";
@@ -27,7 +28,7 @@ type Product = {
 const PRODUCTS: Product[] = [
   {
     key: "die-cut",
-    from: FROM.dieCut,
+    from: FROM_USD.dieCut,
     name: "Die-cut stickers",
     line: "Cut right around your design, so the sticker is the shape of your art.",
     options: "Gloss, matte, holographic or glitter vinyl",
@@ -39,7 +40,7 @@ const PRODUCTS: Product[] = [
   },
   {
     key: "holo",
-    from: FROM.holo,
+    from: FROM_USD.holo,
     name: "Holographic and glitter",
     line: "Foil that shifts colour as it moves, and glitter that catches the light.",
     options: "Any shape, cut to your design",
@@ -51,7 +52,7 @@ const PRODUCTS: Product[] = [
   },
   {
     key: "seals",
-    from: FROM.seals,
+    from: FROM_USD.seals,
     name: "Packaging seals",
     line: "Seals and stickers for boxes, bags, mailers and coffee bags.",
     options: "Kraft, matte or gloss paper",
@@ -63,7 +64,7 @@ const PRODUCTS: Product[] = [
   },
   {
     key: "product-labels",
-    from: FROM.labels,
+    from: FROM_USD.labels,
     name: "Product labels",
     line: "Labels for jars, bottles, cans, tins and candles, in the size your packaging needs.",
     options: "Paper or vinyl, any shape",
@@ -76,7 +77,7 @@ const PRODUCTS: Product[] = [
   },
   {
     key: "business-labels",
-    from: FROM.labels,
+    from: FROM_USD.labels,
     name: "Business and safety labels",
     line: "Warning, ID, address and approval labels for the work behind the brand.",
     options: "Gloss vinyl or paper, any size",
@@ -150,6 +151,9 @@ export function Products() {
               ))}
             </div>
             <p className="deck-hint text-14 text-liner-soft">Scroll to peel the next one.</p>
+            <p className="deck-swipe" aria-hidden="true">
+              Swipe for more <Arrow />
+            </p>
           </div>
 
           <ul className="deck-pile">
@@ -201,11 +205,11 @@ export function Products() {
                         data-quote-product={p.quote.product}
                         data-quote-shape={p.quote.shape}
                       >
-                        Price these
+                        Order these
                         <Arrow />
                       </a>
                       <p>
-                        From <b>{money(p.from)}</b>
+                        From <b><Price usd={p.from} /></b>
                       </p>
                     </div>
                   </div>
