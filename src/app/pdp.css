@@ -378,10 +378,14 @@
   border-radius: 16px 16px 4px 16px;
   background: var(--color-liner);
   box-shadow: inset 0 0 0 2px var(--color-ink);
+  visibility: hidden;
+  pointer-events: none;
   transform: translate(-50%, calc(100% + 32px));
   transition: transform 0.5s var(--ease-out);
 }
 .dock[data-show] {
+  visibility: visible;
+  pointer-events: auto;
   transform: translate(-50%, 0);
 }
 .dock-thumb {

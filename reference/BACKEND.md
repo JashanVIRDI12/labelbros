@@ -19,6 +19,12 @@ It gives Sticker Bros' 50 × 3 in = $60.75 exactly; double the quantity and each
 
 The site picks the currency from the visitor's location on their first visit (Vercel and Cloudflare send it; on a cPanel host without Cloudflare everyone starts in CAD), and a **Shipping to: Canada · CAD / Elsewhere · USD** switch under the price changes it everywhere. The server works the price out again in the chosen currency, and Stripe Checkout only accepts Canadian addresses for CAD orders and non-Canadian addresses for USD orders.
 
+Checkout disables Stripe Adaptive Pricing explicitly, so an Indian browser does not introduce
+an INR conversion option to a CAD order. Deploy this setting to the host as well as testing it
+locally. Existing converted Checkout Sessions keep their original settings: return to the cart
+and create a new checkout after deploying. The Stripe Dashboard's Adaptive Pricing setting can
+also be switched off separately in each sandbox and in live mode.
+
 To match Sticker Bros exactly, add their listed sticker prices to `LISTED_USD` in `src/lib/pricing.ts` (`"material|size|quantity": price`). Listed prices are used as they are; anything not listed comes from the formula. Update `CAD_PER_USD` in `src/lib/facts.ts` when the exchange rate moves.
 
 ## What happens
@@ -47,6 +53,21 @@ Refunds are made in the Stripe dashboard; the order is marked **Refunded** autom
 Any Postgres works (Supabase, the host's own). GoDaddy cPanel usually offers MySQL, not Postgres, which is why an outside Postgres is used: it works from both hosts.
 
 ### 2. Stripe
+
+For local development, put your test key in `.env.local`, start `pnpm dev`, then run
+`pnpm stripe:listen` in a second terminal. The listener forwards the five payment events to
+`http://localhost:3000/api/stripe/webhook`, saves its matching signing secret without printing it,
+and sets the local site URL if it is missing. Keep the listener running while testing.
+For a different port, use `pnpm stripe:listen http://localhost:3001`.
+
+Run `pnpm payments:check` to verify the database, Stripe key, webhook configuration, shipping,
+tax settings and SMTP authentication. It does not send emails or change Stripe settings.
+Use `pnpm payments:check --live` before launch; it requires a live key, public HTTPS site URL,
+activated payments/payouts and the public webhook rather than the local CLI signing secret.
+The local listener deliberately accepts only test keys and local URLs.
+
+Shipping charges, the real sending mailbox, business identity and tax registrations must come
+from the shop. Do not fill these with sample charges or invented business details.
 
 1. dashboard.stripe.com: finish the account (business details, Canadian bank account). Stay in **Test mode** until you've tried an order.
 2. Developers > API keys: copy the **Secret key** → `STRIPE_SECRET_KEY`.

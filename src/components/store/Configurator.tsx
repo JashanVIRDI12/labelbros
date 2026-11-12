@@ -189,8 +189,10 @@ export function Configurator({ p, head, media }: { p: Product; head: ReactNode; 
   const stage = useRef<StageApi | null>(null);
   const grid = useRef<HTMLDivElement>(null);
   const intro = useRef<HTMLDivElement>(null);
+  const controls = useRef<HTMLDivElement>(null);
   const summary = useRef<HTMLDivElement>(null);
   const [summaryInView, setSummaryInView] = useState(false);
+  const [controlsInView, setControlsInView] = useState(true);
   const [introGone, setIntroGone] = useState(false);
   const input = useRef<HTMLInputElement>(null);
   const [view, setView] = useState<StageView>("photo");
@@ -274,22 +276,25 @@ export function Configurator({ p, head, media }: { p: Product; head: ReactNode; 
     if (urlRef.current) URL.revokeObjectURL(urlRef.current);
   }, []);
 
-  // the buy bar at the bottom: there once the name and price have scrolled away, and out of the way
-  // while the summary itself is on screen
+  // Keep the floating buy bar away from the entire configurator, including the upload controls.
   useEffect(() => {
     const el = summary.current;
     const top = intro.current;
-    if (!el || !top) return;
+    const form = controls.current;
+    if (!el || !top || !form) return;
     const io = new IntersectionObserver(([e]) => setSummaryInView(e.isIntersecting), { threshold: 0.3 });
     io.observe(el);
     const io2 = new IntersectionObserver(([e]) => setIntroGone(!e.isIntersecting && e.boundingClientRect.top < 0));
     io2.observe(top);
+    const io3 = new IntersectionObserver(([e]) => setControlsInView(e.isIntersecting), { rootMargin: "0px 0px 100px 0px" });
+    io3.observe(form);
     return () => {
       io.disconnect();
       io2.disconnect();
+      io3.disconnect();
     };
   }, []);
-  const dock = introGone && !summaryInView;
+  const dock = introGone && !summaryInView && !controlsInView;
 
   // checks
   const sizeError = (() => {
@@ -497,7 +502,7 @@ export function Configurator({ p, head, media }: { p: Product; head: ReactNode; 
         />
       </div>
 
-      <div className="cfg" id="customize-order">
+      <div className="cfg" id="customize-order" ref={controls}>
         <div className="cfg-heading">
           <h2>{p.noArtwork ? "Choose your packs" : isDeal ? "Make this pack yours" : `Customize your ${p.range}`}</h2>
           <Link href="/contact">Need a hand?</Link>
@@ -804,7 +809,7 @@ export function Configurator({ p, head, media }: { p: Product; head: ReactNode; 
       </div>
 
       {/* the price and the button, always in reach once the top has scrolled away */}
-      <div className="dock" data-show={dock || undefined} aria-hidden={!dock || undefined}>
+      <div className="dock" data-show={dock || undefined} aria-hidden={!dock || undefined} inert={!dock}>
         <span className="dock-thumb" data-tone={p.tone}>
           <Image src={p.image.thumb} alt="" width={256} height={256} sizes="56px" />
         </span>

@@ -98,6 +98,9 @@ export async function createCheckout(
       cancel_url: `${origin}${back.path}?checkout=cancelled${back.hash ? `#${back.hash}` : ""}`,
       expires_at: Math.floor(Date.now() / 1000) + 60 * 60 * 2, // 2 hours
       ...extra,
+      // Keep the shop's selected CAD/USD currency, regardless of the visitor's location.
+      // Apply this after extra options so a caller cannot re-enable INR conversion.
+      adaptive_pricing: { enabled: false },
     },
     { idempotencyKey: `checkout-${s.ref}` },
   );

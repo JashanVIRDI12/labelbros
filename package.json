@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "stripe:listen": "node scripts/stripe-listen.mjs",
+    "payments:check": "node scripts/check-payments.mjs",
     "db:setup": "node --experimental-strip-types scripts/db-setup.ts",
     "admin:password": "node --experimental-strip-types scripts/admin-password.ts"
   },
