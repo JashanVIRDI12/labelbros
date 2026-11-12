@@ -119,6 +119,71 @@ function avoid(home: { x: number; y: number; rot: number }, w: number, h: number
   home.y = Math.max(home.y, top * 0.55);
 }
 
+type Piece = { home: { x: number; y: number; rot: number }; w: number; h: number; full: boolean };
+
+/**
+ * Space the start positions out (client, 2026-11-11: "too much overlap"). Wherever two pieces
+ * overlap by more than a sliver, push them apart the shorter way out (sideways when it's close,
+ * since the table is wide), keep each on the table and off the words, and repeat until they sit
+ * clear. A little overlap is kept: it's a table of labels, not a grid.
+ */
+function spread(pieces: Piece[], W: number, H: number, band: { top: number; bottom: number }, keep: Rect[]) {
+  const ext = pieces.map((p) => {
+    const e = extents(p.w, p.h, p.home.rot);
+    return { hw: e.hw * 0.9, hh: e.hh * 0.9 };
+  });
+  const overlap = (i: number, j: number) => {
+    const a = pieces[i].home;
+    const b = pieces[j].home;
+    const slack = 0.12 * Math.min(ext[i].hw, ext[i].hh, ext[j].hw, ext[j].hh);
+    return {
+      ox: ext[i].hw + ext[j].hw - slack - Math.abs(a.x - b.x),
+      oy: ext[i].hh + ext[j].hh - slack - Math.abs(a.y - b.y),
+    };
+  };
+  // pairs that couldn't get clear up and down (a short band, or the words in the way)
+  const stuck = new Set<number>();
+  for (let pass = 0; pass < 60; pass++) {
+    let moved = false;
+    const vertical: [number, number][] = [];
+    for (let i = 0; i < pieces.length; i++)
+      for (let j = i + 1; j < pieces.length; j++) {
+        const { ox, oy } = overlap(i, j);
+        if (ox <= 0 || oy <= 0) continue;
+        moved = true;
+        const a = pieces[i].home;
+        const b = pieces[j].home;
+        if (ox <= oy * 1.4 || stuck.has(i * 64 + j)) {
+          const d = (ox / 2 + 0.5) * (a.x >= b.x ? 1 : -1);
+          a.x += d;
+          b.x -= d;
+        } else {
+          const d = (oy / 2 + 0.5) * (a.y >= b.y ? 1 : -1);
+          a.y += d;
+          b.y -= d;
+          vertical.push([i, j]);
+        }
+      }
+    for (let i = 0; i < pieces.length; i++) {
+      const p = pieces[i];
+      const e = ext[i];
+      // on the table: every piece fully on screen (its art box, a little inside the edges)
+      const fullW = e.hw / 0.9 + 6;
+      p.home.x = clamp(p.home.x, fullW, W - fullW);
+      const lo = band.top + e.hh * 0.95;
+      const hi = p.full ? Math.max(lo, H - e.hh - 8) : Math.max(lo, band.bottom - e.hh * 0.55);
+      p.home.y = clamp(p.home.y, lo, hi);
+      avoid(p.home, p.w, p.h, keep, band.top);
+    }
+    // a vertical push that the edges or the words undid: next time, go sideways
+    for (const [i, j] of vertical) {
+      const { ox, oy } = overlap(i, j);
+      if (ox > 0 && oy > 0) stuck.add(i * 64 + j);
+    }
+    if (!moved) break;
+  }
+}
+
 export class StickerStage {
   private o: StageOptions;
   private renderer: WebGLRenderer | null = null;
@@ -201,6 +266,7 @@ export class StickerStage {
     const band = this.band(H);
     const keep = this.keepouts();
     const base = def.scale(W, H, band.bottom - band.top);
+    const placed: (Piece & { canvas: HTMLCanvasElement })[] = [];
     for (const p of def.items) {
       if (!this.fits(p, W, band.bottom - band.top)) continue;
       const design = DESIGNS.find((d) => d.id === p.id);
@@ -208,11 +274,12 @@ export class StickerStage {
       const art = await renderSticker(design, Math.min(window.devicePixelRatio || 1, 2));
       if (this.destroyed) return;
       const k = base * (p.s ?? 1);
-      const w = art.width * k;
-      const h = art.height * k;
       const home = { x: p.x * W, y: this.homeY(p, H, band), rot: (p.rot * Math.PI) / 180 };
-      avoid(home, w, h, keep, band.top);
-      const c = art.canvas;
+      avoid(home, art.width * k, art.height * k, keep, band.top);
+      placed.push({ home, w: art.width * k, h: art.height * k, full: p.zone === "full", canvas: art.canvas });
+    }
+    spread(placed, W, H, band, keep);
+    for (const { home, w, h, canvas: c } of placed) {
       c.setAttribute("aria-hidden", "true");
       c.style.cssText = `position:absolute;left:0;top:0;width:${w}px;height:${h}px;transform:translate(${home.x - w / 2}px,${home.y - h / 2}px) rotate(${home.rot}rad)`;
       this.o.mount.appendChild(c);
@@ -308,7 +375,7 @@ export class StickerStage {
     const proxy = document.createElement("button");
     proxy.type = "button";
     proxy.className = "sticker-proxy";
-    proxy.setAttribute("aria-label", `${design.name} sticker, ${design.spec.toLowerCase()}`);
+    proxy.setAttribute("aria-label", `${design.name}${/label$/i.test(design.name) ? "" : " sticker"}, ${design.spec.toLowerCase()}`);
     proxy.setAttribute("aria-describedby", "sticker-help");
     this.o.proxies.appendChild(proxy);
 
@@ -434,6 +501,7 @@ export class StickerStage {
     const keep = this.keepouts();
     this.base = def.scale(W, H, band.bottom - band.top);
 
+    const pieces: Piece[] = [];
     for (const s of this.stickers) {
       const p = def.items.find((it) => it.id === s.design.id && this.fits(it, W, band.bottom - band.top));
       s.active = !!p;
@@ -442,7 +510,15 @@ export class StickerStage {
       if (!p) continue;
       s.itemScale = p.s ?? 1;
       s.home = { x: p.x * W, y: this.homeY(p, H, band), rot: (p.rot * Math.PI) / 180 };
-      avoid(s.home, (s.art.width - 8) * this.k(s), (s.art.height - 8) * this.k(s), keep, band.top);
+      const w = (s.art.width - 8) * this.k(s);
+      const h = (s.art.height - 8) * this.k(s);
+      avoid(s.home, w, h, keep, band.top);
+      pieces.push({ home: s.home, w, h, full: p.zone === "full" });
+    }
+    spread(pieces, W, H, band, keep);
+
+    for (const s of this.stickers) {
+      if (!s.active) continue;
       if (initial || changed || !s.moved) {
         gsap.killTweensOf(s.state, "x,y,rot");
         s.state.x = s.home.x;
@@ -481,8 +557,9 @@ export class StickerStage {
       });
   }
 
+  /** Room kept clear at the top of the table: the shop's header now sits above it (2026-11-11). */
   private headerH() {
-    return document.querySelector<HTMLElement>("header")?.offsetHeight ?? 72;
+    return 18;
   }
 
   /** The strip between the header and the headline where the collage lives. */

@@ -1,0 +1,1514 @@
+{
+  "base": "http://localhost:3100",
+  "pages": [
+    {
+      "route": "/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels.webp&w=640&q=75",
+          "alt": "Glass jam jar with a cream label that reads Your Brand, strawberry jam",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels.webp&w=640&q=75",
+          "alt": "Amber bottle with a teal wrap-around label that reads Your Brand, sparkling kombucha",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbottle-labels.webp&w=640&q=75",
+          "alt": "Dark green olive oil bottle with an arched label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcoffee-labels.webp&w=640&q=75",
+          "alt": "Kraft coffee pouch with a black label that reads Your Brand, cold brew coffee",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcandle-labels.webp&w=640&q=75",
+          "alt": "Glass candle with a cream label that reads Your Brand, hand poured soy candle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcosmetic-labels.webp&w=640&q=75",
+          "alt": "Amber dropper bottle with a sage label that reads Your Brand, botanical face oil",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels.webp&w=640&q=75",
+          "alt": "Olive oil bottle, jam jar and candle, each with a label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels.webp&w=640&q=75",
+          "alt": "A roll of printed labels that read Your Brand, partly unrolled",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcircle-labels.webp&w=640&q=75",
+          "alt": "Gift boxes and a jar lid sealed with round labels that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsheet-labels.webp&w=640&q=75",
+          "alt": "A sheet of eight printed labels that read Your Brand, one peeled up",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fvinyl-stickers.webp&w=640&q=75",
+          "alt": "Two vinyl stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fclear-stickers.webp&w=640&q=75",
+          "alt": "A clear sticker reading Your Brand on a glass bottle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fholographic-stickers.webp&w=640&q=75",
+          "alt": "Two holographic stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fglitter-stickers.webp&w=640&q=75",
+          "alt": "Two glitter stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fkraft-stickers.webp&w=640&q=75",
+          "alt": "Kraft paper stickers that read Your Brand, thank you",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fmetallic-stickers.webp&w=640&q=75",
+          "alt": "Gold and silver stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/labels",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels.webp&w=640&q=75",
+          "alt": "Glass jam jar with a cream label that reads Your Brand, strawberry jam",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels.webp&w=640&q=75",
+          "alt": "Amber bottle with a teal wrap-around label that reads Your Brand, sparkling kombucha",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbottle-labels.webp&w=640&q=75",
+          "alt": "Dark green olive oil bottle with an arched label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcoffee-labels.webp&w=640&q=75",
+          "alt": "Kraft coffee pouch with a black label that reads Your Brand, cold brew coffee",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcandle-labels.webp&w=640&q=75",
+          "alt": "Glass candle with a cream label that reads Your Brand, hand poured soy candle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcosmetic-labels.webp&w=640&q=75",
+          "alt": "Amber dropper bottle with a sage label that reads Your Brand, botanical face oil",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels.webp&w=640&q=75",
+          "alt": "Olive oil bottle, jam jar and candle, each with a label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels.webp&w=640&q=75",
+          "alt": "A roll of printed labels that read Your Brand, partly unrolled",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcircle-labels.webp&w=640&q=75",
+          "alt": "Gift boxes and a jar lid sealed with round labels that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsheet-labels.webp&w=640&q=75",
+          "alt": "A sheet of eight printed labels that read Your Brand, one peeled up",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/stickers",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fvinyl-stickers.webp&w=640&q=75",
+          "alt": "Two vinyl stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fclear-stickers.webp&w=640&q=75",
+          "alt": "A clear sticker reading Your Brand on a glass bottle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fholographic-stickers.webp&w=640&q=75",
+          "alt": "Two holographic stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fglitter-stickers.webp&w=640&q=75",
+          "alt": "Two glitter stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fkraft-stickers.webp&w=640&q=75",
+          "alt": "Kraft paper stickers that read Your Brand, thank you",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fmetallic-stickers.webp&w=640&q=75",
+          "alt": "Gold and silver stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2F50-3in-custom-stickers.webp&w=640&q=75",
+          "alt": "A stack of round stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2F250-3in-vinyl-stickers.webp&w=640&q=75",
+          "alt": "A pile of stickers that read Your Brand spilling from an envelope",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsample-pack.webp&w=640&q=75",
+          "alt": "A sample pack of label materials: white, clear, kraft, silver and gold",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/shop",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels.webp&w=640&q=75",
+          "alt": "Glass jam jar with a cream label that reads Your Brand, strawberry jam",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels.webp&w=640&q=75",
+          "alt": "Amber bottle with a teal wrap-around label that reads Your Brand, sparkling kombucha",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbottle-labels.webp&w=640&q=75",
+          "alt": "Dark green olive oil bottle with an arched label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcoffee-labels.webp&w=640&q=75",
+          "alt": "Kraft coffee pouch with a black label that reads Your Brand, cold brew coffee",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcandle-labels.webp&w=640&q=75",
+          "alt": "Glass candle with a cream label that reads Your Brand, hand poured soy candle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcosmetic-labels.webp&w=640&q=75",
+          "alt": "Amber dropper bottle with a sage label that reads Your Brand, botanical face oil",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels.webp&w=640&q=75",
+          "alt": "Olive oil bottle, jam jar and candle, each with a label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels.webp&w=640&q=75",
+          "alt": "A roll of printed labels that read Your Brand, partly unrolled",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcircle-labels.webp&w=640&q=75",
+          "alt": "Gift boxes and a jar lid sealed with round labels that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsheet-labels.webp&w=640&q=75",
+          "alt": "A sheet of eight printed labels that read Your Brand, one peeled up",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fvinyl-stickers.webp&w=640&q=75",
+          "alt": "Two vinyl stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fclear-stickers.webp&w=640&q=75",
+          "alt": "A clear sticker reading Your Brand on a glass bottle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fholographic-stickers.webp&w=640&q=75",
+          "alt": "Two holographic stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fglitter-stickers.webp&w=640&q=75",
+          "alt": "Two glitter stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fkraft-stickers.webp&w=640&q=75",
+          "alt": "Kraft paper stickers that read Your Brand, thank you",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fmetallic-stickers.webp&w=640&q=75",
+          "alt": "Gold and silver stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2F50-3in-custom-stickers.webp&w=640&q=75",
+          "alt": "A stack of round stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2F250-3in-vinyl-stickers.webp&w=640&q=75",
+          "alt": "A pile of stickers that read Your Brand spilling from an envelope",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsample-pack.webp&w=640&q=75",
+          "alt": "A sample pack of label materials: white, clear, kraft, silver and gold",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/business",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels-thumb.webp&w=64&q=75",
+          "alt": "",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels-thumb.webp&w=64&q=75",
+          "alt": "",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbottle-labels-thumb.webp&w=64&q=75",
+          "alt": "",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels-thumb.webp&w=64&q=75",
+          "alt": "",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcircle-labels-thumb.webp&w=64&q=75",
+          "alt": "",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels-thumb.webp&w=64&q=75",
+          "alt": "",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels.webp&w=640&q=75",
+          "alt": "Olive oil bottle, jam jar and candle, each with a label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels.webp&w=640&q=75",
+          "alt": "A roll of printed labels that read Your Brand, partly unrolled",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels.webp&w=640&q=75",
+          "alt": "Glass jam jar with a cream label that reads Your Brand, strawberry jam",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels.webp&w=640&q=75",
+          "alt": "Amber bottle with a teal wrap-around label that reads Your Brand, sparkling kombucha",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbottle-labels.webp&w=640&q=75",
+          "alt": "Dark green olive oil bottle with an arched label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcoffee-labels.webp&w=640&q=75",
+          "alt": "Kraft coffee pouch with a black label that reads Your Brand, cold brew coffee",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcandle-labels.webp&w=640&q=75",
+          "alt": "Glass candle with a cream label that reads Your Brand, hand poured soy candle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcosmetic-labels.webp&w=640&q=75",
+          "alt": "Amber dropper bottle with a sage label that reads Your Brand, botanical face oil",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcircle-labels.webp&w=640&q=75",
+          "alt": "Gift boxes and a jar lid sealed with round labels that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsheet-labels.webp&w=640&q=75",
+          "alt": "A sheet of eight printed labels that read Your Brand, one peeled up",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/shop/food-labels",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels.webp&w=750&q=62",
+          "alt": "Glass jam jar with a cream label that reads Your Brand, strawberry jam",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels.webp&w=640&q=75",
+          "alt": "Olive oil bottle, jam jar and candle, each with a label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels.webp&w=640&q=75",
+          "alt": "A roll of printed labels that read Your Brand, partly unrolled",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels.webp&w=640&q=75",
+          "alt": "Amber bottle with a teal wrap-around label that reads Your Brand, sparkling kombucha",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbottle-labels.webp&w=640&q=75",
+          "alt": "Dark green olive oil bottle with an arched label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/shop/vinyl-stickers",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fvinyl-stickers.webp&w=750&q=62",
+          "alt": "Two vinyl stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fclear-stickers.webp&w=640&q=75",
+          "alt": "A clear sticker reading Your Brand on a glass bottle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fholographic-stickers.webp&w=640&q=75",
+          "alt": "Two holographic stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fglitter-stickers.webp&w=640&q=75",
+          "alt": "Two glitter stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fkraft-stickers.webp&w=640&q=75",
+          "alt": "Kraft paper stickers that read Your Brand, thank you",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/shop/sample-pack",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsample-pack.webp&w=750&q=62",
+          "alt": "A sample pack of label materials: white, clear, kraft, silver and gold",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels.webp&w=640&q=75",
+          "alt": "Olive oil bottle, jam jar and candle, each with a label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels.webp&w=640&q=75",
+          "alt": "A roll of printed labels that read Your Brand, partly unrolled",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels.webp&w=640&q=75",
+          "alt": "Glass jam jar with a cream label that reads Your Brand, strawberry jam",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels.webp&w=640&q=75",
+          "alt": "Amber bottle with a teal wrap-around label that reads Your Brand, sparkling kombucha",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels.webp&w=256&q=75",
+          "alt": "Glass jam jar with a cream label that reads Your Brand, strawberry jam",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels.webp&w=256&q=75",
+          "alt": "Amber bottle with a teal wrap-around label that reads Your Brand, sparkling kombucha",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbottle-labels.webp&w=256&q=75",
+          "alt": "Dark green olive oil bottle with an arched label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcoffee-labels.webp&w=256&q=75",
+          "alt": "Kraft coffee pouch with a black label that reads Your Brand, cold brew coffee",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcandle-labels.webp&w=256&q=75",
+          "alt": "Glass candle with a cream label that reads Your Brand, hand poured soy candle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcosmetic-labels.webp&w=256&q=75",
+          "alt": "Amber dropper bottle with a sage label that reads Your Brand, botanical face oil",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels.webp&w=256&q=75",
+          "alt": "Olive oil bottle, jam jar and candle, each with a label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels.webp&w=256&q=75",
+          "alt": "A roll of printed labels that read Your Brand, partly unrolled",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcircle-labels.webp&w=256&q=75",
+          "alt": "Gift boxes and a jar lid sealed with round labels that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsheet-labels.webp&w=256&q=75",
+          "alt": "A sheet of eight printed labels that read Your Brand, one peeled up",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fvinyl-stickers.webp&w=256&q=75",
+          "alt": "Two vinyl stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fclear-stickers.webp&w=256&q=75",
+          "alt": "A clear sticker reading Your Brand on a glass bottle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fholographic-stickers.webp&w=256&q=75",
+          "alt": "Two holographic stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fglitter-stickers.webp&w=256&q=75",
+          "alt": "Two glitter stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fkraft-stickers.webp&w=256&q=75",
+          "alt": "Kraft paper stickers that read Your Brand, thank you",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fmetallic-stickers.webp&w=256&q=75",
+          "alt": "Gold and silver stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/labels",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels.webp&w=256&q=75",
+          "alt": "Glass jam jar with a cream label that reads Your Brand, strawberry jam",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels.webp&w=256&q=75",
+          "alt": "Amber bottle with a teal wrap-around label that reads Your Brand, sparkling kombucha",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbottle-labels.webp&w=256&q=75",
+          "alt": "Dark green olive oil bottle with an arched label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcoffee-labels.webp&w=256&q=75",
+          "alt": "Kraft coffee pouch with a black label that reads Your Brand, cold brew coffee",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcandle-labels.webp&w=256&q=75",
+          "alt": "Glass candle with a cream label that reads Your Brand, hand poured soy candle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcosmetic-labels.webp&w=256&q=75",
+          "alt": "Amber dropper bottle with a sage label that reads Your Brand, botanical face oil",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels.webp&w=256&q=75",
+          "alt": "Olive oil bottle, jam jar and candle, each with a label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels.webp&w=256&q=75",
+          "alt": "A roll of printed labels that read Your Brand, partly unrolled",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcircle-labels.webp&w=256&q=75",
+          "alt": "Gift boxes and a jar lid sealed with round labels that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsheet-labels.webp&w=256&q=75",
+          "alt": "A sheet of eight printed labels that read Your Brand, one peeled up",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/stickers",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fvinyl-stickers.webp&w=256&q=75",
+          "alt": "Two vinyl stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fclear-stickers.webp&w=256&q=75",
+          "alt": "A clear sticker reading Your Brand on a glass bottle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fholographic-stickers.webp&w=256&q=75",
+          "alt": "Two holographic stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fglitter-stickers.webp&w=256&q=75",
+          "alt": "Two glitter stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fkraft-stickers.webp&w=256&q=75",
+          "alt": "Kraft paper stickers that read Your Brand, thank you",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fmetallic-stickers.webp&w=256&q=75",
+          "alt": "Gold and silver stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2F50-3in-custom-stickers.webp&w=256&q=75",
+          "alt": "A stack of round stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2F250-3in-vinyl-stickers.webp&w=256&q=75",
+          "alt": "A pile of stickers that read Your Brand spilling from an envelope",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsample-pack.webp&w=256&q=75",
+          "alt": "A sample pack of label materials: white, clear, kraft, silver and gold",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/shop",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels.webp&w=256&q=75",
+          "alt": "Glass jam jar with a cream label that reads Your Brand, strawberry jam",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels.webp&w=256&q=75",
+          "alt": "Amber bottle with a teal wrap-around label that reads Your Brand, sparkling kombucha",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbottle-labels.webp&w=256&q=75",
+          "alt": "Dark green olive oil bottle with an arched label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcoffee-labels.webp&w=256&q=75",
+          "alt": "Kraft coffee pouch with a black label that reads Your Brand, cold brew coffee",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcandle-labels.webp&w=256&q=75",
+          "alt": "Glass candle with a cream label that reads Your Brand, hand poured soy candle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcosmetic-labels.webp&w=256&q=75",
+          "alt": "Amber dropper bottle with a sage label that reads Your Brand, botanical face oil",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels.webp&w=256&q=75",
+          "alt": "Olive oil bottle, jam jar and candle, each with a label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels.webp&w=256&q=75",
+          "alt": "A roll of printed labels that read Your Brand, partly unrolled",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcircle-labels.webp&w=256&q=75",
+          "alt": "Gift boxes and a jar lid sealed with round labels that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsheet-labels.webp&w=256&q=75",
+          "alt": "A sheet of eight printed labels that read Your Brand, one peeled up",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fvinyl-stickers.webp&w=256&q=75",
+          "alt": "Two vinyl stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fclear-stickers.webp&w=256&q=75",
+          "alt": "A clear sticker reading Your Brand on a glass bottle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fholographic-stickers.webp&w=256&q=75",
+          "alt": "Two holographic stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fglitter-stickers.webp&w=256&q=75",
+          "alt": "Two glitter stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fkraft-stickers.webp&w=256&q=75",
+          "alt": "Kraft paper stickers that read Your Brand, thank you",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fmetallic-stickers.webp&w=256&q=75",
+          "alt": "Gold and silver stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2F50-3in-custom-stickers.webp&w=256&q=75",
+          "alt": "A stack of round stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2F250-3in-vinyl-stickers.webp&w=256&q=75",
+          "alt": "A pile of stickers that read Your Brand spilling from an envelope",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsample-pack.webp&w=256&q=75",
+          "alt": "A sample pack of label materials: white, clear, kraft, silver and gold",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/business",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels-thumb.webp&w=64&q=75",
+          "alt": "",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels-thumb.webp&w=64&q=75",
+          "alt": "",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbottle-labels-thumb.webp&w=64&q=75",
+          "alt": "",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels-thumb.webp&w=64&q=75",
+          "alt": "",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcircle-labels-thumb.webp&w=64&q=75",
+          "alt": "",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels-thumb.webp&w=64&q=75",
+          "alt": "",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels.webp&w=256&q=75",
+          "alt": "Olive oil bottle, jam jar and candle, each with a label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels.webp&w=256&q=75",
+          "alt": "A roll of printed labels that read Your Brand, partly unrolled",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels.webp&w=256&q=75",
+          "alt": "Glass jam jar with a cream label that reads Your Brand, strawberry jam",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels.webp&w=256&q=75",
+          "alt": "Amber bottle with a teal wrap-around label that reads Your Brand, sparkling kombucha",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbottle-labels.webp&w=256&q=75",
+          "alt": "Dark green olive oil bottle with an arched label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcoffee-labels.webp&w=256&q=75",
+          "alt": "Kraft coffee pouch with a black label that reads Your Brand, cold brew coffee",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcandle-labels.webp&w=256&q=75",
+          "alt": "Glass candle with a cream label that reads Your Brand, hand poured soy candle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcosmetic-labels.webp&w=256&q=75",
+          "alt": "Amber dropper bottle with a sage label that reads Your Brand, botanical face oil",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcircle-labels.webp&w=256&q=75",
+          "alt": "Gift boxes and a jar lid sealed with round labels that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsheet-labels.webp&w=256&q=75",
+          "alt": "A sheet of eight printed labels that read Your Brand, one peeled up",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/shop/food-labels",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels.webp&w=640&q=62",
+          "alt": "Glass jam jar with a cream label that reads Your Brand, strawberry jam",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels.webp&w=256&q=75",
+          "alt": "Olive oil bottle, jam jar and candle, each with a label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels.webp&w=256&q=75",
+          "alt": "A roll of printed labels that read Your Brand, partly unrolled",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels.webp&w=256&q=75",
+          "alt": "Amber bottle with a teal wrap-around label that reads Your Brand, sparkling kombucha",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbottle-labels.webp&w=256&q=75",
+          "alt": "Dark green olive oil bottle with an arched label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/shop/vinyl-stickers",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fvinyl-stickers.webp&w=640&q=62",
+          "alt": "Two vinyl stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fclear-stickers.webp&w=256&q=75",
+          "alt": "A clear sticker reading Your Brand on a glass bottle",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fholographic-stickers.webp&w=256&q=75",
+          "alt": "Two holographic stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fglitter-stickers.webp&w=256&q=75",
+          "alt": "Two glitter stickers that read Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fkraft-stickers.webp&w=256&q=75",
+          "alt": "Kraft paper stickers that read Your Brand, thank you",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "route": "/shop/sample-pack",
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": 1,
+      "images": [
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fsample-pack.webp&w=640&q=62",
+          "alt": "A sample pack of label materials: white, clear, kraft, silver and gold",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fcustom-labels.webp&w=256&q=75",
+          "alt": "Olive oil bottle, jam jar and candle, each with a label that reads Your Brand",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Froll-labels.webp&w=256&q=75",
+          "alt": "A roll of printed labels that read Your Brand, partly unrolled",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Ffood-labels.webp&w=256&q=75",
+          "alt": "Glass jam jar with a cream label that reads Your Brand, strawberry jam",
+          "loaded": true,
+          "fit": "cover"
+        },
+        {
+          "src": "http://localhost:3100/_next/image?url=%2Fproducts%2Fbeverage-labels.webp&w=256&q=75",
+          "alt": "Amber bottle with a teal wrap-around label that reads Your Brand, sparkling kombucha",
+          "loaded": true,
+          "fit": "cover"
+        }
+      ],
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "checks": [
+    {
+      "name": "label preview",
+      "width": 1440,
+      "source": "/products/labels/jam.webp",
+      "pass": true
+    },
+    {
+      "name": "photo toggle",
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "name": "Labels menu",
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "name": "Stickers menu",
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "name": "hero drag",
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "name": "hero labels",
+      "width": 1440,
+      "labels": [
+        "Your Brand kombucha label, white bopp, gloss, wrap-around",
+        "Your Brand olive oil label, white bopp, matte, arched",
+        "Your Brand jam label, white bopp, gloss, rectangle",
+        "Your Brand face oil label, white paper, matte",
+        "Fire Escape Hot Sauce sticker, gloss vinyl, scalloped die-cut",
+        "Night Shift Coffee sticker, matte paper, arch die-cut",
+        "Label Bros sticker, holographic vinyl, die-cut",
+        "Thank-you packaging seal sticker, kraft paper, circle",
+        "New flavour burst sticker, glitter vinyl, starburst",
+        "Ember & Oak candle label, matte paper, oval",
+        "Caution label, gloss vinyl, rectangle",
+        "Proof approved seal sticker, gloss vinyl, circle"
+      ]
+    },
+    {
+      "name": "hero reset",
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "name": "two-item cart",
+      "width": 1440,
+      "count": 2,
+      "pass": true,
+      "thumbs": true
+    },
+    {
+      "name": "label preview",
+      "width": 390,
+      "source": "/products/labels/jam.webp",
+      "pass": true
+    },
+    {
+      "name": "photo toggle",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "name": "mobile sticker menu",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "name": "hero drag",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "name": "hero labels",
+      "width": 390,
+      "labels": [
+        "Your Brand kombucha label, white bopp, gloss, wrap-around",
+        "Your Brand olive oil label, white bopp, matte, arched",
+        "Your Brand jam label, white bopp, gloss, rectangle",
+        "Night Shift Coffee sticker, matte paper, arch die-cut",
+        "Label Bros sticker, holographic vinyl, die-cut",
+        "Thank-you packaging seal sticker, kraft paper, circle",
+        "New flavour burst sticker, glitter vinyl, starburst"
+      ]
+    },
+    {
+      "name": "hero reset",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "name": "two-item cart",
+      "width": 390,
+      "count": 2,
+      "pass": true,
+      "thumbs": true
+    },
+    {
+      "name": "overflow",
+      "width": 375,
+      "route": "/",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 375,
+      "route": "/labels",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 375,
+      "route": "/stickers",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 375,
+      "route": "/shop",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 375,
+      "route": "/business",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 375,
+      "route": "/shop/food-labels",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 375,
+      "route": "/shop/vinyl-stickers",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 375,
+      "route": "/shop/sample-pack",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 390,
+      "route": "/",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 390,
+      "route": "/labels",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 390,
+      "route": "/stickers",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 390,
+      "route": "/shop",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 390,
+      "route": "/business",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 390,
+      "route": "/shop/food-labels",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 390,
+      "route": "/shop/vinyl-stickers",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 390,
+      "route": "/shop/sample-pack",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 768,
+      "route": "/",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 768,
+      "route": "/labels",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 768,
+      "route": "/stickers",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 768,
+      "route": "/shop",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 768,
+      "route": "/business",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 768,
+      "route": "/shop/food-labels",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 768,
+      "route": "/shop/vinyl-stickers",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 768,
+      "route": "/shop/sample-pack",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1280,
+      "route": "/",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1280,
+      "route": "/labels",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1280,
+      "route": "/stickers",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1280,
+      "route": "/shop",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1280,
+      "route": "/business",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1280,
+      "route": "/shop/food-labels",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1280,
+      "route": "/shop/vinyl-stickers",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1280,
+      "route": "/shop/sample-pack",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1920,
+      "route": "/",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1920,
+      "route": "/labels",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1920,
+      "route": "/stickers",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1920,
+      "route": "/shop",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1920,
+      "route": "/business",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1920,
+      "route": "/shop/food-labels",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1920,
+      "route": "/shop/vinyl-stickers",
+      "pass": true
+    },
+    {
+      "name": "overflow",
+      "width": 1920,
+      "route": "/shop/sample-pack",
+      "pass": true
+    }
+  ]
+}

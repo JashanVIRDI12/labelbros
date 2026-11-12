@@ -12,21 +12,21 @@ export const CONTACT_TOPICS = [
 export type ContactTopic = (typeof CONTACT_TOPICS)[number]["id"];
 
 export const BUSINESS_KINDS = [
-  { id: "shipping", label: "Shipping and address" },
-  { id: "asset", label: "Asset tags" },
-  { id: "warning", label: "Warning and safety" },
-  { id: "inspection", label: "Inspection and QC" },
-  { id: "bin", label: "Bin and shelf" },
-  { id: "badge", label: "Name badges" },
-  { id: "product", label: "Product labels" },
+  { id: "food", label: "Food" },
+  { id: "beverage", label: "Drinks" },
+  { id: "cosmetic", label: "Cosmetics and skincare" },
+  { id: "candle", label: "Candles and home" },
+  { id: "coffee", label: "Coffee and tea" },
+  { id: "retail", label: "Retail packaging" },
+  { id: "shipping", label: "Shipping and warehouse" },
   { id: "other", label: "Something else" },
 ] as const;
 
 export const BUSINESS_VOLUME = [
-  { id: "under-500", label: "Under 500" },
-  { id: "500-5k", label: "500 to 5,000" },
-  { id: "5k-50k", label: "5,000 to 50,000" },
-  { id: "50k-plus", label: "Over 50,000" },
+  { id: "1k-10k", label: "1,000 to 10,000" },
+  { id: "10k-50k", label: "10,000 to 50,000" },
+  { id: "50k-100k", label: "50,000 to 100,000" },
+  { id: "100k-plus", label: "Over 100,000" },
 ] as const;
 
 export const BUSINESS_OFTEN = [

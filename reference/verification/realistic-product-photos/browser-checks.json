@@ -1,0 +1,408 @@
+{
+  "checks": 48,
+  "results": [
+    {
+      "path": "/shop/custom-labels",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/custom-labels",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/roll-labels",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/food-labels",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/roll-labels",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/beverage-labels",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/bottle-labels",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/food-labels",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/coffee-labels",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/beverage-labels",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/candle-labels",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/bottle-labels",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/cosmetic-labels",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/circle-labels",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/coffee-labels",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/sheet-labels",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/candle-labels",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/vinyl-stickers",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/cosmetic-labels",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/clear-stickers",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/holographic-stickers",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/circle-labels",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/glitter-stickers",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/kraft-stickers",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/sheet-labels",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/metallic-stickers",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/50-3in-custom-stickers",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/vinyl-stickers",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/250-3in-vinyl-stickers",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/clear-stickers",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/sample-pack",
+      "width": 390,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/",
+      "width": 390,
+      "newPhotoReferences": 16,
+      "overflow": false
+    },
+    {
+      "path": "/shop/holographic-stickers",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/labels",
+      "width": 390,
+      "newPhotoReferences": 10,
+      "overflow": false
+    },
+    {
+      "path": "/shop/glitter-stickers",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/stickers",
+      "width": 390,
+      "newPhotoReferences": 9,
+      "overflow": false
+    },
+    {
+      "path": "/shop/kraft-stickers",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop",
+      "width": 390,
+      "newPhotoReferences": 19,
+      "overflow": false
+    },
+    {
+      "path": "/shop/metallic-stickers",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/business",
+      "width": 390,
+      "newPhotoReferences": 16,
+      "overflow": false
+    },
+    {
+      "path": "/shop/50-3in-custom-stickers",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/250-3in-vinyl-stickers",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/shop/sample-pack",
+      "width": 1440,
+      "photo": true,
+      "thumbnail": true,
+      "alt": true,
+      "fit": "contain",
+      "overflow": false
+    },
+    {
+      "path": "/",
+      "width": 1440,
+      "newPhotoReferences": 16,
+      "overflow": false
+    },
+    {
+      "path": "/labels",
+      "width": 1440,
+      "newPhotoReferences": 10,
+      "overflow": false
+    },
+    {
+      "path": "/stickers",
+      "width": 1440,
+      "newPhotoReferences": 9,
+      "overflow": false
+    },
+    {
+      "path": "/shop",
+      "width": 1440,
+      "newPhotoReferences": 19,
+      "overflow": false
+    },
+    {
+      "path": "/business",
+      "width": 1440,
+      "newPhotoReferences": 16,
+      "overflow": false
+    }
+  ],
+  "errors": []
+}

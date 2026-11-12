@@ -1,0 +1,773 @@
+/* ---------- Policy pages (PolicyPage.tsx) and About ---------- */
+
+/* the text sits on a cream liner sheet; "On this page" rides beside it on wide screens */
+.pol {
+  display: grid;
+  gap: 28px;
+  padding: 0 var(--gutter) clamp(72px, 12svh, 140px);
+}
+@media (min-width: 1024px) {
+  .pol {
+    grid-template-columns: minmax(200px, 260px) minmax(0, 820px);
+    gap: clamp(36px, 5vw, 80px);
+  }
+}
+
+.pol-toc {
+  align-self: start;
+}
+@media (min-width: 1024px) {
+  .pol-toc {
+    position: sticky;
+    top: 28px;
+  }
+}
+.pol-toc-title {
+  margin-bottom: 10px;
+  font-size: var(--text-14);
+  font-weight: 650;
+  color: var(--color-liner-soft);
+}
+.pol-toc ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+@media (min-width: 1024px) {
+  .pol-toc ol {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+.pol-toc a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  font-size: var(--text-15);
+  font-weight: 600;
+  color: var(--color-liner-soft);
+  transition: color 0.2s var(--ease-out);
+}
+@media (min-width: 1024px) {
+  .pol-toc a {
+    padding-left: 20px;
+  }
+  /* a small yellow tab marks the section being read */
+  .pol-toc a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px 3px 1px 3px;
+    background: var(--color-signal);
+    transform: translateY(-50%) scale(0) rotate(-20deg);
+    transition: transform 0.35s var(--ease-slap, cubic-bezier(0.2, 0.9, 0.1, 1));
+  }
+  .pol-toc a[aria-current]::before {
+    transform: translateY(-50%) scale(1) rotate(-8deg);
+  }
+}
+.pol-toc a:hover,
+.pol-toc a[aria-current] {
+  color: var(--color-liner);
+}
+
+.pol-doc {
+  --muted: #4a463d; /* 8.6:1 on liner */
+  min-width: 0;
+  padding: clamp(22px, 4vw, 56px) clamp(20px, 4.5vw, 64px);
+  border-radius: 18px 18px 5px 18px;
+  background: var(--color-liner);
+  color: var(--color-ink);
+}
+.pol-doc .crumbs ol {
+  color: var(--muted);
+}
+.pol-doc .crumbs [aria-current] {
+  color: var(--color-ink);
+}
+.pol-meta {
+  margin-bottom: clamp(20px, 3svh, 32px);
+  padding-bottom: 18px;
+  border-bottom: 1px dashed color-mix(in srgb, var(--color-ink) 28%, transparent);
+  font-size: var(--text-14);
+  color: var(--muted);
+}
+
+.pol-sec {
+  scroll-margin-top: 24px;
+}
+.pol-sec + .pol-sec {
+  margin-top: clamp(28px, 4svh, 44px);
+}
+.pol-sec h2 {
+  margin-bottom: 12px;
+  font-size: clamp(1.3rem, 1.1rem + 0.9vw, 1.75rem);
+  font-weight: 850;
+  font-stretch: 108%;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+}
+.pol-sec p,
+.pol-sec li {
+  max-width: 68ch;
+  font-size: var(--text-16);
+  line-height: 1.65;
+}
+.pol-sec p + p,
+.pol-sec p + ul,
+.pol-sec p + ol,
+.pol-sec ul + p,
+.pol-sec ol + p {
+  margin-top: 12px;
+}
+.pol-sec ul,
+.pol-sec ol {
+  display: grid;
+  gap: 8px;
+  margin-top: 4px;
+}
+.pol-sec ul li {
+  position: relative;
+  padding-left: 22px;
+}
+/* bullets are tiny die-cut squares */
+.pol-sec ul li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.62em;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px 2px 1px 2px;
+  background: var(--color-ink);
+  transform: rotate(-8deg);
+}
+.pol-sec ol {
+  counter-reset: step;
+}
+.pol-sec ol li {
+  position: relative;
+  padding-left: 40px;
+  counter-increment: step;
+}
+.pol-sec ol li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0.05em;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px 8px 3px 8px;
+  background: var(--color-ink);
+  color: var(--color-liner);
+  font-size: var(--text-14);
+  font-weight: 800;
+}
+.pol-doc a:not(.btn) {
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+.pol-doc a:not(.btn):hover {
+  text-decoration-color: var(--color-field);
+  color: var(--color-field);
+}
+.pol-doc :focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--color-signal);
+}
+
+.pol-ask {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 24px;
+  margin-top: clamp(32px, 5svh, 56px);
+  padding-top: 22px;
+  border-top: 1px dashed color-mix(in srgb, var(--color-ink) 28%, transparent);
+}
+.pol-ask p {
+  font-size: var(--text-16);
+}
+
+/* ---------- About ---------- */
+
+.ab {
+  display: grid;
+  gap: clamp(56px, 10svh, 120px);
+  padding: clamp(24px, 6svh, 72px) var(--gutter) clamp(72px, 12svh, 140px);
+}
+.ab-split {
+  display: grid;
+  gap: 28px;
+  align-items: start;
+}
+@media (min-width: 1024px) {
+  .ab-split {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(36px, 5vw, 88px);
+  }
+}
+.ab-title {
+  font-size: clamp(2.2rem, 1.4rem + 3.4vw, 4.4rem);
+  font-weight: 900;
+  font-stretch: 112%;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+.ab-sub {
+  margin-top: 16px;
+  max-width: 40ch;
+  color: var(--color-liner-soft);
+  font-size: var(--text-18);
+  line-height: 1.5;
+}
+
+/* what you can count on: a sheet of promises, each one a flat die-cut label */
+.ab-promises {
+  display: grid;
+  gap: 14px;
+}
+@media (min-width: 640px) {
+  .ab-promises {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .ab-promises {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.ab-promise {
+  padding: 22px 22px 20px;
+  border-radius: 16px 16px 4px 16px;
+  background: var(--color-liner);
+  color: var(--color-ink);
+}
+.ab-promise:nth-child(3n + 2) {
+  background: var(--color-signal);
+}
+.ab-promise b {
+  display: block;
+  font-size: var(--text-20);
+  font-weight: 850;
+  line-height: 1.15;
+}
+.ab-promise span {
+  display: block;
+  margin-top: 8px;
+  font-size: var(--text-15);
+  line-height: 1.5;
+}
+
+/* the team: photo frames waiting for real photos */
+.ab-team {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 300px));
+}
+.ab-person {
+  padding: 12px 12px 18px;
+  border-radius: 14px 14px 4px 14px;
+  background: var(--color-liner);
+  color: var(--color-ink);
+}
+.ab-photo {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 5;
+  border: 2px dashed color-mix(in srgb, var(--color-ink) 30%, transparent);
+  border-radius: 10px 10px 3px 10px;
+  background: var(--color-backing);
+  padding: 12px;
+  text-align: center;
+  font-size: var(--text-14);
+}
+.ab-person b {
+  display: block;
+  margin-top: 14px;
+  font-weight: 800;
+}
+.ab-person span {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--text-14);
+  color: #4a463d;
+}
+
+/* Printed in Canada: the leaf as a sticker, the address beside it */
+.ab-made {
+  display: grid;
+  gap: 28px;
+  align-items: center;
+  padding: clamp(24px, 4vw, 56px);
+  border-radius: 22px 22px 6px 22px;
+  background: var(--color-field-deep);
+}
+@media (min-width: 768px) {
+  .ab-made {
+    grid-template-columns: auto 1fr;
+    gap: clamp(28px, 4vw, 64px);
+  }
+}
+.ab-leaf {
+  display: grid;
+  place-items: center;
+  width: clamp(120px, 16vw, 180px);
+  aspect-ratio: 1;
+  border: 6px solid #fff;
+  border-radius: 50%;
+  background: #d52b1e; /* sticker art may carry any colour */
+  color: #fff;
+  box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.45);
+  transform: rotate(-8deg);
+}
+.ab-leaf svg {
+  width: 58%;
+}
+.ab-made dl {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+.ab-made dt {
+  font-size: var(--text-14);
+  color: var(--color-liner-soft);
+}
+.ab-made dd {
+  font-size: var(--text-18);
+  font-weight: 650;
+}
+
+/* ---------- Trust strip and payment marks (Trust.tsx) ---------- */
+
+.trust {
+  padding: clamp(28px, 5svh, 48px) var(--gutter);
+}
+.trust-list {
+  display: grid;
+  gap: 22px 28px;
+}
+@media (min-width: 640px) {
+  .trust-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1100px) {
+  .trust:not(.trust-compact) .trust-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.trust-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 4px 14px;
+}
+.trust-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--color-liner);
+}
+.trust-text b {
+  display: block;
+  font-size: var(--text-16);
+  font-weight: 800;
+  line-height: 1.25;
+}
+.trust-text > span {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--text-14);
+  line-height: 1.4;
+  color: var(--color-liner-soft);
+}
+.trust-link {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  text-underline-offset: 3px;
+}
+.trust-link:hover {
+  text-decoration-color: var(--color-signal);
+}
+/* the one sticker in the strip: a red leaf on a white die-cut disc */
+.trust-leaf {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 2.5px solid #fff;
+  border-radius: 50%;
+  background: #d52b1e;
+  color: #fff;
+  box-shadow: 0 4px 10px -4px rgb(0 0 0 / 0.5);
+  transform: rotate(-10deg);
+}
+.trust-leaf svg {
+  width: 62%;
+}
+.trust .trust-pay {
+  grid-column: 2;
+  margin-top: 8px;
+}
+.trust-compact {
+  padding: 22px 0 0;
+}
+.trust-compact .trust-list {
+  gap: 16px 22px;
+}
+.trust-compact > .trust-pay {
+  margin-top: 18px;
+}
+
+.pay-marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+/* long placeholders wrap inside their cards */
+.pol-doc .ph,
+.rv .ph,
+.ab .ph,
+.trust .ph,
+.cp-ways .ph,
+.signup .ph {
+  white-space: normal;
+}
+.pay-marks li {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 24px;
+}
+.pay-logo {
+  display: block;
+  width: 38px;
+  height: 24px;
+}
+
+/* ---------- Reviews (Reviews.tsx) ---------- */
+
+.rv {
+  padding: clamp(80px, 13svh, 150px) var(--gutter);
+}
+.rv-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px 40px;
+}
+.rv-sum {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  max-width: 44ch;
+  font-size: var(--text-16);
+  line-height: 1.5;
+  color: var(--color-liner-soft);
+}
+.rv-sum b {
+  color: var(--color-liner);
+  font-size: var(--text-20);
+}
+.rv-sum .rv-stars svg {
+  fill: none;
+  stroke: var(--color-liner);
+}
+.rv-sum .rv-stars svg[data-on] {
+  fill: var(--color-signal);
+  stroke: var(--color-signal);
+}
+.rv-list {
+  display: grid;
+  gap: clamp(18px, 2.4vw, 30px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  margin-top: clamp(32px, 5svh, 56px);
+}
+/* each review is a cream label slapped on the table */
+.rv-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: clamp(22px, 2.4vw, 32px);
+  border-radius: 18px 18px 5px 18px;
+  background: var(--color-liner);
+  color: var(--color-ink);
+  box-shadow:
+    0 1px 0 rgb(0 0 0 / 0.08),
+    0 16px 30px -18px rgb(0 0 0 / 0.6);
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 0.45s var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .rv-card:hover {
+    transform: rotate(0deg) translateY(-4px);
+  }
+}
+/* stand-in reviews say so (lib/reviews.ts SAMPLE_REVIEWS) */
+.rv-sample {
+  align-self: flex-start;
+  margin-bottom: 2px;
+  padding: 3px 8px 2px;
+  border: 1.5px dashed currentColor;
+  border-radius: 6px 6px 2px 6px;
+  font-size: 12px;
+  font-weight: 750;
+  color: var(--color-ink-soft);
+}
+.rv-stars {
+  display: inline-flex;
+  gap: 2px;
+}
+.rv-stars svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+}
+.rv-stars svg[data-on] {
+  fill: var(--color-ink);
+}
+.rv-text p,
+p.rv-text {
+  font-size: var(--text-18);
+  font-weight: 600;
+  line-height: 1.45;
+}
+.rv-who {
+  margin-top: auto;
+  font-size: var(--text-15);
+}
+.rv-who b {
+  display: block;
+  font-weight: 800;
+}
+.rv-who span,
+.rv-product {
+  display: block;
+  font-size: var(--text-14);
+  color: #4a463d;
+}
+.rv-empty .rv-text {
+  padding: 14px;
+  border: 2px dashed color-mix(in srgb, var(--color-ink) 28%, transparent);
+  border-radius: 10px;
+  font-size: var(--text-16);
+}
+
+/* ---------- Email sign-up (Signup.tsx) ---------- */
+
+.signup {
+  max-width: 520px;
+  margin-top: clamp(36px, 6svh, 56px);
+}
+.signup-title {
+  font-size: var(--text-20);
+  font-weight: 850;
+  line-height: 1.2;
+}
+.signup-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.signup-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 2px solid transparent;
+  border-radius: 12px 12px 3px 12px;
+  background: var(--color-liner);
+  color: var(--color-ink);
+  font-size: var(--text-16);
+}
+.signup-input::placeholder {
+  color: #6b665b;
+}
+.signup-input:focus-visible {
+  outline: 3px solid var(--color-signal);
+  outline-offset: 2px;
+}
+.signup-input[aria-invalid="true"] {
+  border-color: var(--color-signal);
+}
+.signup-btn {
+  min-height: 48px;
+  flex: none;
+}
+.signup-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+  font-size: var(--text-14);
+  line-height: 1.45;
+  cursor: pointer;
+}
+.signup-consent input {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  accent-color: var(--color-signal);
+  cursor: pointer;
+}
+.signup-consent input:focus-visible {
+  outline: 3px solid var(--color-signal);
+  outline-offset: 2px;
+}
+.signup-note {
+  margin-top: 10px;
+  font-size: var(--text-13);
+  line-height: 1.5;
+  color: var(--color-liner-soft);
+}
+.signup-note a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.signup-error {
+  margin-top: 8px;
+  font-size: var(--text-14);
+  font-weight: 700;
+  color: var(--color-signal);
+}
+
+/* ---------- Footer policy links ---------- */
+
+.footer-legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 18px;
+}
+.footer-legal-links a {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.25s var(--ease-out);
+}
+.footer-legal-links a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ---------- Track my order (TrackForm.tsx) ---------- */
+
+.trackpage-body {
+  padding: 0 var(--gutter) clamp(72px, 12svh, 140px);
+}
+.track {
+  display: grid;
+  gap: 24px;
+  align-items: start;
+}
+@media (min-width: 1024px) {
+  .track {
+    grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+    gap: clamp(28px, 4vw, 64px);
+  }
+}
+.track-form {
+  display: grid;
+  gap: 16px;
+}
+.track-btn {
+  justify-self: start;
+}
+.track-help {
+  font-size: var(--text-14);
+  color: var(--muted);
+}
+.track-help a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.track-result {
+  padding: clamp(20px, 3vw, 36px);
+  border-radius: 18px 18px 5px 18px;
+  background: var(--color-field-deep);
+}
+.track-result:focus {
+  outline: none;
+}
+.track-ref {
+  font-size: var(--text-14);
+  font-weight: 800;
+  color: var(--color-liner-soft);
+}
+.track-summary {
+  margin-top: 4px;
+  font-size: var(--text-20);
+  font-weight: 800;
+  line-height: 1.3;
+}
+.track-state {
+  margin-top: 16px;
+  color: var(--color-liner-soft);
+}
+.track-steps {
+  display: grid;
+  gap: 0;
+  margin-top: 22px;
+}
+.track-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 14px;
+  padding-bottom: 20px;
+}
+/* the line between steps */
+.track-step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 26px;
+  bottom: 0;
+  width: 2px;
+  background: rgb(201 209 255 / 0.3);
+}
+.track-step[data-state="done"]::before {
+  background: var(--color-signal);
+}
+.track-dot {
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgb(201 209 255 / 0.5);
+  border-radius: 50%;
+}
+.track-step[data-state="done"] .track-dot {
+  border-color: var(--color-signal);
+  background: var(--color-signal);
+}
+.track-step[data-state="now"] .track-dot {
+  border: 7px solid var(--color-signal);
+  background: var(--color-field-deep);
+}
+.track-step b {
+  display: block;
+  font-weight: 800;
+}
+.track-step small {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--text-14);
+  color: var(--color-liner-soft);
+}
+.track-step[data-state="next"] b {
+  color: var(--color-liner-soft);
+}

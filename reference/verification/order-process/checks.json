@@ -1,0 +1,259 @@
+{
+  "pageChecks": 28,
+  "results": [
+    {
+      "width": 375,
+      "route": "/how-it-works",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 375,
+      "route": "/shop/food-labels",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 375,
+      "route": "/shop/vinyl-stickers",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 375,
+      "route": "/shop/sample-pack",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/how-it-works",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/shop/food-labels",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/shop/vinyl-stickers",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/shop/sample-pack",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/how-it-works",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/shop/food-labels",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/shop/vinyl-stickers",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/shop/sample-pack",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/how-it-works",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/shop/food-labels",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/shop/vinyl-stickers",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/shop/sample-pack",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "route": "/how-it-works",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "route": "/shop/food-labels",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "route": "/shop/vinyl-stickers",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "route": "/shop/sample-pack",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/how-it-works",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/shop/food-labels",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/shop/vinyl-stickers",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/shop/sample-pack",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "route": "/how-it-works",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "route": "/shop/food-labels",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "route": "/shop/vinyl-stickers",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "route": "/shop/sample-pack",
+      "stages": true,
+      "keyboard": true,
+      "next": true,
+      "cta": true,
+      "overflow": false
+    }
+  ],
+  "noJavaScript": true,
+  "errors": []
+}

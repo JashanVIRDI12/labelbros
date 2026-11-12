@@ -1,7 +1,11 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+<<<<<<< Updated upstream
 import type { Finish } from "./facts";
+=======
+import type { ArtworkId, FinishId, FormatId, MaterialId, ShapeId } from "./options";
+>>>>>>> Stashed changes
 
 /*
  * The cart, in the visitor's browser: the lines in localStorage (they survive reloads), each
@@ -13,17 +17,27 @@ import type { Finish } from "./facts";
 export type CartLine = {
   id: string;
   slug: string;
-  finish: Finish;
-  size?: number;
-  qty?: number;
+  shape: ShapeId;
+  w: number;
+  h: number;
+  material: MaterialId;
+  finish: FinishId;
+  format: FormatId;
+  qty: number;
+  /** deals: how many packs; custom lines: 1 */
   packs: number;
+<<<<<<< Updated upstream
   artwork: "upload" | "design";
+=======
+  /** their file, ours to design, sent after ordering, or none needed (the sample pack) */
+  artwork: ArtworkId;
+>>>>>>> Stashed changes
   fileName?: string;
   fileSize?: number;
   notes?: string;
 };
 
-const KEY = "lb-cart";
+const KEY = "lb-cart-v2"; // v2: labels (2026-11-11); older carts are left behind
 const EVENT = "lb-cart";
 let memory: CartLine[] = [];
 let cache: { raw: string | null; lines: CartLine[] } = { raw: null, lines: [] };

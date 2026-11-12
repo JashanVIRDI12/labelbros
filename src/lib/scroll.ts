@@ -2,13 +2,13 @@
 
 /*
  * Scroll motion for the sections below the hero. Imported only by the lazy section modules,
- * so ScrollTrigger and DrawSVG never weigh on the first screen.
+ * so ScrollTrigger and SplitText never weigh on the first screen.
  */
 import { gsap } from "./gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
+import { SplitText } from "gsap/SplitText";
 
-gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 // Late web fonts change line heights, and with them every trigger position.
 let fontsHooked = false;
@@ -20,4 +20,6 @@ if (typeof document !== "undefined" && !fontsHooked) {
 export const reducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-export { gsap, ScrollTrigger };
+export const reduced = reducedMotion;
+
+export { gsap, ScrollTrigger, SplitText };

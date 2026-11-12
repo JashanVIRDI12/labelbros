@@ -693,7 +693,59 @@ const approved: StickerDesign = {
   },
 };
 
+/* ---------------------------------------------------------------- product labels
+ * The flat labels shared with the shop's product photographs, so the table shows the labels
+ * Label Bros prints for products, beside the stickers. Each has a plain drawn stand-in in case
+ * its image can't load: the label's shape and colour, with its name. */
+
+function flatLabel(
+  o: { id: string; name: string; spec: string; finish: Finish; src: string; px: [number, number]; w: number; fill: string; ink: string; title: string; sub: string; arch?: boolean },
+): StickerDesign {
+  const h = Math.round((o.w * o.px[1]) / o.px[0]);
+  return {
+    id: o.id,
+    name: o.name,
+    spec: o.spec,
+    finish: o.finish,
+    w: o.w,
+    h,
+    border: 0,
+    image: { src: o.src, w: o.w, h },
+    draw(ctx, f) {
+      const { w } = this;
+      const r = Math.min(w, h) * 0.08;
+      ctx.beginPath();
+      if (o.arch) {
+        ctx.moveTo(0, h);
+        ctx.lineTo(0, w / 2);
+        ctx.arc(w / 2, w / 2, w / 2, Math.PI, 0);
+        ctx.lineTo(w, h);
+        ctx.closePath();
+      } else ctx.roundRect(0, 0, w, h, r);
+      ctx.fillStyle = o.fill;
+      ctx.fill();
+      ctx.fillStyle = o.ink;
+      ctx.textAlign = "center";
+      capFont(ctx, 900, Math.min(w, h) * 0.13, f.sans, "expanded", { text: o.title, max: w * 0.84 });
+      ctx.fillText(o.title, w / 2, h * 0.56);
+      capFont(ctx, 700, Math.min(w, h) * 0.045, f.sans, undefined, { text: o.sub, max: w * 0.8, tracking: 1.4 });
+      tracked(ctx, o.sub, w / 2, h * 0.68, 1.4);
+    },
+  };
+}
+
+// "Your Brand" labels from the shop's 3D products (public/products): the labels Label Bros prints,
+// with the visitor's brand where a company's would be, never a real company
+const tidewater = flatLabel({ id: "tidewater", name: "Your Brand kombucha label", spec: "White BOPP, gloss, wrap-around", finish: "gloss", src: "/products/labels/kombucha.webp", px: [720, 383], w: 232, fill: "#17535a", ink: "#f2e8d4", title: "YOUR BRAND", sub: "SPARKLING KOMBUCHA" });
+const oldHarbor = flatLabel({ id: "old-harbor", name: "Your Brand olive oil label", spec: "White BOPP, matte, arched", finish: "matte", src: "/products/labels/olive-oil.webp", px: [564, 720], w: 138, fill: "#f3eddc", ink: "#3d4a1c", title: "YOUR BRAND", sub: "EXTRA VIRGIN OLIVE OIL", arch: true });
+const sundayJam = flatLabel({ id: "sunday-jam", name: "Your Brand jam label", spec: "White BOPP, gloss, rectangle", finish: "gloss", src: "/products/labels/jam.webp", px: [720, 334], w: 236, fill: "#f7efdf", ink: "#c21f2f", title: "YOUR BRAND", sub: "STRAWBERRY JAM" });
+const wildFern = flatLabel({ id: "wild-fern", name: "Your Brand face oil label", spec: "White paper, matte", finish: "matte", src: "/products/labels/face-oil.webp", px: [720, 497], w: 168, fill: "#aab69c", ink: "#2f4128", title: "YOUR BRAND", sub: "BOTANICAL FACE OIL" });
+
 export const DESIGNS: StickerDesign[] = [
+  tidewater,
+  oldHarbor,
+  sundayJam,
+  wildFern,
   fireEscape,
   nightShift,
   beeline,

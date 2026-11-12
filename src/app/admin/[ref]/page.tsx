@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { requireAdmin } from "@/server/auth";
 import { env, ready } from "@/server/env";
-import { KIND_LABEL, STATUSES, counts, getJob, nextStatus, statusLabel, type Kind } from "@/server/inbox";
-import { changeStatus, saveNotes } from "../actions";
+import { INVOICE_DAYS } from "@/lib/facts";
+import { KIND_LABEL, STATUSES, counts, getJob, listProofs, nextStatus, statusLabel, type Kind } from "@/server/inbox";
+import { changeStatus, saveNotes, sendOrderInvoice, sendProof } from "../actions";
 import { dateTime, money } from "../format";
 import { AdminShell, Due, SpecGlyph, StatusMark, specOf, type Section } from "../ui";
 
@@ -16,14 +17,22 @@ import { AdminShell, Due, SpecGlyph, StatusMark, specOf, type Section } from "..
  */
 
 type Params = Promise<{ ref: string }>;
+type Search = Promise<{ proof?: string; invoice?: string }>;
 
-export default function JobPage({ params }: { params: Params }) {
+export default function JobPage({ params, searchParams }: { params: Params; searchParams: Search }) {
   return (
     <Suspense fallback={<p className="adm-loading">Loading…</p>}>
-      <Job params={params} />
+      <Job params={params} searchParams={searchParams} />
     </Suspense>
   );
 }
+
+const PROOF_NOTE: Record<string, string> = {
+  sent: "Proof saved and emailed to the customer.",
+  link: "Proof saved. Email isn’t set up, so copy its link below and send it to the customer.",
+  type: "Proofs can be PNG, JPG, WEBP or PDF.",
+  big: "That proof is too big. Save it smaller (under 4 MB).",
+};
 
 type Address = { line1?: string; line2?: string; city?: string; state?: string; postal_code?: string; country?: string };
 type Shipping = { name?: string; address?: Address; cost?: number; tax?: number; custom?: { key: string; value: string | null }[] };
@@ -49,28 +58,37 @@ const kb = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)} MB` : `${Math.max
 const short = (label: string) => label.replace(/:.*/, "");
 const str = (v: unknown) => (typeof v === "string" && v ? v : undefined);
 
-async function Job({ params }: { params: Params }) {
+async function Job({ params, searchParams }: { params: Params; searchParams: Search }) {
   await requireAdmin();
   const { ref } = await params;
+  const flash = await searchParams;
   if (!/^LB-[A-Z0-9]{6}$/.test(ref) || !ready.db()) notFound();
   // the job, its files and history in one query, the sidebar counts beside it
   const [s, tally] = await Promise.all([getJob(ref), counts()]);
   if (!s) notFound();
   const { files, events } = s;
+  const proofs = s.kind === "order" ? await listProofs(s.id) : [];
 
   const d = s.details as Record<string, unknown>;
   const spec = specOf(s);
   const ship = s.shipping as Shipping | null;
   const a = ship?.address;
   const kitSize = ship?.custom?.find((c) => c.key === "size")?.value;
-  const path = PATH[s.kind];
-  const at = path.indexOf(s.status);
+  // invoice orders: proofs and payment run side by side, so the steps follow the artwork and the
+  // payment is shown in its own panel ("Check artwork" covers requested, invoiced and paid)
+  const byInvoice = s.kind === "order" && d.payment === "invoice";
+  const path = byInvoice ? ["invoice_requested", ...PATH.order.slice(2)] : PATH[s.kind];
+  const shown = byInvoice && ["invoiced", "paid"].includes(s.status) ? "invoice_requested" : s.status === "changes" ? "proof_sent" : s.status;
+  const at = path.indexOf(shown);
+  const stepLabel = (st: string) => (byInvoice && st === "invoice_requested" ? "Check artwork" : short(statusLabel(s.kind, st)));
+  const invoice = (d.invoice ?? null) as { id: string; url: string | null; number: string | null; cents: number } | null;
+  const billing = (d.billing ?? null) as Record<string, string | undefined> | null;
   const stopped = at < 0;
   const next = nextStatus(s.kind, s.status);
   const section = SECTION[s.kind];
   const stripeBase = `https://dashboard.stripe.com${env.stripeSecretKey.startsWith("sk_test") ? "/test" : ""}`;
   const subject = encodeURIComponent(`Your Label Bros ${s.kind === "order" || s.kind === "sample_kit" ? "order" : "enquiry"} ${s.ref}`);
-  type Line = { product: string; summary: string; packs: number; cents: number; artwork: string; design_for_them?: string; notes?: string };
+  type Line = { product: string; summary: string; packs: number; cents: number; artwork: string; design_for_them?: string; bulk?: string; notes?: string };
   const items = Array.isArray(d.items) ? (d.items as Line[]) : null;
   const isJob = (s.kind === "order" || s.kind === "quote") && !items;
   const message = str(d.message);
@@ -104,7 +122,7 @@ async function Job({ params }: { params: Params }) {
                 <span className="adm-step-dot" aria-hidden="true">
                   {i < at ? "✓" : i + 1}
                 </span>
-                <span className="adm-step-label">{short(statusLabel(s.kind, st))}</span>
+                <span className="adm-step-label">{stepLabel(st)}</span>
               </li>
             ))}
           </ol>
@@ -155,6 +173,7 @@ async function Job({ params }: { params: Params }) {
                       <b>
                         {it.product}
                         {it.design_for_them && <span className="adm-flag">We design it</span>}
+                        {it.bulk && <span className="adm-flag adm-flag-bulk">Bulk</span>}
                       </b>
                       <span>{it.summary}</span>
                       <span className="adm-muted">{it.artwork}</span>
@@ -283,6 +302,121 @@ async function Job({ params }: { params: Params }) {
                 {str(d.order_number) && <span className="adm-muted">Order {str(d.order_number)}</span>}
               </div>
               <blockquote className="adm-quote">{message ?? theirNotes}</blockquote>
+            </section>
+          )}
+
+          {byInvoice && (
+            <section className="adm-panel" id="invoice" aria-labelledby="invoice-title">
+              <div className="adm-panel-head">
+                <h2 id="invoice-title">Pay by invoice</h2>
+                <span className={s.paid_at ? "adm-flag" : "adm-flag adm-flag-inv"}>{s.paid_at ? "Paid" : invoice ? `Sent${invoice.number ? ` · ${invoice.number}` : ""}` : "Invoice to send"}</span>
+              </div>
+              {flash.invoice === "sent" && <p className="adm-flash">Invoice sent by Stripe to {s.email}.</p>}
+              {flash.invoice === "error" && <p className="adm-flash adm-flash-bad">Stripe couldn’t send the invoice. Check the Stripe keys and the billing address, then try again.</p>}
+              {billing && (
+                <dl className="adm-spec adm-spec-row">
+                  <div>
+                    <dt>Business</dt>
+                    <dd>{billing.company ?? "—"}</dd>
+                  </div>
+                  <div>
+                    <dt>Billing address</dt>
+                    <dd className="adm-address">{[billing.line1, billing.line2, [billing.city, billing.state, billing.postal_code].filter(Boolean).join(" "), billing.country].filter(Boolean).join("\n")}</dd>
+                  </div>
+                  <div>
+                    <dt>PO number</dt>
+                    <dd>{billing.po ?? "—"}</dd>
+                  </div>
+                </dl>
+              )}
+              {!invoice && !s.paid_at ? (
+                ready.stripe() ? (
+                  <form action={sendOrderInvoice} className="adm-form">
+                    <input type="hidden" name="ref" value={s.ref} />
+                    <p className="adm-muted">Check the artwork (and send the proof, before or after). Stripe emails the invoice ({money(s.amount_cents, s.currency)} for the items, plus shipping and any tax) and marks the order paid here when it is paid.</p>
+                    <div className="adm-form-row">
+                      <label>
+                        <span>Shipping ({s.currency.toUpperCase()})</span>
+                        <input name="shipping" type="number" min="0" step="0.01" defaultValue="0" className="adm-input" />
+                      </label>
+                      <label>
+                        <span>Due in (days)</span>
+                        <input name="days" type="number" min="0" max="90" defaultValue={INVOICE_DAYS} className="adm-input" />
+                      </label>
+                    </div>
+                    <label>
+                      <span>Note on the invoice (optional)</span>
+                      <input name="note" maxLength={1500} className="adm-input" placeholder="We print once your proof is approved and this invoice is paid." />
+                    </label>
+                    <button type="submit" className="adm-btn adm-btn-primary">
+                      Send Stripe invoice →
+                    </button>
+                  </form>
+                ) : (
+                  <p className="adm-muted">Add STRIPE_SECRET_KEY to send invoices from here.</p>
+                )
+              ) : invoice ? (
+                <p className="adm-muted">
+                  {s.paid_at ? "Paid. " : "Sent, waiting for payment. "}
+                  {invoice.url && (
+                    <a href={invoice.url} target="_blank" rel="noopener noreferrer" className="adm-link">
+                      The invoice ↗
+                    </a>
+                  )}{" "}
+                  <a href={`${stripeBase}/invoices/${invoice.id}`} target="_blank" rel="noopener noreferrer" className="adm-link">
+                    In Stripe ↗
+                  </a>
+                </p>
+              ) : null}
+            </section>
+          )}
+
+          {s.kind === "order" && (
+            <section className="adm-panel" id="proofs" aria-labelledby="proofs-title">
+              <div className="adm-panel-head">
+                <h2 id="proofs-title">Proofs</h2>
+                <span className="adm-muted">{proofs.length ? `${proofs.length} sent` : "None sent yet"}</span>
+              </div>
+              {flash.proof && PROOF_NOTE[flash.proof] && <p className={flash.proof === "type" || flash.proof === "big" ? "adm-flash adm-flash-bad" : "adm-flash"}>{PROOF_NOTE[flash.proof]}</p>}
+              {proofs.length > 0 && (
+                <ol className="adm-proofs">
+                  {proofs.map((pr) => (
+                    <li key={pr.id} data-status={pr.status}>
+                      <span className="adm-file-ext">V{pr.version}</span>
+                      <span className="adm-file-name">
+                        <b>
+                          {pr.status === "approved" ? "Approved" : pr.status === "changes" ? "Changes asked" : pr.status === "replaced" ? "Replaced" : "Waiting on the customer"}
+                          {pr.decided_at ? ` · ${dateTime(pr.decided_at)}` : ` · sent ${dateTime(pr.created_at)}`}
+                        </b>
+                        <span>{pr.name}</span>
+                        {pr.comment && <blockquote className="adm-quote">{pr.comment}</blockquote>}
+                      </span>
+                      <span className="adm-proof-links">
+                        <a href={`/proof/${pr.token}/file`} target="_blank" rel="noopener" className="adm-btn">
+                          File
+                        </a>
+                        <a href={`/proof/${pr.token}`} target="_blank" rel="noopener" className="adm-btn">
+                          Customer page ↗
+                        </a>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              )}
+              <form action={sendProof} className="adm-form">
+                <input type="hidden" name="ref" value={s.ref} />
+                <label>
+                  <span>Proof file (PNG, JPG or PDF, under 4 MB)</span>
+                  <input name="proof" type="file" accept=".png,.jpg,.jpeg,.webp,.pdf" required className="adm-input" />
+                </label>
+                <label>
+                  <span>Message to the customer (optional)</span>
+                  <textarea name="message" rows={3} maxLength={3000} className="adm-input" placeholder="We tightened the cut line and darkened the text so it reads at 2 inches." />
+                </label>
+                <button type="submit" className="adm-btn adm-btn-primary">
+                  {proofs.length ? "Send a new proof →" : "Send proof →"}
+                </button>
+              </form>
             </section>
           )}
 

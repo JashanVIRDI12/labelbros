@@ -63,6 +63,9 @@ function detailRows(d: Record<string, unknown>): [string, string][] {
           `Item ${i + 1}`,
           [`${it.product}: ${it.summary}`, it.artwork, it.notes && `Notes: ${it.notes}`].filter(Boolean).join("\n"),
         ]);
+      // an address or invoice: its parts on one line
+      if (typeof v === "object" && !Array.isArray(v))
+        return [[k.replace(/_/g, " "), Object.values(v as Record<string, unknown>).filter((x) => x !== undefined && x !== null && x !== "").join(", ")]];
       return [[k.replace(/_/g, " "), Array.isArray(v) ? v.join(", ") : String(v)]];
     });
 }
@@ -124,6 +127,40 @@ export async function confirmToCustomer(s: Submission) {
     text,
     html,
   });
+}
+
+/** Send the customer their proof: a private link to see it and approve it or ask for changes. */
+export async function sendProofEmail(s: Submission, p: { version: number; link: string; message: string }) {
+  if (!ready.mail()) return false;
+  const first = s.name.split(" ")[0] || "there";
+  const { text, html } = body(
+    `Hi ${first}, your proof for order ${s.ref} is ready.`,
+    [
+      ["Order", s.ref],
+      ["What", s.summary],
+      ["Proof", `Version ${p.version}`],
+      ["From us", p.message || undefined],
+      ["See it", p.link],
+    ],
+    `Open the link to approve it, or tell us what to change. Nothing prints until you approve. Questions? Reply to this email and quote ${s.ref}.`,
+  );
+  await transport().sendMail({
+    from: env.mailFrom,
+    to: { name: s.name, address: s.email },
+    replyTo: env.shopInbox,
+    subject: `${BRAND}: your proof for ${s.ref} is ready`,
+    text,
+    html,
+  });
+  return true;
+}
+
+/** Tell the shop what the customer said about a proof. */
+export async function proofAnswerToShop(ref: string, name: string, decision: "approved" | "changes", comment: string, adminUrl?: string) {
+  if (!ready.mail()) return;
+  const headline = decision === "approved" ? "Proof approved" : "Changes requested";
+  const { text, html } = body(`${headline} by ${name} on ${ref}.`, [["Order", ref], ["What they said", comment || undefined]], adminUrl ? `Open it in the admin: ${adminUrl}` : "");
+  await transport().sendMail({ from: env.mailFrom, to: env.shopInbox, subject: `${headline}: ${ref} · ${name}`.slice(0, 180), text, html });
 }
 
 /** Send, but never let an email problem fail the request that triggered it. */

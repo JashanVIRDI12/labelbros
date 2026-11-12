@@ -281,9 +281,24 @@ export function JobCard({ s }: { s: Submission & { file_count?: number } }) {
           <span className="adm-job-amount">{money(s.amount_cents, s.currency)}</span>
         </span>
         {(s.file_count ?? 0) > 0 && <span className="adm-job-file">Artwork attached</span>}
-        {(s.details as Record<string, unknown>).artwork === "Design it for me" && <span className="adm-flag">We design it</span>}
+        <span className="adm-job-flags">
+          {((s.details as Record<string, unknown>).artwork === "Design it for me" || (s.details as Record<string, unknown>).design_for_them === "yes") && <span className="adm-flag">We design it</span>}
+          {(s.details as Record<string, unknown>).bulk === "yes" && <span className="adm-flag adm-flag-bulk">Bulk</span>}
+          {(s.details as Record<string, unknown>).payment === "invoice" && (
+            <span className="adm-flag adm-flag-inv">{s.paid_at ? "Invoice paid" : (s.details as Record<string, unknown>).invoice ? "Invoice sent" : "Invoice to send"}</span>
+          )}
+          {s.status === "changes" && <span className="adm-flag adm-flag-bad">Changes asked</span>}
+        </span>
       </Link>
-      {next && (
+      {next && (s.status === "paid" || s.status === "changes") ? (
+        <Link href={`/admin/${s.ref}#proofs`} className="adm-job-next adm-job-next-link">
+          Send proof <span aria-hidden="true">→</span>
+        </Link>
+      ) : s.status === "invoice_requested" ? (
+        <Link href={`/admin/${s.ref}#invoice`} className="adm-job-next adm-job-next-link">
+          Send invoice <span aria-hidden="true">→</span>
+        </Link>
+      ) : next && (
         <form action={changeStatus} className="adm-job-next">
           <input type="hidden" name="ref" value={s.ref} />
           <input type="hidden" name="status" value={next} />

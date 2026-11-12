@@ -1,45 +1,50 @@
+import Link from "next/link";
+import type { CSSProperties } from "react";
 import { Arrow } from "@/components/site/Arrow";
+import { BULK_FROM } from "@/lib/options";
 import { StickerControls } from "./StickerControls";
 import { StickerTable } from "./StickerTable";
-import { SecondAsk } from "@/components/site/SecondAsk";
 
+/*
+ * The first screen, as the client liked it (restored 2026-11-11): a table of real-feeling labels
+ * and stickers you can peel, drag and throw (StickerTable, WebGL, loaded after first paint), the
+ * headline along the bottom, and both ways into the shop. Every word and button is a keep-out:
+ * the labels never land on them.
+ */
 export function Hero() {
   return (
-    <section
-      aria-labelledby="hero-title"
-      className="hero relative isolate h-[100svh] min-h-[680px] overflow-clip md:min-h-[640px]"
-    >
-      <div className="absolute inset-x-0 bottom-0 z-0 px-[var(--gutter)] pb-[clamp(20px,4.2svh,44px)]">
+    <section aria-labelledby="hero-title" className="hero-table relative isolate overflow-clip">
+      <div className="relative z-0 px-[var(--gutter)] pb-[clamp(20px,4.2svh,44px)]">
         <h1 id="hero-title" className="hero-title">
           <span className="title-line">
-            <span data-keepout style={{ ["--i" as string]: 0 }}>
+            <span data-keepout style={{ "--i": 0 } as CSSProperties}>
               Make your
             </span>
-          </span>
-{" "}
+          </span>{" "}
           <span className="title-line">
-            <span data-keepout style={{ ["--i" as string]: 1 }}>
+            <span data-keepout style={{ "--i": 1 } as CSSProperties}>
               brand stick.
             </span>
           </span>
         </h1>
 
-        <div className="mt-[clamp(18px,3.2svh,36px)] flex flex-col gap-5 lg:flex-row lg:items-end lg:gap-[clamp(24px,3vw,56px)]">
-          <p data-keepout className="hero-fade max-w-[34ch] text-16 leading-[1.45] md:text-18" style={{ ["--i" as string]: 0 }}>
-            Custom stickers and product labels, cut to any shape. Upload your design or let us design it. We send a
-            proof to approve and call you if anything needs changing.
+        <div className="mt-[clamp(18px,3.2svh,36px)] flex flex-col gap-5 lg:flex-row lg:flex-wrap lg:items-end lg:gap-x-[clamp(24px,3vw,56px)] xl:flex-nowrap">
+          <p data-keepout="hard" className="max-w-[40ch] text-16 leading-[1.45] md:text-18 lg:flex-[1_1_34ch]">
+            Custom product labels and stickers in any shape and size, on rolls or sheets. Type your size, upload your design or let us design it, and approve a free proof before we print.
           </p>
-          <div data-keepout className="hero-fade flex flex-col gap-3 sm:flex-row" style={{ ["--i" as string]: 1 }}>
-            <a href="#pricing" className="btn btn-primary">
-              Upload your design
+          <div data-keepout="hard" className="hero-fade flex flex-col gap-3 sm:flex-row" style={{ "--i": 1 } as CSSProperties}>
+            <Link href="/labels" className="btn btn-primary">
+              Shop labels
               <Arrow />
-            </a>
-            <SecondAsk />
+            </Link>
+            <Link href="/business" className="btn btn-ghost">
+              Bulk pricing from {BULK_FROM}
+            </Link>
           </div>
           {/* phones: the three reasons to trust the order, right under the buttons */}
-          <ul data-keepout className="hero-fade hero-trust md:hidden" style={{ ["--i" as string]: 2 }}>
+          <ul data-keepout className="hero-fade hero-trust md:hidden" style={{ "--i": 2 } as CSSProperties}>
             <li>Free proof</li>
-            <li>From 10 stickers</li>
+            <li>Bulk from {BULK_FROM}</li>
             <li>Ships in 2–4 business days</li>
           </ul>
           <StickerControls />

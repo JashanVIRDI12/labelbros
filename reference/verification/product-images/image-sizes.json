@@ -1,0 +1,351 @@
+[
+  {
+    "file": "public/products/labels/jam.webp",
+    "w": 720,
+    "h": 334,
+    "bytes": 38232,
+    "quality": 82,
+    "alpha": true
+  },
+  {
+    "file": "public/products/labels/kombucha.webp",
+    "w": 720,
+    "h": 383,
+    "bytes": 40326,
+    "quality": 82,
+    "alpha": true
+  },
+  {
+    "file": "public/products/labels/olive-oil.webp",
+    "w": 564,
+    "h": 720,
+    "bytes": 57888,
+    "quality": 78,
+    "alpha": true
+  },
+  {
+    "file": "public/products/labels/coffee.webp",
+    "w": 579,
+    "h": 720,
+    "bytes": 29342,
+    "quality": 82,
+    "alpha": true
+  },
+  {
+    "file": "public/products/labels/candle.webp",
+    "w": 720,
+    "h": 384,
+    "bytes": 32224,
+    "quality": 82,
+    "alpha": true
+  },
+  {
+    "file": "public/products/labels/face-oil.webp",
+    "w": 720,
+    "h": 497,
+    "bytes": 52576,
+    "quality": 78,
+    "alpha": true
+  },
+  {
+    "file": "public/products/labels/sticker.webp",
+    "w": 716,
+    "h": 720,
+    "bytes": 57170,
+    "quality": 74,
+    "alpha": true
+  },
+  {
+    "file": "public/products/food-labels.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 104084,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/food-labels-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 10186,
+    "quality": 82
+  },
+  {
+    "file": "public/products/beverage-labels.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 70506,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/beverage-labels-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 6376,
+    "quality": 82
+  },
+  {
+    "file": "public/products/bottle-labels.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 32550,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/bottle-labels-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 3860,
+    "quality": 82
+  },
+  {
+    "file": "public/products/coffee-labels.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 72826,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/coffee-labels-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 5582,
+    "quality": 82
+  },
+  {
+    "file": "public/products/candle-labels.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 49512,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/candle-labels-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 6882,
+    "quality": 82
+  },
+  {
+    "file": "public/products/cosmetic-labels.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 53320,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/cosmetic-labels-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 4970,
+    "quality": 82
+  },
+  {
+    "file": "public/products/custom-labels.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 71322,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/custom-labels-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 8116,
+    "quality": 82
+  },
+  {
+    "file": "public/products/roll-labels.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 82178,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/roll-labels-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 9772,
+    "quality": 82
+  },
+  {
+    "file": "public/products/sheet-labels.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 80296,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/sheet-labels-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 10038,
+    "quality": 82
+  },
+  {
+    "file": "public/products/circle-labels.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 126114,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/circle-labels-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 7996,
+    "quality": 82
+  },
+  {
+    "file": "public/products/vinyl-stickers.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 71256,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/vinyl-stickers-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 10882,
+    "quality": 82
+  },
+  {
+    "file": "public/products/clear-stickers.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 37324,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/clear-stickers-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 4842,
+    "quality": 82
+  },
+  {
+    "file": "public/products/holographic-stickers.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 51076,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/holographic-stickers-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 6804,
+    "quality": 82
+  },
+  {
+    "file": "public/products/glitter-stickers.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 95354,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/glitter-stickers-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 7432,
+    "quality": 82
+  },
+  {
+    "file": "public/products/kraft-stickers.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 71026,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/kraft-stickers-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 5068,
+    "quality": 82
+  },
+  {
+    "file": "public/products/metallic-stickers.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 64170,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/metallic-stickers-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 5786,
+    "quality": 82
+  },
+  {
+    "file": "public/products/50-3in-custom-stickers.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 69950,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/50-3in-custom-stickers-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 9976,
+    "quality": 82
+  },
+  {
+    "file": "public/products/250-3in-vinyl-stickers.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 114278,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/250-3in-vinyl-stickers-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 16862,
+    "quality": 82
+  },
+  {
+    "file": "public/products/sample-pack.webp",
+    "w": 1024,
+    "h": 1280,
+    "bytes": 123950,
+    "quality": 82,
+    "alpha": false
+  },
+  {
+    "file": "public/products/sample-pack-thumb.webp",
+    "w": 256,
+    "h": 256,
+    "bytes": 7554,
+    "quality": 82
+  },
+  {
+    "file": "src/app/opengraph-image.jpg",
+    "w": 1200,
+    "h": 630,
+    "bytes": 60884,
+    "quality": 82,
+    "alpha": false
+  }
+]

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ProductCard } from "@/components/shop/ProductCard";
@@ -18,11 +19,30 @@ export const metadata: Metadata = {
 };
 
 /* The shop: the packs first (a fixed price, the quickest buy), then everything you size yourself. */
+=======
+import { Footer } from "@/components/site/Footer";
+import { Header } from "@/components/site/Header";
+import { Motion } from "@/components/site/Motion";
+import { CategoryHero } from "@/components/store/CategoryHero";
+import { ProductGrid } from "@/components/store/ProductGrid";
+import { ProductShowcase } from "@/components/store/ProductShowcase";
+import { QuickPrice } from "@/components/store/QuickPrice";
+import { PROOF, SHIPS } from "@/lib/facts";
+import { pageMeta } from "@/lib/meta";
+import { DEALS, LABEL_PRODUCTS, SAMPLE_PACK, STICKER_PRODUCTS } from "@/lib/products";
+import { BRAND } from "@/lib/site";
+
+export const metadata = pageMeta({
+  title: `Shop labels and stickers · ${BRAND}`,
+  description: "Every label and sticker we print: product labels on rolls and sheets, custom stickers and deals. Type your size and the price follows.",
+  path: "/shop",
+});
+
+>>>>>>> Stashed changes
 export default function ShopPage() {
-  const deals = PRODUCTS.filter((p) => p.kind === "deal");
-  const custom = PRODUCTS.filter((p) => p.kind === "custom");
   return (
     <>
+<<<<<<< Updated upstream
       <Header current="/shop" />
       <main id="main" className="shop">
         <section className="shop-hero" aria-labelledby="shop-title">
@@ -80,6 +100,16 @@ export default function ShopPage() {
             </Link>
           </p>
         </section>
+=======
+      <Header />
+      <main id="main" className="store" data-motion-root>
+        <Motion name="reveal" />
+        <CategoryHero trail={[{ name: "Shop", href: "/shop" }]} title="Shop everything." lede="Every label and sticker we print. Pick one, type your size in inches, and the price follows." facts={[PROOF, SHIPS]} aside={<QuickPrice />} />
+        <ProductShowcase id="shop-labels" title="Labels." products={LABEL_PRODUCTS.filter((p) => p.group === "product")} />
+        <ProductGrid id="shop-formats" title="Label formats." products={LABEL_PRODUCTS.filter((p) => p.group === "format")} cols={4} />
+        <ProductGrid id="shop-stickers" title="Stickers." products={STICKER_PRODUCTS} cols={3} />
+        <ProductGrid id="shop-deals" title="Deals and samples." products={[...DEALS, ...(SAMPLE_PACK ? [SAMPLE_PACK] : [])]} cols={3} />
+>>>>>>> Stashed changes
       </main>
       <Footer />
     </>

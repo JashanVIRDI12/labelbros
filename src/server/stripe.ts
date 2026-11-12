@@ -126,3 +126,74 @@ export function paidDetails(session: Stripe.Checkout.Session) {
     email: session.customer_details?.email ?? null,
   };
 }
+
+/*
+ * Pay by invoice (business orders): a Stripe invoice that Stripe emails to the customer, with a
+ * page where they pay by card or bank transfer. One customer per order, so the invoice carries
+ * the business name, address and PO number they gave.
+ */
+type Billing = { company?: string; line1?: string; line2?: string; city?: string; state?: string; postal_code?: string; country?: string; po?: string };
+
+export async function sendInvoice(
+  s: Submission,
+  items: Item[],
+  opts: { shippingCents: number; days: number; billing: Billing; note?: string },
+) {
+  const st = stripe();
+  const currency = s.currency === "usd" ? "usd" : "cad";
+  const b = opts.billing;
+  const address = b.line1
+    ? { line1: b.line1, line2: b.line2 || undefined, city: b.city, state: b.state, postal_code: b.postal_code, country: b.country }
+    : undefined;
+  const key = `${s.ref}-${Date.now()}`;
+  const customer = await st.customers.create(
+    {
+      email: s.email,
+      name: b.company || s.name,
+      phone: s.phone ?? undefined,
+      address,
+      shipping: address ? { name: s.name, address, phone: s.phone ?? undefined } : undefined,
+      metadata: { ref: s.ref, contact: s.name },
+    },
+    { idempotencyKey: `cust-${key}` },
+  );
+  const invoice = await st.invoices.create(
+    {
+      customer: customer.id,
+      collection_method: "send_invoice",
+      days_until_due: opts.days,
+      currency,
+      auto_advance: false,
+      pending_invoice_items_behavior: "exclude",
+      automatic_tax: { enabled: env.stripeAutomaticTax },
+      description: (opts.note || `${BRAND} order ${s.ref}. We print once your proof is approved and this invoice is paid.`).slice(0, 1500),
+      custom_fields: [
+        { name: "Order", value: s.ref },
+        ...(b.po ? [{ name: "PO number", value: b.po.slice(0, 140) }] : []),
+      ],
+      metadata: { ref: s.ref, kind: s.kind },
+    },
+    { idempotencyKey: `inv-${key}` },
+  );
+  if (!invoice.id) throw new Error("Stripe returned no invoice id");
+  for (const [i, it] of items.entries())
+    await st.invoiceItems.create(
+      {
+        customer: customer.id,
+        invoice: invoice.id,
+        currency,
+        amount: it.cents * (it.quantity ?? 1),
+        description: `${it.name}: ${it.description}${(it.quantity ?? 1) > 1 ? ` (× ${it.quantity})` : ""}`.slice(0, 500),
+        tax_behavior: "exclusive",
+      },
+      { idempotencyKey: `ii-${key}-${i}` },
+    );
+  if (opts.shippingCents > 0)
+    await st.invoiceItems.create(
+      { customer: customer.id, invoice: invoice.id, currency, amount: opts.shippingCents, description: "Shipping", tax_behavior: "exclusive" },
+      { idempotencyKey: `ii-${key}-ship` },
+    );
+  const final = await st.invoices.finalizeInvoice(invoice.id, { auto_advance: false });
+  await st.invoices.sendInvoice(invoice.id);
+  return { id: invoice.id, url: final.hosted_invoice_url ?? null, number: final.number ?? null, cents: final.amount_due };
+}

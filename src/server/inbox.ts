@@ -21,8 +21,11 @@ export const KIND_LABEL: Record<Kind, string> = {
 export const STATUSES: Record<Kind, { id: string; label: string }[]> = {
   order: [
     { id: "pending_payment", label: "Awaiting payment" },
-    { id: "paid", label: "Paid: send proof" },
+    { id: "invoice_requested", label: "Invoice requested" },
+    { id: "invoiced", label: "Invoice sent" },
+    { id: "paid", label: "Paid: check artwork" },
     { id: "proof_sent", label: "Proof sent" },
+    { id: "changes", label: "Changes requested" },
     { id: "approved", label: "Proof approved" },
     { id: "printing", label: "Printing" },
     { id: "shipped", label: "Shipped" },
@@ -59,7 +62,7 @@ export const STATUSES: Record<Kind, { id: string; label: string }[]> = {
 };
 
 /** Statuses that need someone to act: shown first and counted on the inbox. */
-export const TODO = ["paid", "new", "approved"];
+export const TODO = ["paid", "new", "approved", "invoice_requested", "changes"];
 
 export const statusLabel = (kind: Kind, status: string) =>
   STATUSES[kind].find((s) => s.id === status)?.label ?? status;
@@ -88,6 +91,8 @@ export type Submission = {
 
 type New = {
   kind: Kind;
+  /** where it starts (the kind's first status unless set) */
+  status?: string;
   name: string;
   email: string;
   phone?: string;
@@ -104,7 +109,7 @@ type New = {
 /** Save a new submission (and its file) and return it: one statement, so one round trip. */
 export async function createSubmission(n: New): Promise<Submission> {
   const sql = await db();
-  const status = STATUSES[n.kind][0].id;
+  const status = n.status && STATUSES[n.kind].some((x) => x.id === n.status) ? n.status : STATUSES[n.kind][0].id;
   for (let attempt = 0; ; attempt++) {
     const ref = newRef();
     try {
@@ -214,9 +219,138 @@ export async function markRefunded(paymentIntent: string, amount: string) {
     insert into events (submission_id, actor, action, detail) select id, 'stripe', 'refunded', ${amount} from u`;
 }
 
+/* ---------- Invoices (business orders paid by invoice) ---------- */
+
+/** The Stripe invoice sent for an order: saved on it, and the order moves to "Invoice sent". */
+export async function setInvoice(ref: string, invoice: { id: string; url: string | null; number: string | null; cents: number }, actor: string) {
+  const sql = await db();
+  const patch = json({ invoice: { id: invoice.id, url: invoice.url, number: invoice.number, cents: invoice.cents } });
+  // a proof may already have gone out: the order keeps its place on the line, only a request moves on
+  await sql`
+    with u as (
+      update submissions set details = details || ${patch}::text::jsonb, updated_at = now(),
+        status = case when status = 'invoice_requested' then 'invoiced' else status end
+      where ref = ${ref} and kind = 'order' and paid_at is null and details->>'payment' = 'invoice' and details->'invoice' is null
+      returning id
+    )
+    insert into events (submission_id, actor, action, detail) select id, ${actor}, 'invoice sent', ${invoice.number ?? invoice.id} from u`;
+}
+
+/** An invoice Stripe says is paid: the order is paid (once). Returns the row if this call paid it. */
+export async function markInvoicePaid(ref: string, invoiceId: string, cents: number, currency: string) {
+  const sql = await db();
+  const [row] = await sql<Submission[]>`
+    with u as (
+      update submissions set paid_at = now(), updated_at = now(), amount_cents = ${cents},
+        status = case when status in ('invoice_requested', 'invoiced') then 'paid' else status end
+      where ref = ${ref} and kind = 'order' and paid_at is null
+        and details->'invoice'->>'id' = ${invoiceId}
+      returning *
+    ),
+    e as (
+      insert into events (submission_id, actor, action, detail)
+      select id, 'stripe', 'invoice paid', '$' || to_char(${cents}::int / 100.0, 'FM999999990.00') || ' ' || upper(${currency}::text) from u
+    )
+    select * from u`;
+  return row ?? null;
+}
+
+/* ---------- Proofs ---------- */
+
+export type Proof = {
+  id: string;
+  submission_id: string;
+  token: string;
+  version: number;
+  name: string;
+  mime: string;
+  size: number;
+  message: string;
+  status: "sent" | "approved" | "changes" | "replaced";
+  comment: string;
+  created_at: Date;
+  decided_at: Date | null;
+};
+
+/** Save a new proof for an order (earlier open ones are replaced) and move the order to "Proof sent". */
+export async function createProof(ref: string, p: { token: string; name: string; mime: string; bytes: Uint8Array; message: string }, actor: string) {
+  const sql = await db();
+  return sql.begin(async (tx) => {
+    const [s] = await tx<{ id: string }[]>`select id from submissions where ref = ${ref} and kind = 'order' for update`;
+    if (!s) return null;
+    await tx`update proofs set status = 'replaced' where submission_id = ${s.id} and status = 'sent'`;
+    const [{ v }] = await tx<{ v: number }[]>`select coalesce(max(version), 0) + 1 as v from proofs where submission_id = ${s.id}`;
+    const [proof] = await tx<Proof[]>`
+      insert into proofs (submission_id, token, version, name, mime, size, bytes, message)
+      values (${s.id}, ${p.token}, ${v}, ${p.name}, ${p.mime}, ${p.bytes.byteLength}, ${Buffer.from(p.bytes)}, ${p.message})
+      returning id, submission_id, token, version, name, mime, size, message, status, comment, created_at, decided_at`;
+    await tx`update submissions set status = 'proof_sent', updated_at = now() where id = ${s.id}`;
+    await tx`insert into events (submission_id, actor, action, detail) values (${s.id}, ${actor}, 'proof sent', ${`Proof ${v}`})`;
+    return proof;
+  });
+}
+
+/** A proof and its order, by the customer's private link. */
+export async function getProof(token: string) {
+  const sql = await db();
+  const [row] = await sql<(Proof & { ref: string; order_status: string; summary: string; details: Record<string, unknown>; name_on_order: string; latest: number; paid_at: Date | null })[]>`
+    select p.id, p.submission_id, p.token, p.version, p.name, p.mime, p.size, p.message, p.status, p.comment, p.created_at, p.decided_at,
+      s.ref, s.status as order_status, s.summary, s.details, s.name as name_on_order, s.paid_at,
+      (select max(version) from proofs where submission_id = p.submission_id)::int as latest
+    from proofs p join submissions s on s.id = p.submission_id
+    where p.token = ${token}`;
+  return row ?? null;
+}
+
+export async function getProofFile(token: string) {
+  const sql = await db();
+  const [row] = await sql<{ name: string; mime: string; bytes: Buffer }[]>`select name, mime, bytes from proofs where token = ${token}`;
+  return row ?? null;
+}
+
+export async function getProofFileById(id: string) {
+  const sql = await db();
+  const [row] = await sql<{ name: string; mime: string; bytes: Buffer }[]>`select name, mime, bytes from proofs where id = ${id}`;
+  return row ?? null;
+}
+
+/** An order's proofs, newest first (for its admin page). */
+export async function listProofs(submissionId: string) {
+  const sql = await db();
+  return sql<Proof[]>`
+    select id, submission_id, token, version, name, mime, size, message, status, comment, created_at, decided_at
+    from proofs where submission_id = ${submissionId} order by version desc`;
+}
+
+/**
+ * The customer's answer to a proof: approved (the order moves to "Proof approved") or changes
+ * (back to "Changes requested", with what they want). Only an open proof can be answered, once.
+ */
+export async function decideProof(token: string, decision: "approved" | "changes", comment: string) {
+  const sql = await db();
+  const [row] = await sql<{ ref: string; version: number }[]>`
+    with p as (
+      update proofs set status = ${decision}, comment = ${comment.slice(0, 4000)}, decided_at = now()
+      where token = ${token} and status = 'sent'
+      returning submission_id, version
+    ),
+    s as (
+      update submissions set status = ${decision === "approved" ? "approved" : "changes"}, updated_at = now()
+      from p where submissions.id = p.submission_id and submissions.status in ('proof_sent', 'paid', 'changes', 'invoiced', 'invoice_requested')
+      returning submissions.id, submissions.ref
+    ),
+    e as (
+      insert into events (submission_id, actor, action, detail)
+      select p.submission_id, 'customer', ${decision === "approved" ? "approved proof" : "asked for changes"}, 'Proof ' || p.version || case when ${comment} = '' then '' else ': ' || ${comment.slice(0, 300)} end
+      from p
+    )
+    select (select ref from submissions where id = p.submission_id) as ref, p.version from p`;
+  return row ?? null;
+}
+
 /** The usual next step for each status (the admin's one-click button). */
 export const NEXT: Partial<Record<Kind, Record<string, string>>> = {
-  order: { paid: "proof_sent", proof_sent: "approved", approved: "printing", printing: "shipped", shipped: "done" },
+  order: { paid: "proof_sent", changes: "proof_sent", proof_sent: "approved", approved: "printing", printing: "shipped", shipped: "done" },
   sample_kit: { paid: "shipped", shipped: "done" },
   quote: { new: "replied", replied: "won" },
   business: { new: "replied", replied: "won" },
@@ -225,7 +359,9 @@ export const NEXT: Partial<Record<Kind, Record<string, string>>> = {
 export const nextStatus = (kind: Kind, status: string) => NEXT[kind]?.[status];
 
 /** The production line, in order: the board's columns. */
-export const LINE = ["paid", "proof_sent", "approved", "printing", "shipped"] as const;
+export const LINE = ["invoice_requested", "paid", "proof_sent", "approved", "printing", "shipped"] as const;
+/** Statuses shown in another column of the board: invoiced orders wait with the requests, changes go back to "check artwork". */
+export const COLUMN_OF: Record<string, (typeof LINE)[number]> = { invoiced: "invoice_requested", changes: "paid" };
 
 /** Statuses that end a job early (shown apart from the steps). */
 export const OFF_LINE = ["cancelled", "refunded", "abandoned", "closed"];
@@ -295,6 +431,12 @@ export async function setStatus(ref: string, status: string, actor: string) {
     select id, ${actor}, 'status',
       coalesce(${LABELS}::text::jsonb -> kind ->> old, old) || ' → ' || coalesce(${LABELS}::text::jsonb -> kind ->> ${status}::text, ${status}::text)
     from u`;
+}
+
+/** A line in a submission's history. */
+export async function addEvent(submissionId: string, actor: string, action: string, detail = "") {
+  const sql = await db();
+  await sql`insert into events (submission_id, actor, action, detail) values (${submissionId}, ${actor}, ${action}, ${detail})`;
 }
 
 export async function setNotes(ref: string, notes: string, actor: string) {

@@ -1,6 +1,6 @@
 import "server-only";
 import type Stripe from "stripe";
-import { filesWithBytes, markPaid } from "./inbox";
+import { filesWithBytes, markInvoicePaid, markPaid } from "./inbox";
 import { confirmToCustomer, notifyShop, safely } from "./mail";
 import { env } from "./env";
 import { paidDetails } from "./stripe";
@@ -23,6 +23,18 @@ export async function completeCheckout(session: Stripe.Checkout.Session) {
       attachments: files.map((f) => ({ name: f.name, bytes: f.bytes })),
     }),
   );
+  await safely(() => confirmToCustomer(row));
+  return row;
+}
+
+/** An invoice Stripe says is paid: mark the order paid and tell the shop and the customer. */
+export async function completeInvoice(invoice: Stripe.Invoice) {
+  const ref = invoice.metadata?.ref;
+  if (!ref || !invoice.id) return null;
+  const row = await markInvoicePaid(ref, invoice.id, invoice.amount_paid, invoice.currency);
+  if (!row) return null;
+  const adminUrl = env.siteUrl ? `${env.siteUrl}/admin/${row.ref}` : undefined;
+  await safely(() => notifyShop(row, { adminUrl, headline: "Invoice paid" }));
   await safely(() => confirmToCustomer(row));
   return row;
 }

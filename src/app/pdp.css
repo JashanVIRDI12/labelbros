@@ -1,0 +1,527 @@
+/* ======================================================================
+   The product page (rebuilt 2026-11-12): the stage fits the photograph on the left (the
+   photo, or the label in 3D on its liner), the name, price and the cream order sheet on the
+   right, a buy bar once they scroll away, then the story, bulk, steps and the rest of the range.
+   Imported by globals.css after store.css.
+   ====================================================================== */
+
+.pdp-top {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 16px var(--gutter) 0;
+}
+.pdp-grid {
+  display: grid;
+  grid-template-areas: "intro" "media" "config";
+  gap: 24px;
+  align-items: start;
+}
+.pdp-left {
+  grid-area: media;
+  justify-self: center;
+  width: 100%;
+  max-width: 600px;
+}
+.pdp-intro {
+  grid-area: intro;
+  min-width: 0;
+}
+@media (min-width: 1024px) {
+  .pdp-grid {
+    grid-template-areas: "media intro" "media config";
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    grid-template-rows: auto 1fr;
+    column-gap: clamp(28px, 3.4vw, 56px);
+    row-gap: 20px;
+  }
+  .pdp-left {
+    position: sticky;
+    top: calc(var(--hdr) + 14px);
+    max-width: max(320px, calc((100svh - var(--hdr) - 140px) * 0.8));
+  }
+}
+
+/* ---------- The stage ---------- */
+
+.stage {
+  --tone: #efe8d9;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 28px 28px 8px 28px;
+  background: var(--tone);
+  color: var(--color-ink);
+  transition: background-color 0.5s var(--ease-out);
+}
+/* your label lies on its liner on the deep blue, like the labels on the homepage table */
+.stage[data-view="label"] {
+  background: var(--color-field-deep);
+}
+.stage-photo,
+.stage-label {
+  position: absolute;
+  inset: 0;
+}
+.stage-photo[hidden],
+.stage-label[hidden] {
+  display: none;
+}
+.stage-photo {
+  overflow: hidden;
+}
+.stage-3d {
+  position: absolute;
+  inset: 0;
+}
+.l3d-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+}
+.stage-3d[data-over] .l3d-canvas {
+  cursor: grab;
+}
+.stage-3d[data-peeling] .l3d-canvas {
+  cursor: grabbing;
+}
+.stage-flat {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 96px 12% 76px;
+}
+.stage-flat .lp {
+  width: min(100%, 520px);
+}
+.stage-flat .lp-cap {
+  display: none;
+}
+
+/* the two views, as little prints of themselves */
+.stage-views {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+.stage-views button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 58px;
+  padding: 7px 10px;
+  border-radius: 12px 12px 3px 12px;
+  background: var(--color-field-deep);
+  color: var(--color-liner);
+  font-size: var(--text-14);
+  font-weight: 800;
+  border: 1px solid rgb(245 241 232 / 0.25);
+  text-align: left;
+  transition: background-color 0.2s;
+}
+.stage-views [aria-pressed="true"] {
+  background: var(--color-signal);
+  color: var(--color-ink);
+  border-color: var(--color-signal);
+}
+.stage-thumb {
+  --tone: #efe8d9;
+  display: block;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 8px 8px 2px 8px;
+  background: var(--tone);
+}
+.stage-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.stage-thumb-label {
+  display: grid;
+  place-items: center;
+  background: var(--color-field-deep);
+}
+.stage-thumb-label img {
+  width: 84%;
+  height: 84%;
+  object-fit: contain;
+}
+.stage-note {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--fg-soft);
+}
+.stage-note a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* what you're looking at, as a little cream tag, and how to handle it */
+.stage-tag {
+  position: absolute;
+  z-index: 2;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  justify-items: end;
+  gap: 2px;
+  max-width: 60%;
+  padding: 9px 12px 8px;
+  border-radius: 10px 10px 2px 10px;
+  background: var(--color-liner);
+  text-align: right;
+  transform: rotate(1.5deg);
+}
+.stage-tag b {
+  font-size: 1.15rem;
+  font-weight: 900;
+  font-stretch: 110%;
+  line-height: 1.1;
+}
+.stage-tag span {
+  font-size: var(--text-13);
+  font-weight: 650;
+  color: var(--fg-soft);
+}
+.stage-cap {
+  position: absolute;
+  z-index: 2;
+  left: 18px;
+  right: 18px;
+  bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  font-size: var(--text-13);
+  font-weight: 650;
+  color: var(--color-liner);
+  pointer-events: none;
+}
+.stage-hint {
+  color: var(--color-signal);
+}
+
+/* ---------- Name, price and the order sheet ---------- */
+
+.pdp-head {
+  display: grid;
+  gap: 10px;
+}
+.pdp-head .crumbs {
+  margin-bottom: 4px;
+}
+.pdp-badge {
+  justify-self: start;
+  padding: 5px 9px 4px;
+  border-radius: 6px 6px 1px 6px;
+  background: var(--color-signal);
+  color: var(--color-ink);
+  font-size: 12px;
+  font-weight: 850;
+  font-stretch: 110%;
+  text-transform: uppercase;
+  transform: rotate(-3deg);
+}
+.pdp-title {
+  font-size: clamp(2.25rem, 3.8vw, 3.75rem);
+  font-weight: 900;
+  font-stretch: 112%;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.pdp-tagline {
+  max-width: 40ch;
+  font-size: clamp(1.05rem, 1.3vw, 1.22rem);
+  color: var(--fg-soft);
+}
+.pdp-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 10px;
+  margin: 16px 0;
+}
+.pdp-price b {
+  font-size: clamp(2rem, 3vw, 2.7rem);
+  font-weight: 900;
+  font-stretch: 112%;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.pdp-price small {
+  font-weight: 800;
+}
+.pdp-price span {
+  flex-basis: 100%;
+  color: var(--fg-soft);
+}
+.pdp-price .pdp-price-label {
+  font-size: var(--text-13);
+  font-weight: 650;
+}
+.pdp-reassurance {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 14px 0;
+  border-block: 1px solid rgb(245 241 232 / 0.22);
+}
+.pdp-reassurance li {
+  position: relative;
+  display: grid;
+  gap: 3px;
+  padding-left: 18px;
+  font-size: var(--text-13);
+}
+.pdp-reassurance li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--color-signal);
+  font-weight: 800;
+}
+.pdp-reassurance b {
+  font-weight: 750;
+}
+.pdp-reassurance span {
+  color: var(--fg-soft);
+  line-height: 1.45;
+}
+
+.pdp .cfg {
+  grid-area: config;
+  min-width: 0;
+  padding: 6px clamp(18px, 2.2vw, 30px) clamp(18px, 2.2vw, 30px);
+  border-radius: 24px 24px 6px 24px;
+  background: var(--color-liner);
+}
+.pdp .cfg > .cfg-group:first-of-type {
+  border-top: 0;
+}
+.pdp .cfg-group {
+  padding-block: 16px;
+}
+.cfg-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 16px;
+  padding: 16px 0 4px;
+}
+.cfg-heading h2 {
+  font-size: var(--text-18);
+  font-weight: 850;
+}
+.cfg-heading a {
+  font-size: var(--text-13);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.pdp .cfg-sum {
+  background: var(--color-sand);
+}
+.opt-mat-text {
+  display: grid;
+  min-width: 0;
+}
+.opt-mat-text small {
+  font-size: var(--text-13);
+  font-weight: 650;
+  color: var(--fg-soft);
+  font-variant-numeric: tabular-nums;
+}
+.opt[data-checked] .opt-mat-text small {
+  color: var(--color-ink);
+}
+/* a choice lands like a label pressed on */
+@media (prefers-reduced-motion: no-preference) {
+  .pdp .opt[data-checked],
+  .pdp .qrow[data-checked] {
+    animation: opt-slap 0.42s var(--ease-slap);
+  }
+}
+@keyframes opt-slap {
+  from {
+    transform: scale(0.95) rotate(-0.6deg);
+  }
+}
+
+/* ---------- The buy bar ---------- */
+
+.dock {
+  --tone: #efe8d9;
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: min(760px, calc(100% - 24px));
+  padding: 8px;
+  border-radius: 16px 16px 4px 16px;
+  background: var(--color-liner);
+  box-shadow: inset 0 0 0 2px var(--color-ink);
+  transform: translate(-50%, calc(100% + 32px));
+  transition: transform 0.5s var(--ease-out);
+}
+.dock[data-show] {
+  transform: translate(-50%, 0);
+}
+.dock-thumb {
+  --tone: #efe8d9;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  overflow: hidden;
+  border-radius: 10px 10px 2px 10px;
+  background: var(--tone);
+}
+.dock-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dock-text {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+}
+.dock-text b,
+.dock-text small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dock-text b {
+  font-weight: 850;
+}
+.dock-text small,
+.dock-price small {
+  font-size: var(--text-13);
+  color: var(--fg-soft);
+}
+.dock-price {
+  display: grid;
+  justify-items: end;
+  font-variant-numeric: tabular-nums;
+}
+.dock-price b {
+  font-size: 1.3rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+.dock .btn {
+  flex: none;
+}
+@media (max-width: 639px) {
+  .dock {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    border-radius: 0;
+    box-shadow: inset 0 3px 0 var(--color-signal);
+    transform: translateY(110%);
+  }
+  .dock[data-show] {
+    transform: none;
+  }
+  .dock-thumb,
+  .dock-text {
+    display: none;
+  }
+  .dock-price {
+    justify-items: start;
+    margin-right: auto;
+  }
+}
+
+/* ---------- Below: what it's for, what it is ---------- */
+
+.pdp .tape-sec {
+  margin-top: var(--sy);
+}
+.pdp-story-grid {
+  display: grid;
+  gap: 32px;
+  margin-top: clamp(24px, 3vw, 44px);
+}
+@media (min-width: 1024px) {
+  .pdp-story-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+    gap: clamp(40px, 6vw, 110px);
+  }
+}
+.pdp-story-copy {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+.pdp-lead {
+  max-width: 30ch;
+  font-size: clamp(1.45rem, 2.3vw, 2.25rem);
+  font-weight: 750;
+  font-stretch: 104%;
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+  text-wrap: pretty;
+}
+.pdp-story-copy p:not(.pdp-lead) {
+  max-width: 60ch;
+  font-size: 1.08rem;
+  color: var(--fg-soft);
+}
+.pdp-made {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.pdp-made li {
+  padding: 6px 11px 5px;
+  border: 1.5px solid var(--rule);
+  border-radius: 7px 7px 2px 7px;
+  font-size: var(--text-14);
+  font-weight: 650;
+}
+.pdp-specs {
+  display: grid;
+  align-content: start;
+  border-top: 2px solid var(--rule-strong);
+}
+.pdp-specs div {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--text-15);
+}
+.pdp-specs dt {
+  font-weight: 800;
+}
+.pdp-specs dd {
+  color: var(--fg-soft);
+}
+.pdp-trust {
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}

@@ -1,0 +1,116 @@
+[
+  {
+    "path": "/shop/250-3in-vinyl-stickers",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 207212
+  },
+  {
+    "path": "/shop/50-3in-custom-stickers",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 207188
+  },
+  {
+    "path": "/shop/beverage-labels",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 220900
+  },
+  {
+    "path": "/shop/bottle-labels",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 220478
+  },
+  {
+    "path": "/shop/candle-labels",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 219861
+  },
+  {
+    "path": "/shop/circle-labels",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 220243
+  },
+  {
+    "path": "/shop/clear-stickers",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 211864
+  },
+  {
+    "path": "/shop/coffee-labels",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 220394
+  },
+  {
+    "path": "/shop/cosmetic-labels",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 220520
+  },
+  {
+    "path": "/shop/custom-labels",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 221019
+  },
+  {
+    "path": "/shop/food-labels",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 220758
+  },
+  {
+    "path": "/shop/glitter-stickers",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 211527
+  },
+  {
+    "path": "/shop/holographic-stickers",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 211820
+  },
+  {
+    "path": "/shop/kraft-stickers",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 212039
+  },
+  {
+    "path": "/shop/metallic-stickers",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 213259
+  },
+  {
+    "path": "/shop/roll-labels",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 220888
+  },
+  {
+    "path": "/shop/sample-pack",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 206199
+  },
+  {
+    "path": "/shop/sheet-labels",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 219980
+  },
+  {
+    "path": "/shop/vinyl-stickers",
+    "compute": "static",
+    "response": "complete",
+    "htmlBytes": 212852
+  }
+]

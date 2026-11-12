@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { ClearCart } from "@/components/shop/ClearCart";
+import { ClearCart } from "@/components/store/ClearCart";
 import { Arrow } from "@/components/site/Arrow";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
@@ -29,7 +29,7 @@ export default function ThanksPage({ searchParams }: { searchParams: Search }) {
   return (
     <>
       <Header />
-      <main id="main" className="ty">
+      <main id="main" className="store ty">
         <div className="ty-card form-card">
           <Suspense fallback={<p className="sent-body">Checking your payment…</p>}>
             <Receipt searchParams={searchParams} />
@@ -105,8 +105,8 @@ async function Receipt({ searchParams }: { searchParams: Search }) {
           : `${row.details.design_for_them ? "We start on your design now. " : ""}${PROOF.replace("Free proof", "Your proof comes")}, by email${row.email ? ` to ${row.email}` : ""}, for you to approve. ${CALL}${row.phone ? ` (on ${row.phone})` : ""}. Nothing prints until you say yes.`}
       </p>
       <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3">
-        <Link href="/how-it-works" className="btn btn-primary">
-          What happens next
+        <Link href="/track" className="btn btn-primary">
+          Track your order
           <Arrow />
         </Link>
         <Link href="/" className="text-link">

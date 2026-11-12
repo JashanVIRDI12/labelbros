@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ContactForm } from "@/components/contact/ContactForm";
+<<<<<<< Updated upstream
 import { PageHero } from "@/components/sheet/PageHero";
+=======
+import { Ph } from "@/components/site/Ph";
+import { PageHero } from "@/components/site/PageHero";
+>>>>>>> Stashed changes
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { CONTACT } from "@/lib/site";
@@ -33,7 +38,7 @@ export default function ContactPage() {
   return (
     <>
       <Header current="/contact" />
-      <main id="main">
+      <main id="main" className="zone-field">
         <PageHero
           id="contact-title"
           lines={["Talk to", "a person."]}

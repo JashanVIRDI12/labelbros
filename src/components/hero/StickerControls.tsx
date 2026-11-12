@@ -29,8 +29,8 @@ export function StickerControls() {
           </>
         ) : (
           <>
-            <span className="md:hidden">Drag the stickers around.</span>
-            <span className="hidden md:inline">Peel, drag and throw the stickers.</span>
+            <span className="md:hidden">Drag the labels around.</span>
+            <span className="hidden md:inline">Peel, drag and throw the labels and stickers.</span>
           </>
         )}
       </p>

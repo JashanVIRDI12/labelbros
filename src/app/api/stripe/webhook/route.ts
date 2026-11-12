@@ -1,5 +1,5 @@
 import type Stripe from "stripe";
-import { completeCheckout } from "@/server/checkout";
+import { completeCheckout, completeInvoice } from "@/server/checkout";
 import { db } from "@/server/db";
 import { env, ready } from "@/server/env";
 import { markAbandoned, markRefunded } from "@/server/inbox";
@@ -9,7 +9,8 @@ import { stripe } from "@/server/stripe";
  * POST /api/stripe/webhook: Stripe tells us what happened to a payment. Every call is checked
  * against the signing secret (anything unsigned is refused) and handled once, by event id.
  * Events to send (Stripe dashboard > Developers > Webhooks): checkout.session.completed,
- * checkout.session.async_payment_succeeded, checkout.session.expired, charge.refunded.
+ * checkout.session.async_payment_succeeded, checkout.session.expired, charge.refunded, and for
+ * business invoices invoice.paid.
  */
 export async function POST(req: Request) {
   if (!ready.db() || !ready.stripe() || !env.stripeWebhookSecret) return new Response("not configured", { status: 503 });
@@ -33,6 +34,9 @@ export async function POST(req: Request) {
       case "checkout.session.completed":
       case "checkout.session.async_payment_succeeded":
         await completeCheckout(event.data.object);
+        break;
+      case "invoice.paid":
+        await completeInvoice(event.data.object);
         break;
       case "checkout.session.expired":
         await markAbandoned(event.data.object.id);

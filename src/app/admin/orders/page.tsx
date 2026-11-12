@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { requireAdmin } from "@/server/auth";
 import { ready } from "@/server/env";
-import { LINE, STATUSES, counts, listSubmissions, statusLabel } from "@/server/inbox";
+import { COLUMN_OF, LINE, STATUSES, counts, listSubmissions, statusLabel } from "@/server/inbox";
 import { daysAgo } from "../format";
 import { AdminShell, Empty, Filters, JobCard, SubmissionTable } from "../ui";
 
@@ -22,7 +22,8 @@ export default function OrdersPage({ searchParams }: { searchParams: Search }) {
 }
 
 const COLUMN_NOTE: Record<string, string> = {
-  paid: "Check the artwork, send a proof",
+  invoice_requested: "Business orders: check the artwork, send the invoice",
+  paid: "Check the artwork, send a proof (and changes asked for)",
   proof_sent: "Waiting on the customer",
   approved: "Ready to print",
   printing: "On the press",
@@ -67,18 +68,18 @@ async function Orders({ searchParams }: { searchParams: Search }) {
     );
   }
 
-  const [rows, tally] = await Promise.all([listSubmissions({ kind: "order", statuses: [...LINE] }, 400), counts()]);
+  const [rows, tally] = await Promise.all([listSubmissions({ kind: "order", statuses: [...LINE, ...Object.keys(COLUMN_OF)] }, 400), counts()]);
   const recent = daysAgo(14); // shipped jobs stay on the board for two weeks
   const columns = LINE.map((st) => ({
     st,
     jobs: rows
-      .filter((r) => r.status === st && (st !== "shipped" || r.updated_at.getTime() > recent))
+      .filter((r) => (COLUMN_OF[r.status] ?? r.status) === st && (st !== "shipped" || r.updated_at.getTime() > recent))
       // oldest first: the job that has waited longest is on top
       .sort((a, b) => (a.paid_at ?? a.created_at).getTime() - (b.paid_at ?? b.created_at).getTime()),
   }));
 
   return (
-    <AdminShell tally={tally} current="orders" title="Orders" lead="Paid orders move left to right. The longest-waiting job is on top." actions={toggle}>
+    <AdminShell tally={tally} current="orders" title="Orders" lead="Orders move left to right. The longest-waiting job is on top; business invoices start in the first column." actions={toggle}>
       <div className="adm-board">
         {columns.map((c) => (
           <section key={c.st} className="adm-col" data-status={c.st} aria-labelledby={`col-${c.st}`}>

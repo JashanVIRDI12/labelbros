@@ -4,22 +4,22 @@ import { useEffect, useRef } from "react";
 
 type Module = { init: (root: HTMLElement) => () => void };
 
-// Each section's scroll choreography lives in its own chunk and loads when the section gets
-// within a couple of screens, so GSAP and ScrollTrigger never cost the first paint anything.
+// Each section's motion lives in its own chunk and loads when the section gets within a couple
+// of screens, so GSAP and ScrollTrigger never cost the first paint anything.
 const LOADERS = {
-  deck: () => import("@/components/sections/deck-motion") as Promise<Module>,
-  labels: () => import("@/components/sections/labels-motion") as Promise<Module>,
-  process: () => import("@/components/sections/process-motion") as Promise<Module>,
-  kit: () => import("@/components/sections/kit-motion") as Promise<Module>,
-  footer: () => import("@/components/sections/footer-motion") as Promise<Module>,
-  sheet: () => import("@/components/stickers-page/sheet-motion") as Promise<Module>,
-  web: () => import("@/components/labels-page/web-motion") as Promise<Module>,
-  how: () => import("@/components/how-page/how-motion") as Promise<Module>,
-  page: () => import("@/components/service/page-motion") as Promise<Module>,
+  reveal: () => import("@/components/motion/reveal-motion") as Promise<Module>,
+  tape: () => import("@/components/motion/tape-motion") as Promise<Module>,
+  process: () => import("@/components/motion/process-motion") as Promise<Module>,
+  stickers: () => import("@/components/motion/sticker-motion") as Promise<Module>,
+  magnet: () => import("@/components/motion/magnet-motion") as Promise<Module>,
+  bulk: () => import("@/components/motion/bulk-motion") as Promise<Module>,
+  steps: () => import("@/components/motion/steps-motion") as Promise<Module>,
+  footer: () => import("@/components/motion/footer-motion") as Promise<Module>,
 };
 
 export type MotionName = keyof typeof LOADERS;
 
+/** Runs a motion module on the nearest [data-motion-root] once it is within two screens. */
 export function Motion({ name }: { name: MotionName }) {
   const marker = useRef<HTMLSpanElement>(null);
 

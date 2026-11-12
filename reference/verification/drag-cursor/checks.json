@@ -1,0 +1,38 @@
+[
+  {
+    "browser": "chromium",
+    "badge": 96,
+    "pointerPositions": 4,
+    "dragMovedFrom": "Custom labels",
+    "dragMovedTo": "Circle labels & seals",
+    "scroll": "pass",
+    "leave": "pass",
+    "chips": "pass",
+    "arrow": "pass",
+    "reducedMotion": "pass",
+    "errors": []
+  },
+  {
+    "browser": "chromium",
+    "touchCursor": "hidden",
+    "mobileOverflow": "none"
+  },
+  {
+    "browser": "webkit",
+    "badge": 96,
+    "pointerPositions": 4,
+    "dragMovedFrom": "Custom labels",
+    "dragMovedTo": "Circle labels & seals",
+    "scroll": "pass",
+    "leave": "pass",
+    "chips": "pass",
+    "arrow": "pass",
+    "reducedMotion": "pass",
+    "errors": []
+  },
+  {
+    "browser": "webkit",
+    "touchCursor": "hidden",
+    "mobileOverflow": "none"
+  }
+]

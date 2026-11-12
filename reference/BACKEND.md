@@ -6,22 +6,29 @@ Until a part is set up, the site says so plainly ("We can't take orders or messa
 
 ## Prices and currencies
 
-Prices follow Sticker Bros and are kept in **US dollars** in `src/lib/facts.ts`:
+Prices follow Sticker Bros and are kept in **US dollars**. One formula prices every label and sticker, in `src/lib/pricing.ts` (2026-11-11):
+
+    price each (USD) = 1.215 × (quantity ÷ 50) ^ −0.438 × (size ÷ 3) × material
+    size = √(width × height) in inches for labels (the longest side for die-cut, circle and square stickers)
+    material = 1 for white/clear BOPP, paper, kraft and vinyl; 1.128 for metallic silver, holographic, glitter
+
+It gives Sticker Bros' 50 × 3 in = $60.75 exactly; double the quantity and each costs about 26% less. No setup or plate fees.
 
 - **Shipping to Canada:** prices shown and charged in **CAD** (USD × `CAD_PER_USD`, now 1.38). Free shipping over $100 CAD.
 - **Shipping anywhere else:** prices shown and charged in **USD**, exactly Sticker Bros' amounts.
 
 The site picks the currency from the visitor's location on their first visit (Vercel and Cloudflare send it; on a cPanel host without Cloudflare everyone starts in CAD), and a **Shipping to: Canada · CAD / Elsewhere · USD** switch under the price changes it everywhere. The server works the price out again in the chosen currency, and Stripe Checkout only accepts Canadian addresses for CAD orders and non-Canadian addresses for USD orders.
 
-To match Sticker Bros exactly, add their listed prices to `LISTED_USD` in `src/lib/facts.ts` (`"finish|size|quantity": price`). Listed prices are used as they are; anything not listed comes from the model fitted to their prices. Update `CAD_PER_USD` when the exchange rate moves.
+To match Sticker Bros exactly, add their listed sticker prices to `LISTED_USD` in `src/lib/pricing.ts` (`"material|size|quantity": price`). Listed prices are used as they are; anything not listed comes from the formula. Update `CAD_PER_USD` in `src/lib/facts.ts` when the exchange rate moves.
 
 ## What happens
 
 | Visitor does | What the backend does |
 | --- | --- |
-| Builds a quote on `/quote` and presses **Pay and order** | Saves the order (and artwork up to 4 MB), works the price out again on the server, sends them to Stripe Checkout. When Stripe says it's paid: marks it **Paid: send proof**, emails the shop (artwork attached) and the customer. |
-| Presses **Or send it as a quote first** | Saves it as a **Quote**, emails the shop. No payment. |
-| Presses **Order a sample kit** | Straight to Stripe Checkout ($6.90 CAD or $5.00 USD, sticker size picked on Stripe's page). Paid kits show up as **Paid: pack it**. |
+| Adds labels or stickers to the cart (any size, material, quantity; their file, "Design it for me" or "Send it later") and presses **Pay** on `/cart` | Saves one order with every line and its artwork (up to 4 MB in all), works every price out again on the server, sends them to Stripe Checkout. When Stripe says it's paid: **Paid: check artwork**, emails the shop (artwork attached) and the customer. |
+| Chooses **Pay by invoice** on `/cart` (orders of $500 or more) with their business, billing address and PO number | Saves the order as **Invoice requested** (nothing charged) and emails the shop. From the admin you check the artwork, send the proof and press **Send Stripe invoice**: Stripe emails the invoice (due in 14 days by default, shipping added by you). When it's paid, the order is marked paid. |
+| Gets a proof | From the job page you upload the proof (PNG, JPG or PDF). The customer gets a private link (`/proof/…`) to **Approve and print** or **Ask for changes**; their answer moves the order and emails the shop. Without email set up, copy the link from the job page. |
+| Sends the **quote** form on `/business` (over 100,000, many versions, custom materials) or the **contact** form | Saves it, emails the shop with Reply-To set to the customer. |
 | Sends the **contact** form or the **business** form (on `/business`) | Saves it, emails the shop with Reply-To set to the customer. |
 | Leaves Stripe without paying | Back on the page with "nothing was charged". After 2 hours the order is marked **Checkout abandoned**. |
 
@@ -43,7 +50,7 @@ Any Postgres works (Supabase, the host's own). GoDaddy cPanel usually offers MyS
 
 1. dashboard.stripe.com: finish the account (business details, Canadian bank account). Stay in **Test mode** until you've tried an order.
 2. Developers > API keys: copy the **Secret key** → `STRIPE_SECRET_KEY`.
-3. Developers > Webhooks > Add endpoint: `https://YOUR-DOMAIN/api/stripe/webhook`, events `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.expired`, `charge.refunded`. Copy its **Signing secret** → `STRIPE_WEBHOOK_SECRET`.
+3. Developers > Webhooks > Add endpoint: `https://YOUR-DOMAIN/api/stripe/webhook`, events `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.expired`, `charge.refunded` and, for business invoices, `invoice.paid`. Copy its **Signing secret** → `STRIPE_WEBHOOK_SECRET`.
 4. **Shipping** (decide): Canadian orders of $100 CAD and more ship free. In Product catalogue > Shipping rates make a **CAD** rate for smaller Canadian orders (`STRIPE_SHIPPING_RATE_ID`) and a **USD** rate for orders outside Canada (`STRIPE_SHIPPING_RATE_ID_USD`). Without them, no shipping is charged. USD orders can ship anywhere Stripe does; limit it with `SHIP_COUNTRIES_USD` (e.g. `US`).
 5. **Sales tax** (decide, with your accountant): turn on Stripe Tax, add your GST/HST registration, then set `STRIPE_AUTOMATIC_TAX=true`. Without it, prices are charged with no tax added.
 6. Settings > Customer emails: turn on receipts for successful payments.
@@ -89,11 +96,11 @@ On any computer with the project: `pnpm admin:password`. It asks for a password 
 Sections down the side (across the top on a phone), each with a yellow count of what is waiting:
 
 - **Overview:** money paid this month (CAD and USD apart), proofs to send, jobs in production, new enquiries, the production line stage by stage, paid orders over the last 30 days, "Needs you" and the latest activity.
-- **Production · Orders:** a board with one column per stage (Send proof → Proof sent → Approved → Printing → Shipped). Each job is a ticket with its sticker drawn in shape and finish, quantity, due date (red when late), customer and amount; the longest-waiting job is on top, and the button along its bottom moves it to the next stage. **List** shows every order with a filter per status.
+- **Production · Orders:** a board with one column per stage (Invoice requested → Check artwork → Proof sent → Approved → Printing → Shipped). Each job is a ticket with its items, due date (red when late), customer, amount and flags (We design it, Bulk, Invoice to send / sent / paid, Changes asked); the longest-waiting job is on top, and the button along its bottom goes to the next step (Send proof and Send invoice open the job page). **List** shows every order with a filter per status.
 - **Production · Sample kits:** paid kits to pack, with the sticker size.
 - **Sales · Quotes, Business leads, Messages:** each a list with filters (New, Replied...). Leads show the label types, quantity and how often.
 - **Everything / search:** the search box at the top finds anything by name, email, business or `LB-` number.
-- **A job's page:** a stepper showing where it is, with "Mark as …" for the next step (or any status from the menu); the job ticket (the sticker on its cutting mat, every spec, the due date); the customer's message; artwork to download; private shop notes; the customer (Reply by email opens your mail app with the order number in the subject); payment and the shipping address, with a link to the receipt and refunds in Stripe; and the history of every change.
+- **A job's page:** a stepper showing where it is, with "Mark as …" for the next step (or any status from the menu); the items (with Bulk and We design it flags) and their notes; **Pay by invoice** (billing address, PO number, Send Stripe invoice, and the invoice once sent); **Proofs** (every version with the customer's answer, and the form to send a new one); artwork to download; private shop notes; the customer (Reply by email opens your mail app with the order number in the subject); payment and the shipping address, with a link to the receipt and refunds in Stripe; and the history of every change.
 - The **Setup** box at the bottom of the side shows which settings are still missing.
 
 ## Security, in short
@@ -112,7 +119,8 @@ Sections down the side (across the top on a phone), each with a yellow count of 
 | | |
 | --- | --- |
 | `src/server/` | settings (`env.ts`), database and tables (`db.ts`, `schema.ts`), the inbox (`inbox.ts`), Stripe (`stripe.ts`, `checkout.ts`), email (`mail.ts`), admin sign-in (`auth.ts`, `session-token.ts`), guards (`security.ts`), form checks and server prices (`validate.ts`) |
-| `src/app/api/` | `orders`, `sample-kit`, `messages`, `stripe/webhook` |
+| `src/app/api/` | `checkout` (cart: card or invoice), `messages`, `track`, `subscribe`, `stripe/webhook` |
+| `src/app/proof/` | the customer's proof page and its answers |
 | `src/app/admin/` | the back office; `src/proxy.ts` guards it |
-| `src/app/order/thanks/` | the page after paying |
+| `src/app/order/` | the page after paying (`thanks`) and after an invoice request (`requested`) |
 | `src/lib/api.ts`, `src/lib/forms.ts` | the browser side of the forms, and the form choices shared with the server |

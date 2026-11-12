@@ -1,0 +1,496 @@
+/* The ordering guide: one open print job, explored at the visitor's pace. */
+.op {
+  max-width: var(--max);
+  margin-inline: auto;
+  padding: var(--sy) var(--gutter) 0;
+}
+.op-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px 32px;
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+.op-head h2 {
+  max-width: 16ch;
+}
+.op-sheet {
+  --fg: var(--color-ink);
+  --fg-soft: var(--color-ink-soft);
+  --focus: var(--color-field);
+  overflow: hidden;
+  border-radius: 24px 24px 6px 24px;
+  background: var(--color-liner);
+  color: var(--fg);
+}
+.op-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-bottom: 1px solid var(--color-line);
+}
+.op-tabs button {
+  --p: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  min-height: 82px;
+  padding: 18px clamp(18px, 2.8vw, 40px);
+  border-right: 1px solid var(--color-line);
+  font-size: clamp(1rem, 1.9vw, 1.65rem);
+  font-weight: 850;
+  letter-spacing: -0.025em;
+  transition: background-color 0.25s;
+}
+.op-tabs button:last-child {
+  border-right: 0;
+}
+.op-tabs button:hover {
+  background: var(--color-sand);
+}
+.op-tabs button[aria-selected="true"] {
+  background: var(--color-signal);
+}
+.op-tabs button:focus-visible {
+  outline-offset: -5px;
+}
+.op-tab-icon {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.45s var(--ease-out);
+}
+.op-tabs button[aria-selected="true"] .op-tab-icon {
+  transform: rotate(-8deg) scale(1.08);
+}
+/* the line that fills along the open tab while the guide plays */
+.op-tab-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: var(--color-ink);
+  transform: scaleX(var(--p));
+  transform-origin: 0 50%;
+}
+.op-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+}
+.op-story {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(28px, 3.4vw, 44px);
+  padding: clamp(26px, 3.3vw, 48px);
+}
+.op-panels {
+  display: grid;
+}
+.op-panels > [role="tabpanel"] {
+  grid-area: 1 / 1;
+}
+/* closed stages keep their place (so the height never changes) but are not shown, read or
+   reached with the keyboard (visibility: hidden does all three) */
+.op-panels > [data-closed] {
+  visibility: hidden;
+}
+.op-title {
+  overflow: clip;
+  overflow-clip-margin: 0.08em;
+  max-width: 13ch;
+  font-size: clamp(2.1rem, 3.4vw, 3.15rem);
+  font-weight: 900;
+  font-stretch: 112%;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  word-spacing: 0.04em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.op-title span {
+  display: block;
+}
+.op-body {
+  max-width: 39ch;
+  margin-top: 22px;
+  font-size: clamp(1rem, 1.25vw, 1.1rem);
+  line-height: 1.55;
+  color: var(--fg-soft);
+}
+.op-facts {
+  display: grid;
+  gap: 12px;
+  max-width: 40ch;
+  margin-top: 26px;
+  font-size: var(--text-14);
+  font-weight: 650;
+  line-height: 1.45;
+}
+.op-facts li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.op-facts li::before {
+  content: "";
+  flex: none;
+  width: 12px;
+  height: 8px;
+  border-left: 2px solid var(--color-field);
+  border-bottom: 2px solid var(--color-field);
+  transform: translateY(-2px) rotate(-45deg);
+}
+.op-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 22px;
+}
+.op-actions .btn {
+  min-height: 48px;
+  font-size: var(--text-14);
+}
+.op-next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+  font-size: var(--text-14);
+  font-weight: 750;
+}
+.op-next svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.25s var(--ease-out);
+}
+.op-next:hover svg {
+  transform: translateX(4px);
+}
+.op-visual {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  background: var(--color-field-deep);
+  color: var(--color-liner);
+}
+.op-desk {
+  display: grid;
+  flex: 1;
+  align-items: center;
+  min-height: 480px;
+  overflow: hidden;
+}
+.op-drawing {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--font-sans);
+}
+.op-grid {
+  color: #c9d1ff;
+  opacity: 0.2;
+}
+.op-registration {
+  fill: none;
+  stroke: #c9d1ff;
+  stroke-width: 1;
+  opacity: 0.65;
+}
+.op-scene-part {
+  opacity: 0;
+  transition:
+    opacity 0.35s,
+    transform 0.65s var(--ease-out);
+}
+.op-label-object {
+  transform-origin: 400px 310px;
+  transform: rotate(-6deg);
+  transition: transform 0.85s var(--ease-out);
+}
+.op-cut-line {
+  fill: none;
+  stroke: #1e3fd8;
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+  opacity: 0.55;
+}
+.op-file {
+  transform: translate(-24px, 12px) rotate(-5deg);
+  transform-origin: 270px 300px;
+}
+.op-file-type,
+.op-file-name,
+.op-proof-heading,
+.op-stamp-type {
+  fill: #0d0d0c;
+  font-weight: 800;
+}
+.op-file-type {
+  font-size: 18px;
+}
+.op-file-name {
+  font-size: 18px;
+}
+.op-proof-heading {
+  font-size: 17px;
+  letter-spacing: 1px;
+}
+.op-stamp-type {
+  font-size: 15px;
+}
+.op-ship-type {
+  fill: #0d0d0c;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.op-file-lines {
+  fill: none;
+  stroke: #dcd4c3;
+  stroke-width: 2;
+}
+.op-crop,
+.op-proof-cut {
+  fill: none;
+  stroke: #1e3fd8;
+  stroke-width: 2;
+}
+.op-proof-cut {
+  stroke-width: 1;
+  stroke-dasharray: 6 5;
+  opacity: 0.5;
+}
+.op-proof-check {
+  fill: none;
+  stroke: #0d0d0c;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.op-measurements path {
+  fill: none;
+  stroke: #f5f1e8;
+  stroke-width: 1.5;
+}
+.op-measurements text {
+  fill: #f5f1e8;
+  font-size: 20px;
+  font-weight: 650;
+}
+.op-visual[data-stage="choose"] .op-measurements,
+.op-visual[data-stage="artwork"] .op-file,
+.op-visual[data-stage="proof"] .op-proof-sheet,
+.op-visual[data-stage="delivery"] .op-mailer,
+.op-visual[data-stage="delivery"] .op-mailer-front {
+  opacity: 1;
+}
+.op-mailer,
+.op-mailer-front {
+  transform: translateY(40px);
+}
+.op-visual[data-stage="delivery"] .op-mailer,
+.op-visual[data-stage="delivery"] .op-mailer-front {
+  transform: none;
+}
+.op-visual[data-stage="artwork"] .op-file {
+  transform: rotate(-5deg);
+}
+.op-visual[data-stage="artwork"] .op-label-object {
+  transform: translate(95px, -35px) rotate(7deg) scale(0.9);
+}
+.op-visual[data-stage="proof"] .op-label-object {
+  transform: none;
+}
+/* packed: the label stands in the open mailer, its lower part behind the front */
+.op-visual[data-stage="delivery"] .op-label-object {
+  transform: translate(0, -12px) rotate(-4deg) scale(0.62);
+}
+.op-visual[data-stage="delivery"] .op-cut-line,
+.op-visual[data-stage="proof"] .op-label-corner {
+  opacity: 0;
+}
+.op-visual figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 66px;
+  padding: 14px 28px;
+  border-top: 1px solid rgb(201 209 255 / 0.25);
+  font-size: var(--text-14);
+  font-weight: 650;
+}
+.op-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1.5px solid rgb(201 209 255 / 0.4);
+  border-radius: 8px 8px 2px 8px;
+  color: var(--color-liner);
+  font-size: var(--text-13);
+  font-weight: 750;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.op-play:hover {
+  border-color: var(--color-liner);
+}
+.op-play svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.op-no-script {
+  display: grid;
+  gap: 28px;
+  padding-top: 28px;
+}
+.op-no-script h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+.op-no-script p,
+.op-no-script ul {
+  margin-top: 8px;
+}
+@media (max-width: 1023px) {
+  .op-workspace {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .op-title {
+    font-size: 2.25rem;
+  }
+  .op-story {
+    padding: 28px;
+  }
+  .op-desk {
+    min-height: 420px;
+  }
+  .op-tabs button {
+    min-height: 70px;
+    padding-inline: 22px;
+  }
+}
+@media (max-width: 767px) {
+  .op-head h2 {
+    max-width: 15ch;
+  }
+  .op-sheet {
+    border-radius: 18px 18px 4px 18px;
+  }
+  .op-tabs button {
+    justify-content: center;
+    min-height: 60px;
+    gap: 0;
+    padding: 12px 6px;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+  }
+  .op-tab-icon {
+    width: 22px;
+    height: 22px;
+  }
+  .op-tabs button {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .op-workspace {
+    display: flex;
+    flex-direction: column;
+  }
+  .op-story {
+    gap: 24px;
+    padding: 26px 22px 28px;
+  }
+  .op-title {
+    max-width: 15ch;
+    font-size: clamp(2rem, 8vw, 2.6rem);
+  }
+  .op-body {
+    margin-top: 18px;
+  }
+  .op-facts {
+    margin-top: 22px;
+  }
+  .op-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px 20px;
+  }
+  .op-actions .btn {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .op-visual {
+    order: -1;
+  }
+  .op-desk {
+    min-height: 0;
+  }
+  .op-visual figcaption {
+    /* room for a two-line caption, so the sheet keeps one height on every stage */
+    min-height: 68px;
+    padding: 10px 16px 10px 20px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .op-visual[data-stage="proof"] .op-proof-stamp {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: op-stamp 0.55s var(--ease-slap);
+  }
+  .op-visual[data-stage="proof"] .op-proof-check {
+    stroke-dasharray: 40;
+    animation: op-check 0.55s var(--ease-out);
+  }
+}
+@keyframes op-stamp {
+  from {
+    translate: 0 -16px;
+    scale: 1.08;
+  }
+  to {
+    translate: 0 0;
+    scale: 1;
+  }
+}
+@keyframes op-check {
+  from {
+    stroke-dashoffset: 40;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .op-play,
+  .op-tab-line {
+    display: none;
+  }
+  .op-tab-icon,
+  .op-tabs button,
+  .op-scene-part,
+  .op-label-object,
+  .op-next svg {
+    transition: none;
+  }
+}

@@ -1,0 +1,493 @@
+{
+  "generatedOn": "2026-11-12",
+  "mode": "built-in image_gen",
+  "outputDirectory": "public/products/realistic",
+  "photoSize": [
+    1024,
+    1280
+  ],
+  "thumbnailSize": [
+    256,
+    256
+  ],
+  "note": "Nominal dimensions guide photographed shape and relative packaging scale. Photography is a static representative sample; the configurator supplies exact ordered dimensions.",
+  "products": [
+    {
+      "slug": "custom-labels",
+      "name": "Custom labels",
+      "size": "3 × 2 in",
+      "tone": "sky",
+      "scene": "Pale periwinkle #DFE5FF background. A small straight-sided glass food jar, a compact kraft pouch and a rectangular folding carton arranged as a restrained group. Each carries a 3-inch-wide by 2-inch-high rectangular cream label, visibly wider than tall at a precise 3:2 aspect. Printed deep red serif \"YOUR BRAND\" with a small botanical motif. Realistic small-business packaging; the label is the hero, not the empty packaging.",
+      "alt": "Jar, kraft pouch and carton with wide rectangular Your Brand labels",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nPale periwinkle #DFE5FF background. A small straight-sided glass food jar, a compact kraft pouch and a rectangular folding carton arranged as a restrained group. Each carries a 3-inch-wide by 2-inch-high rectangular cream label, visibly wider than tall at a precise 3:2 aspect. Printed deep red serif \"YOUR BRAND\" with a small botanical motif. Realistic small-business packaging; the label is the hero, not the empty packaging.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/custom-labels.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 77192,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/custom-labels-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 6150,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "roll-labels",
+      "name": "Roll labels",
+      "size": "3 × 2 in, rounded rectangle",
+      "tone": "cream",
+      "scene": "Warm cream #EFE8D9 background. One realistic industrial roll of white BOPP adhesive labels on a brown cardboard core, standing slightly on its side, with a short backing strip unrolling toward the camera. Every label is a landscape 3-inch-wide by 2-inch-high rounded rectangle, exact 3:2 aspect, with visible regular die-cut gaps. Cream printed face, thin red rules, bold warm-red serif \"YOUR BRAND\". Liner is pale translucent glassine; wound layers and core are real paper, not solid plastic. No labels floating without backing.",
+      "alt": "Roll of 3 by 2 inch rounded Your Brand labels on glassine backing",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nWarm cream #EFE8D9 background. One realistic industrial roll of white BOPP adhesive labels on a brown cardboard core, standing slightly on its side, with a short backing strip unrolling toward the camera. Every label is a landscape 3-inch-wide by 2-inch-high rounded rectangle, exact 3:2 aspect, with visible regular die-cut gaps. Cream printed face, thin red rules, bold warm-red serif \"YOUR BRAND\". Liner is pale translucent glassine; wound layers and core are real paper, not solid plastic. No labels floating without backing.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/roll-labels.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 57708,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/roll-labels-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 6318,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "food-labels",
+      "name": "Food labels",
+      "size": "3 in diameter, circle",
+      "tone": "sand",
+      "scene": "Warm sand #E8DCC2 background. A realistic wide 500ml straight-sided glass jar of ruby strawberry jam with a brushed gold screw lid. One ROUND 3-inch-diameter cream adhesive label centered on its front, not a rectangle. Circle looks nearly round in frontal view and hugs the glass subtly; fits within the jar body. Fine warm-red circular border, small strawberry illustration, bold red serif \"YOUR BRAND\", secondary line exactly \"STRAWBERRY JAM\". No fruit props. Visible jam seeds, real glass thickness and soft reflections.",
+      "alt": "Strawberry jam jar with a round 3 inch Your Brand food label",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nWarm sand #E8DCC2 background. A realistic wide 500ml straight-sided glass jar of ruby strawberry jam with a brushed gold screw lid. One ROUND 3-inch-diameter cream adhesive label centered on its front, not a rectangle. Circle looks nearly round in frontal view and hugs the glass subtly; fits within the jar body. Fine warm-red circular border, small strawberry illustration, bold red serif \"YOUR BRAND\", secondary line exactly \"STRAWBERRY JAM\". No fruit props. Visible jam seeds, real glass thickness and soft reflections.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/food-labels.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 93816,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/food-labels-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 7698,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "beverage-labels",
+      "name": "Beverage labels",
+      "size": "6 × 2.5 in, wrap-around rectangle",
+      "tone": "sky",
+      "scene": "Pale periwinkle #DFE5FF background. A realistic 330ml amber glass kombucha bottle with a plain silver crown cap. A 6-inch-wide by 2.5-inch-high deep teal BOPP wrap-around label covers the lower straight cylindrical body; width continues naturally around the circumference and only the front panel is visible. No narrow tall label. Cream wave motifs and small coral half-sun, large condensed cream \"YOUR BRAND\", secondary line exactly \"SPARKLING KOMBUCHA\". Subtle sparse condensation and physically accurate glass reflections.",
+      "alt": "Amber kombucha bottle with a wide teal Your Brand wrap-around label",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nPale periwinkle #DFE5FF background. A realistic 330ml amber glass kombucha bottle with a plain silver crown cap. A 6-inch-wide by 2.5-inch-high deep teal BOPP wrap-around label covers the lower straight cylindrical body; width continues naturally around the circumference and only the front panel is visible. No narrow tall label. Cream wave motifs and small coral half-sun, large condensed cream \"YOUR BRAND\", secondary line exactly \"SPARKLING KOMBUCHA\". Subtle sparse condensation and physically accurate glass reflections.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/beverage-labels.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 60180,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/beverage-labels-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 4900,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "bottle-labels",
+      "name": "Bottle labels",
+      "size": "3 × 4 in, rounded rectangle",
+      "tone": "cream",
+      "scene": "Warm cream #EFE8D9 background. A realistic tall 500ml rectangular dark-green glass olive oil bottle with a plain black screw cap. Front matte cream label is 3 inches wide and 4 inches high, a tall rounded RECTANGLE with small corner radii, exact 3:4 aspect, not an arched label. Fits the bottle front below the shoulder. Fine olive-green border, small olive-branch motif, olive-green serif \"YOUR BRAND\", secondary line exactly \"EXTRA VIRGIN OLIVE OIL\". Real oil visible through green glass, subtle imperfections, no props.",
+      "alt": "Olive oil bottle with a tall 3 by 4 inch rounded Your Brand label",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nWarm cream #EFE8D9 background. A realistic tall 500ml rectangular dark-green glass olive oil bottle with a plain black screw cap. Front matte cream label is 3 inches wide and 4 inches high, a tall rounded RECTANGLE with small corner radii, exact 3:4 aspect, not an arched label. Fits the bottle front below the shoulder. Fine olive-green border, small olive-branch motif, olive-green serif \"YOUR BRAND\", secondary line exactly \"EXTRA VIRGIN OLIVE OIL\". Real oil visible through green glass, subtle imperfections, no props.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/bottle-labels.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 35094,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/bottle-labels-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 3502,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "coffee-labels",
+      "name": "Coffee and tea labels",
+      "size": "3 × 4 in, die-cut",
+      "tone": "sand",
+      "scene": "Warm sand #E8DCC2 background. A realistic upright 250g kraft coffee bag with a zip closure and a subtle one-way valve near the top. Its front carries a 3-inch-wide by 4-inch-high matte black die-cut label with softly shaped shoulders, clearly portrait at 3:4 aspect, occupying about two thirds of the flat bag face. Cream crescent mark, bold condensed cream \"YOUR BRAND\", secondary line exactly \"ROASTED COFFEE\". Authentic kraft fibers, folded side gussets, slight tactile crinkles; no coffee beans or other props.",
+      "alt": "Kraft coffee pouch with a tall matte black Your Brand die-cut label",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nWarm sand #E8DCC2 background. A realistic upright 250g kraft coffee bag with a zip closure and a subtle one-way valve near the top. Its front carries a 3-inch-wide by 4-inch-high matte black die-cut label with softly shaped shoulders, clearly portrait at 3:4 aspect, occupying about two thirds of the flat bag face. Cream crescent mark, bold condensed cream \"YOUR BRAND\", secondary line exactly \"ROASTED COFFEE\". Authentic kraft fibers, folded side gussets, slight tactile crinkles; no coffee beans or other props.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/coffee-labels.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 80548,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/coffee-labels-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 4804,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "candle-labels",
+      "name": "Candle labels",
+      "size": "3 in diameter, circle",
+      "tone": "cream",
+      "scene": "Warm cream #EFE8D9 background. A realistic broad clear glass candle tumbler about 4 inches wide, filled with ivory soy wax and an unlit trimmed cotton wick. A single ROUND 3-inch-diameter matte cream adhesive label faces camera on the glass body, not a rectangular band. Fine black circular rules and a tiny flame mark, elegant black script \"Your Brand\", secondary line exactly \"SOY CANDLE\". Label fits fully on the tumbler and curves gently with glass; authentic wax surface and thick glass foot. No lid or props.",
+      "alt": "Soy candle in a glass tumbler with a round 3 inch Your Brand label",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nWarm cream #EFE8D9 background. A realistic broad clear glass candle tumbler about 4 inches wide, filled with ivory soy wax and an unlit trimmed cotton wick. A single ROUND 3-inch-diameter matte cream adhesive label faces camera on the glass body, not a rectangular band. Fine black circular rules and a tiny flame mark, elegant black script \"Your Brand\", secondary line exactly \"SOY CANDLE\". Label fits fully on the tumbler and curves gently with glass; authentic wax surface and thick glass foot. No lid or props.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/candle-labels.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 43118,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/candle-labels-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 4180,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "cosmetic-labels",
+      "name": "Cosmetic labels",
+      "size": "1.5 × 2 in, rectangle",
+      "tone": "sky",
+      "scene": "Pale periwinkle #DFE5FF background. A realistic 50ml amber glass face-oil dropper bottle with black rubber bulb and black screw collar. A sage-green matte rectangular label is 1.5 inches wide by 2 inches high, exact 3:4 portrait aspect, fitted below the shoulder and above the base; not a broad landscape wrap. Delicate dark-green fern motif, refined dark-green serif \"YOUR BRAND\", secondary line exactly \"BOTANICAL FACE OIL\". Real glass reflections and slight oil translucency. No leaves or props outside the label.",
+      "alt": "Amber dropper bottle with a portrait sage Your Brand cosmetic label",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nPale periwinkle #DFE5FF background. A realistic 50ml amber glass face-oil dropper bottle with black rubber bulb and black screw collar. A sage-green matte rectangular label is 1.5 inches wide by 2 inches high, exact 3:4 portrait aspect, fitted below the shoulder and above the base; not a broad landscape wrap. Delicate dark-green fern motif, refined dark-green serif \"YOUR BRAND\", secondary line exactly \"BOTANICAL FACE OIL\". Real glass reflections and slight oil translucency. No leaves or props outside the label.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/cosmetic-labels.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 46054,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/cosmetic-labels-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 3800,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "circle-labels",
+      "name": "Circle labels and seals",
+      "size": "2 in diameter, circle",
+      "tone": "yellow",
+      "scene": "Label yellow #FFD21F background. One small natural kraft gift box with a lid and one shallow kraft paper food tub. A 2-inch-diameter round cream paper seal bridges the lid edge of the gift box; a second identical round label is on the food-tub lid facing the camera. One loose identical circle lies nearby. Every circle has the same actual size, no giant seals. Black botanical linework and bold black serif \"YOUR BRAND\". Three restrained objects, realistic paper fibers, score lines and adhesion.",
+      "alt": "Kraft packaging sealed with matching round 2 inch Your Brand labels",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nLabel yellow #FFD21F background. One small natural kraft gift box with a lid and one shallow kraft paper food tub. A 2-inch-diameter round cream paper seal bridges the lid edge of the gift box; a second identical round label is on the food-tub lid facing the camera. One loose identical circle lies nearby. Every circle has the same actual size, no giant seals. Black botanical linework and bold black serif \"YOUR BRAND\". Three restrained objects, realistic paper fibers, score lines and adhesion.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/circle-labels.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 86800,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/circle-labels-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 6186,
+          "quality": 82
+        }
+      ],
+      "outputTone": "cream"
+    },
+    {
+      "slug": "sheet-labels",
+      "name": "Sheet labels",
+      "size": "3 × 2 in, rounded rectangle on letter sheet",
+      "tone": "sand",
+      "scene": "Warm sand #E8DCC2 background. Slight overhead studio photograph of one realistic 8.5 by 11 inch white backing sheet carrying exactly EIGHT 3-inch-wide by 2-inch-high rounded-rectangle cream printed labels in TWO columns and FOUR rows. Every label is landscape at exact 3:2 aspect, with generous margins and visible die-cut gaps. One corner of the lowest label lifts slightly, showing the sticky reverse without a hand. Thin warm-red rules and large red serif \"YOUR BRAND\". No scattered labels or additional sheets.",
+      "alt": "Letter-size sheet of eight 3 by 2 inch Your Brand labels with one corner lifted",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nWarm sand #E8DCC2 background. Slight overhead studio photograph of one realistic 8.5 by 11 inch white backing sheet carrying exactly EIGHT 3-inch-wide by 2-inch-high rounded-rectangle cream printed labels in TWO columns and FOUR rows. Every label is landscape at exact 3:2 aspect, with generous margins and visible die-cut gaps. One corner of the lowest label lifts slightly, showing the sticky reverse without a hand. Thin warm-red rules and large red serif \"YOUR BRAND\". No scattered labels or additional sheets.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/sheet-labels.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 71684,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/sheet-labels-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 8660,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "vinyl-stickers",
+      "name": "Vinyl stickers",
+      "size": "3 × 3 in, die-cut",
+      "tone": "cream",
+      "scene": "Warm cream #EFE8D9 background. Three realistic thick white vinyl die-cut stickers, each fitting within the SAME 3 by 3 inch bounding box: a round red badge with yellow circular rule, a rounded starburst in yellow and a compact black badge. Each printed boldly with cream or black \"YOUR BRAND\", no secondary words. Arrange as a restrained partly overlapping fan, all main wordmarks readable. White cut borders follow each shape at a consistent narrow thickness; one corner gently lifted to show pliable vinyl and backing. Real gloss and physical thickness, never floating.",
+      "alt": "Three 3 inch Your Brand vinyl stickers with gloss and white die-cut borders",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nWarm cream #EFE8D9 background. Three realistic thick white vinyl die-cut stickers, each fitting within the SAME 3 by 3 inch bounding box: a round red badge with yellow circular rule, a rounded starburst in yellow and a compact black badge. Each printed boldly with cream or black \"YOUR BRAND\", no secondary words. Arrange as a restrained partly overlapping fan, all main wordmarks readable. White cut borders follow each shape at a consistent narrow thickness; one corner gently lifted to show pliable vinyl and backing. Real gloss and physical thickness, never floating.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/vinyl-stickers.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 73100,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/vinyl-stickers-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 8844,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "clear-stickers",
+      "name": "Clear stickers",
+      "size": "3 × 3 in, clear die-cut",
+      "tone": "sky",
+      "scene": "Pale periwinkle #DFE5FF background. A single wide clear glass storage jar, empty, with a realistic 3 by 3 inch clear vinyl round die-cut sticker applied to the broad front. Sticker shows a thin black ring and bold black \"YOUR BRAND\"; all unprinted areas are TRULY CLEAR so glass, background and rear glass refractions remain visible, not opaque white. A tiny subtle gloss edge shows the transparent material boundary. Jar is about 4.5 inches wide so scale is believable. No lid, packaging, or props.",
+      "alt": "Clear glass jar with a transparent 3 inch Your Brand vinyl sticker",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nPale periwinkle #DFE5FF background. A single wide clear glass storage jar, empty, with a realistic 3 by 3 inch clear vinyl round die-cut sticker applied to the broad front. Sticker shows a thin black ring and bold black \"YOUR BRAND\"; all unprinted areas are TRULY CLEAR so glass, background and rear glass refractions remain visible, not opaque white. A tiny subtle gloss edge shows the transparent material boundary. Jar is about 4.5 inches wide so scale is believable. No lid, packaging, or props.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/clear-stickers.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 51010,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/clear-stickers-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 5510,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "holographic-stickers",
+      "name": "Holographic stickers",
+      "size": "3 × 3 in, die-cut",
+      "tone": "ink",
+      "scene": "Charcoal #18181B background. Two realistic die-cut holographic film stickers, each within the same 3 by 3 inch bounding box: one softly rounded starburst and one round badge. Large bold black \"YOUR BRAND\" on each, no other words. Rest flat at a mild three-quarter angle, barely overlapping. Real thin rainbow diffraction foil with silver base and restrained spectral bands from a raking softbox; physically grounded reflections, clean cut edges and subtle white release backing. No luminous glow, metallic 3D objects or packaging props.",
+      "alt": "Two 3 inch Your Brand holographic stickers with realistic rainbow foil",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nCharcoal #18181B background. Two realistic die-cut holographic film stickers, each within the same 3 by 3 inch bounding box: one softly rounded starburst and one round badge. Large bold black \"YOUR BRAND\" on each, no other words. Rest flat at a mild three-quarter angle, barely overlapping. Real thin rainbow diffraction foil with silver base and restrained spectral bands from a raking softbox; physically grounded reflections, clean cut edges and subtle white release backing. No luminous glow, metallic 3D objects or packaging props.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/holographic-stickers.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 71538,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/holographic-stickers-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 5910,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "glitter-stickers",
+      "name": "Glitter stickers",
+      "size": "3 × 3 in, die-cut",
+      "tone": "ink",
+      "scene": "Charcoal #18181B background. Two realistic thin die-cut glitter-film adhesive stickers, each within the SAME 3 by 3 inch bounding box: a soft pink heart and a warm-gold circle. Each reads bold dark-ink \"YOUR BRAND\" clearly. Fine embedded glitter flecks under a smooth transparent gloss laminate, subtle point highlights, realistic fine grain rather than chunky loose glitter. Stickers lie on the surface with gentle edge lift and thin white release backing. No sparkles floating in air, props or external text.",
+      "alt": "Pink and gold 3 inch Your Brand stickers showing fine glitter film",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nCharcoal #18181B background. Two realistic thin die-cut glitter-film adhesive stickers, each within the SAME 3 by 3 inch bounding box: a soft pink heart and a warm-gold circle. Each reads bold dark-ink \"YOUR BRAND\" clearly. Fine embedded glitter flecks under a smooth transparent gloss laminate, subtle point highlights, realistic fine grain rather than chunky loose glitter. Stickers lie on the surface with gentle edge lift and thin white release backing. No sparkles floating in air, props or external text.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/glitter-stickers.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 102950,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/glitter-stickers-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 5458,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "kraft-stickers",
+      "name": "Kraft paper stickers",
+      "size": "2 in diameter, circle",
+      "tone": "sand",
+      "scene": "Warm sand #E8DCC2 background. Exactly three identical 2-inch-diameter circular brown kraft-paper stickers printed in black: bold \"YOUR BRAND\" with secondary line exactly \"THANK YOU\". One seals the folded edge of white tissue wrapping a small parcel; two lie loose alongside, same diameter. Close real paper fibers, uncoated matte finish, tiny cut-edge texture, no metallic shine or vinyl gloss. Restrained photograph, simple parcel is only a scale context.",
+      "alt": "Round 2 inch kraft Your Brand thank-you stickers on white tissue wrapping",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nWarm sand #E8DCC2 background. Exactly three identical 2-inch-diameter circular brown kraft-paper stickers printed in black: bold \"YOUR BRAND\" with secondary line exactly \"THANK YOU\". One seals the folded edge of white tissue wrapping a small parcel; two lie loose alongside, same diameter. Close real paper fibers, uncoated matte finish, tiny cut-edge texture, no metallic shine or vinyl gloss. Restrained photograph, simple parcel is only a scale context.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/kraft-stickers.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 98706,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/kraft-stickers-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 5364,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "metallic-stickers",
+      "name": "Silver and gold stickers",
+      "size": "2 in diameter, circle",
+      "tone": "blue",
+      "scene": "Press blue #1E3FD8 background. Two realistic 2-inch-diameter ROUND metallic adhesive stickers side by side, one brushed gold and one brushed silver, both exactly the same diameter. Thin flexible film with visible release backing at a slightly lifted edge, not thick metal coins or medallions. Minimal fine black circular rules and bold black \"YOUR BRAND\" centered on each. Restrained brushed-metal grain and believable softbox reflections, no embossed lettering or props.",
+      "alt": "Matching round 2 inch gold and silver Your Brand metallic stickers",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nPress blue #1E3FD8 background. Two realistic 2-inch-diameter ROUND metallic adhesive stickers side by side, one brushed gold and one brushed silver, both exactly the same diameter. Thin flexible film with visible release backing at a slightly lifted edge, not thick metal coins or medallions. Minimal fine black circular rules and bold black \"YOUR BRAND\" centered on each. Restrained brushed-metal grain and believable softbox reflections, no embossed lettering or props.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/metallic-stickers.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 74830,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/metallic-stickers-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 5634,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "50-3in-custom-stickers",
+      "name": "50 custom stickers 3 in",
+      "size": "3 × 3 in, 50-sticker pack",
+      "tone": "ink",
+      "scene": "Charcoal #18181B background. One tidy low stack of fifty identical 3-inch round white vinyl die-cut stickers, with about six staggered top layers visible to communicate quantity without counting every layer. Front sticker lies slightly fanned out toward camera, displaying a red badge with yellow circular ring, narrow white die-cut edge, and large cream \"YOUR BRAND\". All stickers are the SAME real 3-inch diameter and have identical artwork. Realistic thin laminated vinyl and white release liner, modest total stack thickness, no captions or package props.",
+      "alt": "Stack of matching 3 inch red Your Brand custom vinyl stickers",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nCharcoal #18181B background. One tidy low stack of fifty identical 3-inch round white vinyl die-cut stickers, with about six staggered top layers visible to communicate quantity without counting every layer. Front sticker lies slightly fanned out toward camera, displaying a red badge with yellow circular ring, narrow white die-cut edge, and large cream \"YOUR BRAND\". All stickers are the SAME real 3-inch diameter and have identical artwork. Realistic thin laminated vinyl and white release liner, modest total stack thickness, no captions or package props.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/50-3in-custom-stickers.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 61530,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/50-3in-custom-stickers-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 7566,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "250-3in-vinyl-stickers",
+      "name": "250 vinyl stickers 3 in",
+      "size": "3 × 3 in, 250-sticker pack",
+      "tone": "cream",
+      "scene": "Warm cream #EFE8D9 background. Three neat low stacks of identical 3-inch round white vinyl die-cut stickers beside an open small kraft shipping envelope, with four individual stickers fanned in front. Every sticker is the SAME diameter, same red badge, yellow ring, narrow white border and large cream \"YOUR BRAND\" wordmark. A believable bulk order of thin backed stickers, not giant puffy discs, no need to count all 250. Envelope large enough to hold the 3-inch stickers; real paper creases, realistic ink gloss. No text except the wordmarks.",
+      "alt": "Bulk stacks of identical 3 inch Your Brand vinyl stickers beside a kraft envelope",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nWarm cream #EFE8D9 background. Three neat low stacks of identical 3-inch round white vinyl die-cut stickers beside an open small kraft shipping envelope, with four individual stickers fanned in front. Every sticker is the SAME diameter, same red badge, yellow ring, narrow white border and large cream \"YOUR BRAND\" wordmark. A believable bulk order of thin backed stickers, not giant puffy discs, no need to count all 250. Envelope large enough to hold the 3-inch stickers; real paper creases, realistic ink gloss. No text except the wordmarks.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/250-3in-vinyl-stickers.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 96854,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/250-3in-vinyl-stickers-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 9964,
+          "quality": 82
+        }
+      ]
+    },
+    {
+      "slug": "sample-pack",
+      "name": "Sample pack",
+      "size": "3 × 2 in material samples",
+      "tone": "yellow",
+      "scene": "Label yellow #FFD21F background. Slight overhead studio flat lay of a small open kraft mailer and a neat fan of 3-inch-wide by 2-inch-high rectangular material sample swatches. Show visibly different white gloss BOPP, clear film, white matte paper, brown kraft, brushed silver and brushed gold, plus two small 2-inch round holographic and glitter samples. All rectangular samples share an exact 3:2 proportion. Materials look thin and flexible. One small cream information card reads exactly \"SAMPLE PACK\" in crisp bold black capitals; no YOUR BRAND text or other writing anywhere. No ruler, hands or decorative props.",
+      "alt": "Sample pack with proportioned white, clear, kraft, metallic, holographic and glitter materials",
+      "prompt": "Use case: product-mockup.\nAsset type: photorealistic e-commerce product photograph for the Label Bros catalog.\nPrimary request: photograph the specified printed label or sticker product with physically believable dimensions and proportions. A real camera photograph, never a 3D render, illustration, collage or contact sheet.\nStyle: consistent premium commercial product photography; seamless matte paper sweep, soft broad daylight studio key from upper left, gentle right fill, natural contact shadows; realistic glass refraction, subtle material grain, crisp ink and tiny natural manufacturing imperfections. Camera approximately product height, 85mm lens, modest downward angle, deep focus.\nComposition: a single portrait photograph with a 4:5 composition, centered subject entirely visible in the central 64% of the frame height and central 76% of the width; enough breathing room for both portrait cards and a centered square thumbnail. Do not crop the subject. No horizon line or pedestal. Keep the main label front-facing and clearly readable.\nText rules: only the exact requested words; main wordmark exactly \"YOUR BRAND\" (two correctly spelled words), large and legible, except script \"Your Brand\" on candle packaging. At most the specified secondary line. No other writing, tiny fake copy, dimensions, rulers, arrows, captions, borders around the photograph, watermarks, real brands, people or hands.\n\nProduct-specific scene and scale:\nLabel yellow #FFD21F background. Slight overhead studio flat lay of a small open kraft mailer and a neat fan of 3-inch-wide by 2-inch-high rectangular material sample swatches. Show visibly different white gloss BOPP, clear film, white matte paper, brown kraft, brushed silver and brushed gold, plus two small 2-inch round holographic and glitter samples. All rectangular samples share an exact 3:2 proportion. Materials look thin and flexible. One small cream information card reads exactly \"SAMPLE PACK\" in crisp bold black capitals; no YOUR BRAND text or other writing anywhere. No ruler, hands or decorative props.\nOutput: one portrait product photograph, suitable for a final 1024 × 1280 WebP and centered square thumbnail.",
+      "exports": [
+        {
+          "file": "/products/realistic/sample-pack.webp",
+          "width": 1024,
+          "height": 1280,
+          "bytes": 121710,
+          "quality": 82
+        },
+        {
+          "file": "/products/realistic/sample-pack-thumb.webp",
+          "width": 256,
+          "height": 256,
+          "bytes": 7062,
+          "quality": 82
+        }
+      ]
+    }
+  ],
+  "thumbnailFit": "contain, with tone-matched padding, to retain the full product silhouette"
+}

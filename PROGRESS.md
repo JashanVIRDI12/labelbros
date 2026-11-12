@@ -1,5 +1,159 @@
 # Progress
 
+## 2026-11-12 (late): sticker cards, sample reviews, the FAQ as an answer board
+
+**Stickers, by material** (`home/StickerCards.tsx` + `motion/sticker-motion.ts`, replace `StickerSwatches`): six cards, each with the sticker's photo, a die-cut tag made of the material itself (vinyl, clear, holographic, glitter, kraft, silver & gold, in CSS), name, line, price and a yellow "Shop …" bar. Cards rise with the shared reveal; a light then passes across each tag in turn and follows the pointer (`--mx`/`--my`, tweened by GSAP). 3 across, 2 on tablets and phones.
+
+**Reviews.** The client asked for placeholder reviews until real ones arrive. `SAMPLE_REVIEWS` in `lib/reviews.ts` (three, written by us) show while `REVIEWS` is empty; each card is marked "Sample review", and they give no star average and no structured data. Adding one real review to `REVIEWS` replaces them.
+
+**FAQ** (`home/FaqBoard.tsx`, used by `Faq` on five pages): an answer board instead of an accordion. Wide: the questions on the left with a yellow tab sliding to the open one; the answer on a sticky cream label with a dashed cut line, whose corner peels as the old answer lifts out and the new one is laid down (slap); each answer links to where to act on it. Narrow: answers ease open under their question, one at a time, with the same tab. Arrow keys move between questions; FAQ structured data unchanged.
+
+**Verified.** tsc, lint, build; 1440 in Chromium and WebKit (FAQ switch, mid-switch, keyboard), 390; no overflow, no console errors.
+
+## 2026-11-12 (late): "From your idea to your shelf" rebuilt as a step track
+
+**Why.** The client saw the press run glitch (in Safari: the rail's mark over the heading, jars off the sheet, an empty stage) and asked for something cleaner and simpler, from scratch.
+
+**Built.** `home/ProcessSteps.tsx` + `motion/process-motion.ts` replace `PressRun` / `press-motion` (deleted, with the ink plates in `public/products/labels/plates/`). The heading, a line and "Start your order" sit on the left (CSS sticky on desktop: no pinning, the page always scrolls normally); the four steps run down the right on a dashed cut line, one segment per gap, each filling in yellow as you scroll from one step to the next. As a step arrives its icon slaps on as a sticker and draws itself (DrawSVG), its title rises (shared reveal), its line and facts slide up out of a clip and the ticks draw one after another; the step crossing the middle of the screen turns its icon yellow. Phones: one column, same motion. Reduced motion: all shown, still.
+
+**Verified.** tsc, lint, build; 1440 in Chromium and WebKit, 390, reduced motion; no overflow, no console errors. Lighthouse mobile on /: 94 / 100 / 100 / 100, LCP 3.1 s, CLS 0.
+
+## 2026-11-12 (late): material lab switches smoothly
+
+**Why.** The client saw the material lab lag when changing material.
+
+**Fixed** (`fx/material-sticker.ts`, `fx/MaterialLab.tsx`). A material's first use built its textures in one 2.6-million-pixel loop on the main thread and compiled its shader on the spot, mid-animation; the curl also recomputed normals and tangents on an 11k-vertex mesh every frame, and every frame redrew the shadow at a 2× pixel ratio. Now: textures are built in 6 ms slices (`printMaps` yields), every material is made and its shader compiled (`compileAsync` on a probe mesh) one by one while the page is idle after the lab starts (`warm`); choosing one lifts the old sticker at once and lays the new one down as soon as it's ready; no per-frame tangents (the shader derives its tangent frame); the mesh is 100 × 62 and the print 1536 wide; the pixel ratio is capped at 1.5; the shadow (1024) is redrawn only when the sticker or the light moves.
+
+**Verified.** tsc, lint, build. Switching through all eight materials, right after load and after warm-up: no main-thread task over 50 ms (the probe catches a forced 120 ms one). Every material still renders as before.
+
+## 2026-11-12 (late): format cards; the press run, upgraded
+
+**Why.** The client wanted "Or shop by format" simpler ("not 3D, just a good card design"), and the press run's animation brought to a higher standard.
+
+**Built.**
+- `home/FormatCards.tsx` (replaces `FormatMorph`): four cream cards (photo, name, line, price, a full-width yellow "Shop rolls / sheets / seals / any shape" bar; the whole card one link). 4 across on desktop, 2 on tablets, 1 on phones; the page's card reveal; hover lifts the card and leans the photo in.
+- Press run (`home/PressRun.tsx`, `motion/press-motion.ts`): a blade traces the cut line (MotionPath); the print is a carriage of three heads that lays the copies down ink by ink: cyan, then cyan and magenta, then full colour (true separations, `public/products/labels/plates/jam-c.webp` and `jam-cm.webp`, made from the label's red and green channels); the labels are flicked into the mailer in arcs, spinning; the parcel leaves and three jars wearing the label drop onto a shelf (the title's "to your shelf"). The rail fills in yellow as the run goes; each step's line and facts ripple in after its title. Pinned for 4.4 screens on desktop. The scene's images (`<image data-pr-src>`) get their `href` only when press-motion loads, because images inside an SVG load at once with the page and had pushed mobile LCP from 3.5 s to about 4 s.
+
+**Verified.** tsc, lint, build; 1440 (blade, carriage mid-print, drops, shelf), 390, reduced motion; no overflow, no console errors. Lighthouse mobile on /: 90–92 / 100 / 100 / 100, LCP 3.3–3.6 s (the hero paragraph, as before), TBT ≤ 10 ms, CLS 0.
+
+## 2026-11-12 (late): "Or shop by format" rebuilt as one label, four ways
+
+**Why.** The client found the label-web version still read as four cards.
+
+**Built.** `home/FormatMorph.tsx` (replaces `LabelWeb`): one stage where the same six labels rearrange into each format on a single GSAP timeline: along the strip coming off a roll (one peeled off), into a kiss-cut sheet (one corner lifted), as circle seals (one across a box lid), and as die-cut stickers in six shapes (star, arch, shield, hexagon, oval, tag) with white edges. Each change lifts, moves, reshapes and slaps the labels down; the artwork changes with the format (CSS keyed on the stage's `data-state`, which also shows each format's props). Desktop pins for 2.4 screens, scrubs and snaps to each format; four buttons (radio group, arrow keys) jump there; smaller screens switch with the buttons (picture first, then the chosen format's photo, line, price and "Shop …"). Reduced motion switches without moving; no script shows the roll.
+
+**Verified.** tsc, lint, build; 1440 (each format), 1024, 390; reduced motion and keyboard; no overflow, no console errors.
+
+## 2026-11-12: the ordering guide becomes an interactive print desk
+
+**Why.** The client found the card stack commonplace and asked for a distinctive component that fits the site's design language and helps sell the product, informed by multiple website references.
+
+**Changed.** Reviewed MOO, Packhelp, Packlane and Packwire, comparing product grids, category switching and process explainers. Replaced the stack with one cream print desk and four accessible stages: Choose, Artwork, Proof and Delivery. Original SVG scenes carry the same sample label from dimensions to artwork, proof approval and a mailer; label movement and a stamped check explain each stage. An order action is always available. Product pages return to the existing configuration; sticker pages have their correct size/material facts. The public How it works page uses the same component. Removed the old stack motion/styles; new CSS loads with the routes using the guide. Reduced motion and a no-script reading path are supported.
+
+**Verified.** Full lint, typecheck and build. Twenty-eight page/width combinations across four pages and seven widths pass every stage, keyboard navigation, Next buttons, order links and overflow checks, with zero runtime errors. Changed product selections survive the return link. Motion and no-JavaScript behavior pass. Production mobile Lighthouse on How it works: performance, accessibility, best practices and SEO all 100; LCP 1.4 s, CLS 0. Sources, rationale, screenshots and motion recording: `reference/ORDER-PROCESS-DESIGN.md`.
+
+## 2026-11-12: product page proportions, buying clarity and search metadata
+
+**Why.** The client asked for the product container to fit the photographs, a restrained visual refinement, and CRO/SEO passes.
+
+**Changed.** The stage reads the image's aspect ratio instead of stretching to a viewport height. Balanced desktop columns, a sticky portrait frame, compact view controls below the photo, smaller headings, and a title/price → photo → configuration flow on mobile. Added an explicit order-total label, existing proof/shipping facts near the price, a configuration heading, help link and product-details shortcut. Sample orders have appropriate copy. Product-specific share images and richer Product/Breadcrumb JSON-LD now use the canonical page base. The photo remains still on hover.
+
+**Verified.** Full lint, typecheck and build; 58 page/width checks covering every product, seven widths, frame proportions, overflow, alt text, headings, metadata, structured data and matching offer prices; zero runtime errors. Desktop/mobile size, quantity, view-toggle and cart interactions pass, including sticker deals and sample packs. Mobile Lighthouse: SEO, accessibility and best practices 100; performance 88 initially and 92 with image processing cached; CLS 0. Simulated mobile LCP remains above the 2.5 s repository target (3.9 s initial / 3.3 s cached). Screens, reports and details: `reference/verification/PDP-REFINEMENT.md`.
+
+## 2026-11-12: realistic product photos matched to catalog sizes
+
+**Why.** The client requested realistic images for every product, tailored to its size.
+
+**Changed.** Generated 19 new product photographs with the built-in imagegen tool, matching the default label shapes and proportions, plus 19 thumbnails. Photos are 1024 × 1280 WebP; thumbnails are 256 × 256 and preserve the full product. The 38 assets total 1.52 MB, all within the 150 KB photo and 20 KB thumbnail budgets. Connected the new `public/products/realistic/` set through the catalog and ordering-step imagery, with updated alt text. Product-page photos use `contain` so tall bottles and packaging remain visible in wide stages. Prompts, dimensions and export details are in `reference/product-photo-prompts-2026-11-12.json`; the earlier photo set remains available.
+
+**Verified.** Full lint, TypeScript and production build pass. Browser checks cover all 19 product pages and five catalog/home/business pages at both 1440 × 900 and 390 × 844 (48 page checks), with correct photo URLs, working thumbnails, alt text, no horizontal overflow and zero runtime errors. All 38 exports pass dimension and byte-budget checks. Reviewed every generated photo, the contact sheet and desktop/mobile screenshots. Evidence: `reference/verification/REALISTIC-PRODUCT-PHOTOS.md` and `reference/verification/realistic-product-photos/`.
+
+## 2026-11-12 (night): homepage finished: shop by format, the material sticker, reviews
+
+**Why.** The client asked to redesign "Or shop by format", make the material lab's 3D read as a real sticker ("real gold feel, not a card"), add reviews, and finalise the homepage.
+
+**Built.**
+- `home/LabelWeb.tsx` (replaces `fx/FormatList.tsx`): the four formats as labels kiss-cut on a strip of liner running off a roll. Each label looks into its photo through a window in its own cut shape (rectangle, four little labels, circle, die-cut), has its price and a yellow "Shop rolls / sheets / seals / any shape". The roll's printed core turns and the web feeds along with the scroll; labels slap on as they arrive; hover lifts a label and curls its corner. Wide: one row across; tablet: two by two with the roll above; phone: the web runs down the page.
+- `fx/material-sticker.ts` (replaces `fx/material-card.ts`): a thin sticker film on glossy backing paper printed faintly with LABEL BROS, its top corner peeled to show the white adhesive side and throwing a real shadow. Materials: brushed silver and gold (anisotropic metal with streaked normals and a laminate), holographic (thin-film iridescence plus a rainbow that slides as it turns), glitter (tilted flakes that catch the light), clear (transmission: the liner shows through, the ink doesn't), white gloss, paper and kraft (fibre relief). A dark studio of softboxes, baked to the environment, turns with the pointer and drifts on its own, so highlights sweep across. Hover lifts the corner, drag peels it, tap peels it on touch.
+- Reviews: unchanged. Only real reviews may go in (`lib/reviews.ts`); the section still shows its `[[REAL REVIEW]]` placeholders.
+
+**Verified.** tsc, lint, build. Screens at 1440, 1024 and 390 for the format web (rest, hover); every material in the lab at 1440 and 390; full homepage at 1440 and 390 (reduced motion); no overflow, no console errors.
+
+## 2026-11-12 (evening): "Stickers, by material" becomes a swatch book
+
+**Why.** The client asked to redesign the sticker rail.
+
+**Built.** `home/StickerSwatches.tsx` (replaces `StickerRail`): the six sticker materials as blades of a riveted printer's swatch fan, sized in container units. Each blade shows its material in CSS (vinyl and clear gloss, holographic rainbow, glitter flecks, kraft fibres, brushed silver and gold) and the foils move with the pointer (`--mx`, `--my`, registered properties). The fan opens as it scrolls in (one `--open` variable scrubbed by GSAP, blades staggered in CSS). Picking a blade opens the book at that page (the others part either side, `--part`), lifts it and marks it with a yellow tab; the card beside it peels in that sticker's photo (clip-path from the corner) with name, line, minimum, price and "Shop …". Radio group with arrow keys; reduced motion and no script show it open and still.
+
+**Verified.** tsc, lint; 1440 × 900 and 390 × 844 (opening, open, pointer light, holographic, keyboard to silver & gold); no overflow, no console errors.
+
+## 2026-11-12 (evening): "From your idea to your shelf" becomes a press run
+
+**Why.** The client found the stacked cards common and asked for a GSAP-worthy, extraordinary section.
+
+**Built.** `home/PressRun.tsx` + `motion/press-motion.ts`: one label goes through the whole job in one SVG scene on an inch-grid liner, on a single timeline. The cut line is drawn (DrawSVG) and tries on shapes (MorphSVG) while a size readout rolls; a file card flies in and uploads, the artwork scans on; bleed, safe area and cut line appear and an Approved stamp slaps down (the sheet shakes); a print head prints a sheet of nine, the waste matrix peels away, the labels drop into a mailer, the lid shuts, the shipping label goes on. Desktop pins for 3.6 screens and scrubs; the step beside it changes as the run passes each one (title types in with SplitText); a registration mark runs down a rail whose steps jump to that point. Phones: no pin, it plays once in view, "Run it again". Reduced motion / no script: the approved proof, still, with all four steps listed. All words are HTML; the picture is decorative. New fact `CHANGES` ("Changes until you're happy", confirmed by the client). The product page keeps `StepStack` for now.
+
+**Verified.** tsc, lint; 1440 × 900 at twelve scroll points, 390 × 844, reduced motion; no overflow, no console errors.
+
+## 2026-11-12 (afternoon): the 3D Product Table, tried and removed
+
+**Why.** The client's brief asked for a 3D "Product Table" (six real products, labels flying on and wrapping round them as you scroll) to replace the curved shelf under "Labels for your product". The client supplied six Sketchfab models (CC BY 4.0).
+
+**Tried.** The models were prepared (cleaned, scaled, meshopt), first on a shared R3F canvas, then reworked as a photographic studio (paper sweep, softbox reflections, transmission glass, soft accumulated shadows, depth of field) with real label sizes. N8AO was dropped on the way: its 2.0.1 render targets use the multiple-target API three r187 removed.
+
+**Removed (client, same day).** The client found it unrealistic and asked for the 3D section and the models to go: the GLBs (originals and prepared), the models script, the GPU benchmark files, `components/table/`, `components/three/` and their styles, and the packages added for them (React Three Fiber, drei, postprocessing, maath, detect-gpu, glTF tooling). "Labels for your product" is now the six product photographs with prices (`ProductCard` grid). Kept from that work: the sticker rail is unpinned (a swipe/scroll row), as the client approved.
+
+## 2026-11-12 (product photography): generated photos replace the product models
+
+**Why.** The client rejected the product models and requested one consistent series of photorealistic products carrying “YOUR BRAND”, with matching flat artwork, thumbnails and a share image.
+
+**Changed.** Generated seven transparent flat labels, nineteen 4:5 product photographs, nineteen 256 × 256 thumbnails and a 1200 × 630 share image (46 files, 1.96 MB total, every file within its budget). Final prompts, dimensions and sizes are in `reference/IMAGES.md`. Removed the product models, live brand-name store, old company-labelled photos and render assets. Added `ProductImage` data, shared photo/thumb components and photo cards; connected the configurator’s Photo / Your label views, menus, cart and bulk packs. Updated the hero’s four flat product labels while retaining its renderer, layouts, drag/throw/reset and fallback fonts. Kept the blue/cream/yellow styling, reveals and photo hover zoom. Product photos are preloaded, thumbnails use low fetch priority, closed menus defer their images, and delivery supports AVIF with WebP fallback. Pricing, checkout, admin and server logic remain as found.
+
+**Verified.** `pnpm tsc --noEmit`, `pnpm lint`, `pnpm build`; all nineteen product routes have complete static HTML. No obsolete-source references or whitespace errors. Dev and production browser sweeps pass sixteen page/width combinations and fifty-five interaction/layout checks each, with zero console errors or broken images. Screens at 1440 × 900 and 390 × 844 cover the eight requested pages, both menus, two-item cart, label preview and hero drag/throw/reset; overflow checked at 375, 390, 768, 1280 and 1920. Images, screenshots, audit reports and detailed evidence are in `reference/verification/PRODUCT-IMAGES.md`.
+
+**Lighthouse mobile.** / 93, /labels 100, /shop/food-labels 94 performance; accessibility, best practices and SEO 100 on all three routes; CLS 0. The brief’s audit targets pass. The additional repository target of LCP < 2.5 s remains above budget on home and food labels (about 3.16 s in the simulated mobile audit).
+
+## 2026-11-12 (later): 3D products with your brand, new reveals, stickers by material
+
+**Why.** The client asked for new scroll reveals, the jar and every product made 3D and interactive (GSAP-worthy), labels that say "your brand" instead of any company, an Awwwards-level redesign of "Labels for your product", and stickers sorted by material like Kraftix (kraftixdigital.in).
+
+**Built.** `src/components/product3d/`: a jar, drinks bottle, oil bottle, coffee tin, candle and dropper bottle, turned on a lathe in three.js, with fresnel glass, contents, metal lids, a contact shadow and a label at its real radius. Labels are drawn in canvas around the visitor's brand (default "Your Brand"; serif, script and condensed faces for the artwork). One WebGL renderer draws every view and copies it into each card. Motion: rise and turn into place while the label is applied in a sweep (expo.out, power2.inOut, slap), gentle sway, lean to the cursor, drag or swipe to spin with coasting and a return to the front, a yellow "Drag / Spin" cursor, the candle flickers. "Put your brand on them": type a name and every label re-prints and re-applies (remembered in the browser; the product page's label preview uses it too). Used on the homepage, /labels, /shop, the business grid and every label product page. Still renders, trimmed thumbs and flat "Your Brand" labels (WebP, 448 KB in all) were rendered from the models; the hero's four product labels and the roll and sheet pictures now use them. Scroll reveals rewritten: headings rise line by line out of SplitText masks, cards are uncovered from the bottom up while their picture settles (clip, never fade). Stickers: vinyl, clear, holographic, glitter, kraft paper, silver & gold (metallic gold added, priced like silver), any shape inside each; old shape pages redirect. Performance: the 3D waits for the first interaction after load, sets up one product per idle task with background shader compiles, and swaps in without replaying its intro if already on screen.
+
+**Verified.** tsc, lint, build. Screens at 1440 and 390 (showcase, typing "Maple & Co", dragging, reveal frames, product page 3D and label preview). The 23-step order test passes on the production build; the checkout accepts the new sticker materials and refuses impossible ones. Lighthouse mobile: home 91, food labels 90, labels 91 performance; 100 accessibility, best practices and SEO; CLS 0; TBT 0–10 ms.
+
+## 2026-11-12: the sticker table is back
+
+**Why.** The client wanted the original hero back ("like stickers, multiple interactable labels, before redesigns"), then asked for bigger stickers and a few more, then for less overlap.
+
+**Built.** The WebGL sticker table (`src/components/hero/`) restored from git, with its headline "Make your brand stick.", shop copy and buttons (Shop labels, Bulk pricing from 500). Four of the shop's product labels (Tidewater, Old Harbor, Sunday Jam, Wild Fern) join the stickers on the table, each with a drawn stand-in if its image fails. Three layouts (desktop 1280+, laptop 768–1279, mobile), 14 pieces on wide screens. A new spacing pass (`spread()` in `stage.ts`) pushes overlapping start positions apart (sideways when up and down is blocked), keeps every piece fully on screen and off the words. The stage no longer reserves room for a see-through header (the shop's header sits above it). The hero grows to fit its words on short windows. The shelf hero and its motion module were removed; `three` is back as a dependency.
+
+**Verified.** tsc, lint; screens at 1920 × 1080, 1440 × 900, 1280 × 800, 1100 × 700 and 390 × 844; a drag-and-throw (the label lands where dropped, "Put them back" appears); 12 keyboard stand-ins; no console errors.
+
+## 2026-11-11 (later): back to blue and yellow
+
+**Why.** The client preferred the previous colours: "use blue yellow colour, not white yellow; previous was looking good, keep that."
+
+**Changed.** The shop keeps its new structure, now on the press-blue field with cream type, as before: cream product cards, forms, cart drawer, menu panel and quantity table ("sheets" with ink type), yellow for buttons and every selected option (shape, size, material, quantity row, tabs), a deeper blue for the promise bar, bulk band and business box, and the hero's products standing on the blue with their shelf. Colours go through roles in `store.css` (`--fg`, `--fg-soft`, `--rule`, `--focus`) that sheets switch to ink, so each piece reads right on either. The product route sets `instant = false` (Next.js asked for it once the page stopped streaming).
+
+## 2026-11-11: a label shop for business
+
+**Why.** The client asked for a shopping website like Sticker Bros (not a showcase that reads as a quote tool): choose a label or sticker, type the size in inches and get the price from a formula like Sticker Bros', upload artwork (we check and verify it) or have it designed, bulk quantities for big businesses bought straight from the shop, payments/admin/database to match, labels first (food packaging and more), stickers second. Then: client-ready, award-level GSAP.
+
+**Research.** Sticker Bros (stickers first; product grid of image tiles, deals, samples), Lightning Labels, Sticker Mule labels, StickerGiant and StickerYou (label-first shops lead with label types by product and industry, roll vs sheet, BOPP/paper/kraft/clear, bulk pricing). Several sites refused automated reads (403/429).
+
+**Removed.** The 3D sticker table hero, peel-off pad, labels shelf, proof scene, builder section and kraft mailer from the homepage; the `/stickers` sheet and `/labels` web pages; the 3D `/how-it-works` journey; `/services` and its six pages; `/shop/build` and the old builder; `/api/sample-kit` (the sample pack is now a cart product); three, react-three, drei, Lenis and lucide. Old addresses redirect (next.config.ts). `.gitignore`'s `build/` (which had hidden `src/app/shop/build`) is now `/build/`.
+
+**Built.**
+- Catalogue (`lib/products.ts`, `lib/options.ts`): 10 label products (custom, roll, food, beverage, bottle, coffee & tea, candle, cosmetic, circle & seals, sheet), 6 sticker products, 2 sticker deals, the sample pack. Shapes, any width × height (labels 0.75–12 in, stickers 1–24 in), materials (white/clear BOPP, paper, kraft, metallic silver; vinyl, clear, holographic, glitter), finishes, roll or sheets, quantities from 50 (stickers 10) to 100,000 with bulk tiers 500–50,000.
+- Price formula (`lib/pricing.ts`): Sticker Bros' fitted curve, `each = 1.215 × (qty/50)^−0.438 × (size/3) × material`, size = √(w×h) for labels; their listed sticker prices kept exact; CAD = USD × 1.38, whole dollars. Material factors for paper/kraft/clear/silver to be confirmed by Label Bros.
+- Store UI on liner cream with press-blue moments: promise bar, sticky header that tucks away on scroll, Labels and Stickers mega menus, mobile menu; home (hero shelf of real products whose labels land on them, price sticker "as low as N¢" from the formula, quick price bar, industries ticker, labels by product and format, bulk band with a scroll-scrubbed price-per-label chart, four steps with a running tape, materials, stickers, trust, reviews, FAQ); `/labels`, `/stickers`, `/shop`; product pages with the configurator (shape, size presets or custom inches, material, finish, roll/sheets, standard or bulk quantity table with savings and the next break, upload / design it for me / send later, live total, add to cart flying into the cart, sticky phone price bar) and a to-scale label preview on an inch grid that morphs with every change; `/business` (popular bulk orders priced on the spot, the chart, every label in bulk, pay by invoice, quote form for 100,000+); a plain `/how-it-works` (steps, what we check on every file, FAQ); cart with free-shipping meter and **Pay now** (Stripe) or **Pay by invoice**; `/order/requested`; footer with tape wordmark.
+- Back end: `POST /api/checkout` takes card or invoice; invoice orders start as **Invoice requested** with billing address and PO; Stripe invoices sent from the admin (`sendInvoice`), `invoice.paid` marks them paid; **proofs** table: the admin uploads a proof, the customer gets a private `/proof/<token>` page to approve or ask for changes (status and emails follow; older links point to the newest); tracking knows invoices and changes. Admin: board with an Invoice requested column, Bulk / Invoice / Changes flags, proof and invoice panels, styled item list.
+- Motion (`components/motion/`): label applied to product (hero, cards, replay on hover), headline wipes, cards slapped down (transform only), bulk chart scrub, steps tape, price roll, fly-to-cart, footer tape. All off under reduced motion.
+
+**Verified.** `pnpm tsc --noEmit`, `pnpm lint`, `pnpm build` (every product page prerendered). Screens at 1440 × 900 and 390 × 844 of home, labels, product, business, cart, about; menus, drawer and preview states; no sideways scroll at 375/390. End to end on the production build against a throwaway Postgres (embedded-postgres; Stripe and email switched off for the run): 24 checks (link presets, upload, design idea required, two-line cart, card offline without Stripe, invoice fields required, invoice order saved with PO and address, cart emptied, board, artwork stored, proof sent, customer asks for changes, second proof, old link points to newer, approval, order at Proof approved, tracking). Lighthouse mobile (production): Performance 89–94, Best Practices 100, SEO 100 (cart is noindex on purpose), CLS 0; accessibility 96–97 before the last contrast fix (footer "Shipping to" chips), rerun below. Measured LCP on a throttled phone 0.93 s (Lighthouse's estimate, 3.1–3.8 s, assumes the 89 KB font blocks the text; it doesn't).
+
+**Not done / needs the client.** A paid Stripe test checkout and a real Stripe invoice (needs test keys; the dev server's database looked like the live one, so no test orders were placed there). Confirm material prices and the invoice terms (14 days, $500 minimum). Real reviews, logo, contact details, policies' placeholders.
+
 ## 2026-11-09 (late): a shop, Sticker Bros style
 
 **Why.** The client asked for e-commerce like stickerbros.com (product pages with finish, upload, notes, quantity and Add to cart; all their products at their prices in CAD), keeping the design language.

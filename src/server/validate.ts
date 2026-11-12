@@ -2,8 +2,12 @@ import "server-only";
 import { z } from "zod";
 import { QUANTITIES, CUSTOM_QTY, FINISHES, PRODUCTS, SHAPES, SIZES, CUSTOM } from "@/components/sections/pricing-model";
 import { FILES } from "@/lib/facts";
+<<<<<<< Updated upstream
 import { RECT_RATIO } from "@/components/sheet/sizes";
 import { CURRENCIES, priceIn, priceSize, quotePrice, SAMPLE_KIT, type Currency } from "@/lib/facts";
+=======
+import { CURRENCIES, type Currency } from "@/lib/facts";
+>>>>>>> Stashed changes
 import { BUSINESS_KINDS, BUSINESS_OFTEN, BUSINESS_VOLUME, CONTACT_TOPICS } from "@/lib/forms";
 
 /*
@@ -73,6 +77,7 @@ const inches = (n: number) => String(Math.round(n * 100) / 100);
 
 export const currencySchema = z.enum(CURRENCIES as [Currency, ...Currency[]]).catch("cad");
 
+<<<<<<< Updated upstream
 /** The price in cents (in the order's currency) and a plain description, worked out on the server. */
 export function priceQuote(q: QuoteInput, cur: Currency) {
   // the same rule as the builder; a preset rectangle is size × size·RECT_RATIO, the others a square
@@ -107,6 +112,8 @@ export const orderSchema = z.object({
   currency: currencySchema,
 });
 
+=======
+>>>>>>> Stashed changes
 export const contactSchema = z.object({
   kind: z.literal("contact"),
   name: person.name,

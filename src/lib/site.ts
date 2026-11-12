@@ -12,7 +12,15 @@ export const BRAND = "Label Bros";
 export const CONTACT = {
   email: "", // e.g. the shop's public inbox
   phone: "", // as it should be written, e.g. "604 555 0100"
+<<<<<<< Updated upstream
   city: "", // e.g. "Vancouver, BC"
+=======
+  address: "", // street, city, province and postal code
+  city: "Bolton", // where the stickers are printed (the "Printed in Canada" mark)
+  province: "", // whose laws the terms follow, e.g. "British Columbia"
+  hours: "", // e.g. "Monday to Friday, 9 am to 5 pm Pacific"
+  privacyOfficer: "", // the person who answers privacy questions (PIPEDA)
+>>>>>>> Stashed changes
 };
 
 /*

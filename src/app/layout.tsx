@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, Archivo, Fraunces, Yellowtail } from "next/font/google";
+<<<<<<< Updated upstream
+=======
+import { SmoothScroll } from "@/components/fx/SmoothScroll";
+import { BASE_URL, BRAND } from "@/lib/site";
+>>>>>>> Stashed changes
 import "./globals.css";
 
 // UI and display: one family. Archivo's width axis gives the headline its label-press stance.
@@ -10,16 +15,31 @@ const archivo = Archivo({
   display: "swap",
 });
 
-// Sticker artwork only (drawn into canvas textures). Not preloaded: the stage asks for them
-// after the headline has painted.
+// Label and sticker artwork only (the hero table's drawn fallbacks).
+// Not preloaded: they are fetched when a label first draws with them.
 const anton = Anton({ subsets: ["latin"], weight: "400", variable: "--font-anton", preload: false });
-const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", preload: false });
+const fraunces = Fraunces({ subsets: ["latin"], weight: ["600"], style: ["normal"], variable: "--font-fraunces", preload: false });
 const yellowtail = Yellowtail({ subsets: ["latin"], weight: "400", variable: "--font-yellowtail", preload: false });
 
+<<<<<<< Updated upstream
 export const metadata: Metadata = {
   title: "Label Bros · Custom stickers and product labels",
   description:
     "Custom die-cut stickers and product labels, cut to any shape. Send your artwork or let our designers make it, and approve a free proof before we print.",
+=======
+const DESCRIPTION =
+  "Custom product labels on rolls and sheets for food, drinks, candles and cosmetics, with bulk pricing for business. Type your size, upload your artwork or let us design it, and approve a free proof before we print.";
+
+// the site-wide defaults; each page sets its own title, description and canonical (lib/meta.ts)
+export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
+  title: "Label Bros · Custom product labels for business",
+  description: DESCRIPTION,
+  applicationName: BRAND,
+  alternates: { canonical: "/" },
+  openGraph: { title: "Label Bros · Custom product labels for business", description: DESCRIPTION, url: "/", siteName: BRAND, type: "website", locale: "en_CA" },
+  twitter: { card: "summary_large_image", title: "Label Bros · Custom product labels for business", description: DESCRIPTION },
+>>>>>>> Stashed changes
 };
 
 export const viewport: Viewport = {
@@ -37,6 +57,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Skip to content
         </a>
         {children}
+        <SmoothScroll />
       </body>
     </html>
   );

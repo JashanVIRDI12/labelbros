@@ -1,38 +1,60 @@
 import Link from "next/link";
 import { CURRENCY, SHIPPING } from "@/lib/facts";
+import { BULK_FROM } from "@/lib/options";
+import { DEALS, LABEL_PRODUCTS, SAMPLE_PACK, STICKER_PRODUCTS } from "@/lib/products";
+import { contactOr } from "@/lib/site";
 import { Arrow } from "./Arrow";
-import { BuyBar } from "./BuyBar";
 import { Motion } from "./Motion";
+<<<<<<< Updated upstream
 import { SecondAsk } from "@/components/site/SecondAsk";
 import { SAMPLE_KIT_ON } from "@/lib/site";
+=======
+import { Ph } from "./Ph";
+import { ShipTo } from "./ShipTo";
+import { Signup } from "./Signup";
+import { MapleLeaf, PayMarks } from "./Trust";
+
+/*
+ * The close: one last ask on the blue band, every product and page, the email sign-up, how you
+ * can pay, and the wordmark stuck across the bottom like a strip of label tape.
+ */
+>>>>>>> Stashed changes
 
 const COLUMNS = [
   {
-    title: "Products",
+    title: "Labels",
+    links: [...LABEL_PRODUCTS.map((p) => ({ label: p.name, href: `/shop/${p.slug}` })), { label: "All labels", href: "/labels" }],
+  },
+  {
+    title: "Stickers",
     links: [
-      { label: "Die-cut stickers", href: "/services/die-cut-stickers" },
-      { label: "Holographic and glitter", href: "/services/holographic-glitter" },
-      { label: "Kiss-cut sheets", href: "/services/kiss-cut-sheets" },
-      { label: "Packaging seals", href: "/services/packaging-seals" },
-      { label: "Roll labels", href: "/services/roll-labels" },
-      { label: "Product labels", href: "/labels" },
-      { label: "Business labels", href: "/business" },
+      ...STICKER_PRODUCTS.map((p) => ({ label: p.name, href: `/shop/${p.slug}` })),
+      ...DEALS.slice(0, 1).map((p) => ({ label: "Sticker deals", href: `/shop/${p.slug}` })),
+      ...(SAMPLE_PACK ? [{ label: "Sample pack", href: `/shop/${SAMPLE_PACK.slug}` }] : []),
     ],
   },
   {
-    title: "Ordering",
+    title: "Business",
     links: [
+<<<<<<< Updated upstream
       { label: "Shop", href: "/shop" },
       { label: "How it works", href: "/how-it-works" },
       { label: "Custom design", href: "/services/custom-design" },
       { label: "All services", href: "/services" },
       { label: "Order now", href: "/quote#pricing" },
       ...(SAMPLE_KIT_ON ? [{ label: "Sample kit", href: "/#samples" }] : []),
+=======
+      { label: "Bulk pricing", href: "/business" },
+      { label: "Pay by invoice", href: "/business#invoice" },
+      { label: "Large orders", href: "/business#quote" },
+      { label: "Roll labels", href: "/shop/roll-labels" },
+>>>>>>> Stashed changes
     ],
   },
   {
     title: "Help",
     links: [
+<<<<<<< Updated upstream
       { label: "Artwork guide", href: "/how-it-works#faq" },
       { label: "Questions", href: "/how-it-works#faq" },
       { label: "Contact us", href: "/contact" },
@@ -41,10 +63,31 @@ const COLUMNS = [
 ];
 
 /** The close: one more ask, the site map, and the wordmark stuck across the bottom. */
+=======
+      { label: "How it works", href: "/how-it-works" },
+      { label: "Questions", href: "/how-it-works#faq" },
+      { label: "Track my order", href: "/track" },
+      { label: "Shipping", href: "/shipping" },
+      { label: "Reprints and refunds", href: "/reprints" },
+      { label: "Contact us", href: "/contact" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About us", href: "/about" },
+      { label: "Privacy", href: "/privacy" },
+      { label: "Terms", href: "/terms" },
+    ],
+  },
+];
+
+>>>>>>> Stashed changes
 export function Footer() {
   return (
-    <footer className="site-footer" data-motion-root>
+    <footer className="ftr" data-motion-root>
       <Motion name="footer" />
+<<<<<<< Updated upstream
       <div className="footer-top">
         <div>
           <h2 className="section-title max-w-[12ch]">Got something to stick?</h2>
@@ -55,15 +98,44 @@ export function Footer() {
             </Link>
             <SecondAsk />
           </div>
+=======
+      <section className="ftr-cta" aria-labelledby="ftr-cta-title">
+        <h2 id="ftr-cta-title" className="display ftr-cta-title">
+          Your labels, ready for the shelf.
+        </h2>
+        <p className="ftr-cta-lede">
+          Type your size, upload your artwork (or let us design it) and approve a free proof. Ordering {BULK_FROM.toLocaleString("en-CA")} or more? Bulk prices are built in.
+        </p>
+        <div className="ftr-cta-btns">
+          <Link href="/labels" className="btn btn-primary">
+            Shop labels
+            <Arrow />
+          </Link>
+          <Link href="/business" className="btn btn-light">
+            Bulk pricing
+          </Link>
         </div>
-        <nav aria-label="Footer" className="footer-nav">
+      </section>
+
+      <div className="ftr-main">
+        <div className="ftr-brand">
+          <p className="ftr-made">
+            <MapleLeaf className="ftr-leaf" />
+            <span>
+              Printed in Canada · <Ph text={contactOr("city")} />
+            </span>
+          </p>
+          <Signup />
+>>>>>>> Stashed changes
+        </div>
+        <nav aria-label="Footer" className="ftr-nav">
           {COLUMNS.map((c) => (
             <div key={c.title}>
-              <h3 className="text-14 font-semibold text-liner-soft">{c.title}</h3>
-              <ul className="mt-3 grid gap-1">
+              <h3 className="ftr-h">{c.title}</h3>
+              <ul>
                 {c.links.map((l) => (
                   <li key={l.label}>
-                    <Link href={l.href} className="nav-link inline-block">
+                    <Link href={l.href} className="ftr-link">
                       {l.label}
                     </Link>
                   </li>
@@ -74,17 +146,26 @@ export function Footer() {
         </nav>
       </div>
 
+<<<<<<< Updated upstream
       <div className="footer-mark" aria-hidden="true">
         <span className="footer-logo">Label Bros</span>
       </div>
 
       <div className="footer-legal text-14 text-liner-soft">
         <p>© 2026 Label Bros</p>
+=======
+      <div className="ftr-base">
+        <PayMarks className="ftr-pay" />
+        <ShipTo className="ftr-ship" />
+>>>>>>> Stashed changes
         <p>
-          {CURRENCY}. {SHIPPING}.
+          © 2026 Label Bros · {CURRENCY}. {SHIPPING}.
         </p>
       </div>
-      <BuyBar />
+
+      <div className="ftr-tape" aria-hidden="true" data-tape>
+        <span>Label Bros</span>
+      </div>
     </footer>
   );
 }
