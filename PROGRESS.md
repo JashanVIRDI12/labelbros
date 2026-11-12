@@ -1,5 +1,13 @@
 # Progress
 
+## 2026-11-12 (evening): the ordering guide polished; repo restored after a branch switch
+
+**Ordering guide** (`home/StepStack.tsx`, `app/order-process.css`; How it works and product pages). Tabs carry each stage's icon instead of tilted arrows. While on screen the guide plays through the stages on its own (5.5 s each, a line filling along the open tab); it pauses on hover or focus, stops once a stage is picked, and has a Pause / Play button (WCAG 2.2.2); no autoplay with reduced motion. The stage's title rises and its line and facts follow (GSAP). The panels share one grid cell marked `data-closed` (Tailwind's layered `[hidden] { display: none !important }` cannot be overridden), so the sheet keeps one height on every stage; the actions sit under the facts. The delivery scene is now an open mailer with the label tucked behind its taped front and a "Printed in Canada" shipping label; the legend was removed.
+
+**Repo.** At 18:19 GitHub Desktop moved the uncommitted work from `upgrade/cart-trust-v3` to `main` (stash `471a4206`); the reapply left conflict markers in 17 files, committed and pushed as `6ed4069f`. Commit `c8e7fa90` on `main` (local, not pushed) restores every file exactly as in that stash and removes the old main-only files the branch had deleted. A full copy of the folder from before the restore is in the session scratchpad (`backup-before-restore`).
+
+**Verified.** tsc, lint, build on the restored tree; guide at 1440 (Chromium, WebKit) and 390, reduced motion: autoplay advances and stops on pick, constant sheet height, no overflow, no console errors.
+
 ## 2026-11-12 (late): sticker cards, sample reviews, the FAQ as an answer board
 
 **Stickers, by material** (`home/StickerCards.tsx` + `motion/sticker-motion.ts`, replace `StickerSwatches`): six cards, each with the sticker's photo, a die-cut tag made of the material itself (vinyl, clear, holographic, glitter, kraft, silver & gold, in CSS), name, line, price and a yellow "Shop …" bar. Cards rise with the shared reveal; a light then passes across each tag in turn and follows the pointer (`--mx`/`--my`, tweened by GSAP). 3 across, 2 on tablets and phones.
