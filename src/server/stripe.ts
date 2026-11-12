@@ -64,7 +64,7 @@ export async function createCheckout(
   item: Item | Item[],
   origin: string,
   extra: Partial<Stripe.Checkout.SessionCreateParams> = {},
-  back: { path: string; hash: string } = s.kind === "sample_kit" ? { path: "/", hash: "samples" } : { path: "/quote", hash: "send" },
+  back: { path: string; hash: string } = s.kind === "sample_kit" ? { path: "/", hash: "samples" } : { path: "/cart", hash: "" },
 ) {
   const items = Array.isArray(item) ? item : [item];
   const total = items.reduce((n, i) => n + i.cents * (i.quantity ?? 1), 0);

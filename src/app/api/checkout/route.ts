@@ -1,11 +1,7 @@
 import { z } from "zod";
-<<<<<<< Updated upstream
-import { FINISH_IDS, priceIn, type Finish } from "@/lib/facts";
-=======
 import { INVOICE_MIN } from "@/lib/facts";
 import { BULK_FROM, FINISH_IDS, FORMAT_IDS, MATERIAL_IDS, SHAPE_IDS, sizeText, type FinishId, type FormatId, type MaterialId, type ShapeId } from "@/lib/options";
 import { priceIn } from "@/lib/pricing";
->>>>>>> Stashed changes
 import { checkLine, lineSummary, productBySlug, unitPriceUsd } from "@/lib/products";
 import { env, ready } from "@/server/env";
 import { createSubmission, setSession } from "@/server/inbox";
@@ -72,11 +68,7 @@ const lineSchema = z.object({
   format: z.enum(FORMAT_IDS as [FormatId, ...FormatId[]]),
   qty: z.number().int(),
   packs: z.number().int(),
-<<<<<<< Updated upstream
-  artwork: z.enum(["upload", "design"]),
-=======
   artwork: z.enum(["upload", "design", "later", "none"]),
->>>>>>> Stashed changes
   notes: z.string().trim().max(2000).optional(),
 });
 
@@ -148,11 +140,7 @@ export async function POST(req: Request) {
       shape: choice.shape,
       material: choice.material,
       finish: choice.finish,
-<<<<<<< Updated upstream
-      size: `${choice.size} in`,
-=======
       format: choice.format,
->>>>>>> Stashed changes
       quantity: choice.qty,
       packs: quantity,
       unit_cents: unit * 100,

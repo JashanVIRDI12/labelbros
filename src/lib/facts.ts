@@ -31,40 +31,6 @@ export const INVOICE_MIN = 500;
 /** Days a business has to pay an invoice, unless the admin changes it when sending. */
 export const INVOICE_DAYS = 14;
 
-<<<<<<< Updated upstream
-// Sticker Bros: glitter from $68.50, embossed from $78.32, where die-cut is from $60.75 (50 × 3 in).
-// Clear, chrome and reflective are NOT yet confirmed against Sticker Bros: clear is priced as
-// standard vinyl, chrome and reflective as foil (like holographic). Confirm and change here.
-const FINISH = {
-  gloss: 1,
-  matte: 1,
-  holo: 68.5 / 60.75,
-  glitter: 68.5 / 60.75,
-  embossed: 78.32 / 60.75,
-  clear: 1, // to confirm
-  chrome: 68.5 / 60.75, // to confirm
-  reflective: 68.5 / 60.75, // to confirm
-} as const;
-/** Every finish and material the shop sells (the server accepts exactly these). */
-export const FINISH_IDS = Object.keys(FINISH) as (keyof typeof FINISH)[];
-export type Finish = keyof typeof FINISH;
-
-/**
- * Sticker Bros' listed prices in USD, used as they are: "finish|longest side in inches|quantity".
- * Add rows from their price table here and the builder, checkout and product cards all follow.
- */
-export const LISTED_USD: Record<string, number> = {
-  "gloss|3|50": 60.75,
-  "matte|3|50": 60.75,
-  "gloss|3|250": 150.0,
-  "matte|3|250": 150.0,
-  "gloss|4|200": 178.0,
-  "matte|4|200": 178.0,
-  "holo|3|50": 68.5,
-  "embossed|3|50": 78.32,
-  "glitter|3|50": 68.5,
-};
-=======
 /* Reprints, refunds and carriers, as the FAQ has always said them (Sticker Bros' terms). */
 export const REPRINT_WINDOW = "72 hours";
 export const REPRINT = `Something wrong when it arrives? Tell us within ${REPRINT_WINDOW} of delivery and we reprint it free`;
@@ -72,7 +38,6 @@ export const NO_REFUND = "Custom prints cannot be refunded once production start
 export const WORLD_CARRIERS = "UPS or FedEx";
 /** When the policy pages were last changed (shown at the top of each). */
 export const LEGAL_UPDATED = "November 9, 2026";
->>>>>>> Stashed changes
 
 /** An amount with its symbol: whole dollars without cents ($84), anything else to the cent ($1.24). */
 export const money = (n: number, cur: Currency = "cad") => {

@@ -69,7 +69,7 @@ export function ContactForm() {
         <p className="sent-title">Thanks{sent ? `, ${sent.name.split(" ")[0]}` : ""}.</p>
         <p className="sent-body">Your message is with us. We write back by email{sent ? ` to ${sent.email}` : ""}.</p>
         <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3">
-          <Link href="/quote#pricing" className="btn btn-primary">
+          <Link href="/shop/build" className="btn btn-primary">
             Order online
             <Arrow />
           </Link>
@@ -97,7 +97,7 @@ export function ContactForm() {
       {topic === "quote" && (
         <p className="form-tip">
           Quickest: upload your design, see your price and order in one go.{" "}
-          <Link href="/quote#pricing">Order online</Link>
+          <Link href="/shop/build">Order online</Link>
         </p>
       )}
 

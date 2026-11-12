@@ -10,9 +10,6 @@
  *           the customer picks the finish and how many packs.
  */
 
-<<<<<<< Updated upstream
-import { quotePriceUsd, type Finish } from "./facts";
-=======
 import {
   FORMATS_FOR,
   MATERIALS,
@@ -31,7 +28,6 @@ import {
 } from "./options";
 import { priceUsd } from "./pricing";
 import { SAMPLE_KIT_ON } from "./site";
->>>>>>> Stashed changes
 
 export type ProductImage = {
   /** The product photograph, cropped to 4:5. */
@@ -82,35 +78,6 @@ export type Product = {
   /** deals: the pack's price and the regular price it replaces, in USD */
   priceUsd?: number;
   valueUsd?: number;
-<<<<<<< Updated upstream
-  /** custom: the choices */
-  sizes?: number[];
-  quantities?: number[];
-  /** the product picture: a headline and stickers on a coloured card */
-  art: { stickers: ArtId[]; headline: [string, string]; tone: "blue" | "ink" | "yellow" | "cream"; emboss?: boolean; effect?: "glitter" | "clear" | "chrome" | "reflective" };
-  /** rectangles only: height ÷ width (2/3 unless set; bumper stickers are long and thin) */
-  ratio?: number;
-  /** a price not yet checked against Sticker Bros' own (see facts.ts) */
-  priceToConfirm?: boolean;
-  badge?: string;
-};
-
-export const FINISH_LABEL: Record<Finish, string> = {
-  gloss: "Gloss",
-  matte: "Matte",
-  holo: "Holographic",
-  glitter: "Glitter",
-  embossed: "Embossed",
-  clear: "Clear",
-  chrome: "Chrome",
-  reflective: "Reflective",
-};
-
-const STICKER_FACTS = ["Durable vinyl, waterproof and scratch-resistant", "Free proof before we print", "Ships in 2–4 business days"];
-
-export const PRODUCTS: Product[] = [
-  // ---------- deals (fixed packs) ----------
-=======
   /** nothing to print from the customer (the sample pack) */
   noArtwork?: boolean;
   seo: { title: string; description: string };
@@ -147,7 +114,6 @@ const sticker = (c: Partial<Choice> & Pick<Choice, "shape" | "w" | "h">): Choice
 
 const ALL: Product[] = [
   // ---------- labels, by product ----------
->>>>>>> Stashed changes
   {
     slug: "custom-labels",
     name: "Custom labels",
@@ -415,82 +381,8 @@ const ALL: Product[] = [
     plural: "vinyl stickers",
     range: "stickers",
     kind: "custom",
-<<<<<<< Updated upstream
-    tagline: "Cut right round your design, in any size from 2 to 5 inches.",
-    about: ["Stickers cut to the exact shape of your design, with a thin white border.", "Pick the size, the quantity and the finish. Free proof first."],
-    facts: ["Die-cut to your shape", ...STICKER_FACTS],
-    product: "stickers",
-    shape: "die-cut",
-    finishes: ["gloss", "matte", "holo"],
-    sizes: [2, 3, 4, 5],
-    quantities: [50, 100, 250, 500, 1000],
-    art: { stickers: ["fire-escape", "liftoff"], headline: ["Die-cut", "Any shape"], tone: "blue" },
-  },
-  {
-    slug: "circle-stickers",
-    name: "Circle stickers",
-    kind: "custom",
-    tagline: "Round stickers and seals, for logos, lids and packaging.",
-    about: ["Perfect circles, for logos, jar lids, coffee bags and seals.", "Pick the size, the quantity and the finish. Free proof first."],
-    facts: ["Cut as a circle", ...STICKER_FACTS],
-    product: "stickers",
-    shape: "circle",
-    finishes: ["gloss", "matte", "holo"],
-    sizes: [2, 3, 4, 5],
-    quantities: [50, 100, 250, 500, 1000],
-    art: { stickers: ["thank-you", "fire-escape"], headline: ["Circle", "Stickers"], tone: "cream" },
-  },
-  {
-    slug: "square-stickers",
-    name: "Square stickers",
-    kind: "custom",
-    tagline: "Square stickers with rounded corners.",
-    about: ["Square stickers with softly rounded corners, for logos, badges and packaging.", "Pick the size, the quantity and the finish. Free proof first."],
-    facts: ["Square, rounded corners", ...STICKER_FACTS],
-    product: "stickers",
-    shape: "square",
-    finishes: ["gloss", "matte", "holo"],
-    sizes: [2, 3, 4, 5],
-    quantities: [50, 100, 250, 500, 1000],
-    art: { stickers: ["approved", "night-shift"], headline: ["Square", "Stickers"], tone: "ink" },
-  },
-  {
-    slug: "rectangle-stickers",
-    name: "Rectangle stickers",
-    kind: "custom",
-    tagline: "Rectangles for wordmarks, bumpers and labels.",
-    about: ["Rectangle stickers with rounded corners: room for a wordmark, a message or a label.", "Pick the size, the quantity and the finish. Free proof first."],
-    facts: ["Rectangle, rounded corners", ...STICKER_FACTS],
-    product: "stickers",
-    shape: "rectangle",
-    finishes: ["gloss", "matte", "holo"],
-    sizes: [2, 3, 4, 5],
-    quantities: [50, 100, 250, 500, 1000],
-    art: { stickers: ["caution", "label-bros"], headline: ["Rectangle", "Stickers"], tone: "yellow" },
-  },
-  {
-    slug: "holographic-stickers",
-    name: "Holographic stickers",
-    kind: "custom",
-    tagline: "Foil that shifts colour as it moves, cut to your shape.",
-    about: ["Holographic foil under your design: it shifts through the rainbow as it catches the light.", "Pick the size and the quantity. Free proof first."],
-    facts: ["Holographic foil", ...STICKER_FACTS],
-    product: "stickers",
-    shape: "die-cut",
-    finishes: ["holo"],
-    sizes: [2, 3, 4, 5],
-    quantities: [50, 100, 250, 500, 1000],
-    art: { stickers: ["label-bros", "new-burst"], headline: ["Holo", "Stickers"], tone: "blue" },
-  },
-  {
-    slug: "embossed-stickers",
-    name: "Embossed stickers",
-    kind: "custom",
-    tagline: "Raised, pressed-in stickers you can feel, for a premium brand.",
-=======
     group: "stickers",
     tagline: "Thick, waterproof vinyl in gloss or matte.",
->>>>>>> Stashed changes
     about: [
       "Our everyday sticker: thick white vinyl that shrugs off water, sun and scratches, for laptops, bottles, merch and packaging.",
       "Cut right round your design, or as a circle, square or rounded rectangle, in any size. Gloss or matte. Free proof first.",
@@ -660,20 +552,6 @@ const ALL: Product[] = [
 
   // ---------- samples ----------
   {
-<<<<<<< Updated upstream
-    slug: "product-labels",
-    name: "Product labels",
-    kind: "custom",
-    tagline: "Labels for jars, bottles, candles and bags.",
-    about: ["Rectangle labels for your products: jars, bottles, cans, candles and bags.", "Pick the size, the quantity and the finish. Free proof first."],
-    facts: ["Rectangle labels", "Gloss or matte", "Free proof before we print", "Ships in 2–4 business days"],
-    product: "labels",
-    shape: "rectangle",
-    finishes: ["gloss", "matte"],
-    sizes: [2, 3, 4, 5],
-    quantities: [50, 100, 250, 500, 1000],
-    art: { stickers: ["ember-oak", "beeline"], headline: ["Product", "Labels"], tone: "cream" },
-=======
     slug: "sample-pack",
     name: "Sample pack",
     plural: "sample packs",
@@ -694,7 +572,6 @@ const ALL: Product[] = [
     priceUsd: 5,
     noArtwork: true,
     seo: { title: "Label and sticker sample pack", description: "Printed samples of our label materials and sticker finishes, mailed to you." },
->>>>>>> Stashed changes
   },
 ];
 
@@ -714,13 +591,9 @@ export const formatsOf = (p: Product) => (p.kind === "deal" ? [p.defaults.format
 /** The most packs of a deal in one order line. */
 export const MAX_PACKS = 20;
 
-<<<<<<< Updated upstream
-export type LineChoice = { finish: Finish; size?: number; qty?: number; packs: number };
-=======
 export type LineChoice = Choice & { packs: number };
 
 const r2 = (n: number) => Math.round(n * 100) / 100;
->>>>>>> Stashed changes
 
 /** A line's choices, checked against its product: the corrected choice, or null if impossible. */
 export function checkLine(p: Product, c: LineChoice): LineChoice | null {
@@ -728,11 +601,6 @@ export function checkLine(p: Product, c: LineChoice): LineChoice | null {
   if (!m || !materialsOf(p).includes(c.material) || !m.finishes.includes(c.finish)) return null;
   const packs = Math.round(c.packs);
   if (!(packs >= 1 && packs <= MAX_PACKS)) return null;
-<<<<<<< Updated upstream
-  if (p.kind === "deal") return { finish: c.finish, packs, size: p.size, qty: p.qty };
-  if (!c.size || !p.sizes?.includes(c.size) || !c.qty || !p.quantities?.includes(c.qty)) return null;
-  return { finish: c.finish, packs: 1, size: c.size, qty: c.qty };
-=======
   if (p.kind === "deal") return { ...p.defaults, material: c.material, finish: c.finish, packs };
 
   if (!shapesOf(p).includes(c.shape) || !formatsOf(p).includes(c.format)) return null;
@@ -744,32 +612,11 @@ export function checkLine(p: Product, c: LineChoice): LineChoice | null {
   const qty = c.qty;
   if (!Number.isInteger(qty) || qty < minQty(p.range, c.material) || qty > MAX_QTY) return null;
   return { shape: c.shape, w, h, material: c.material, finish: c.finish, format: c.format, qty, packs: 1 };
->>>>>>> Stashed changes
 }
 
 /** One pack (deal) or one order (custom), in US dollars. */
 export function unitPriceUsd(p: Product, c: Choice) {
   if (p.kind === "deal") return p.priceUsd ?? 0;
-<<<<<<< Updated upstream
-  const s = c.size ?? 3;
-  const size = p.shape === "rectangle" ? Math.round(Math.sqrt(s * s * (p.ratio ?? 2 / 3)) * 100) / 100 : s;
-  return quotePriceUsd(c.qty ?? 50, size, c.finish);
-}
-
-const inch = (n: number) => String(Math.round(n * 100) / 100);
-/** A size in words: "3 in" (longest side), or both sides for rectangles: "10 × 3 in". */
-export const sizeLabel = (p: Product, s: number) =>
-  p.shape === "rectangle" ? `${inch(s)} × ${inch(s * (p.ratio ?? 2 / 3))} in` : `${inch(s)} in`;
-
-/** The lowest price a product starts from, in US dollars (for cards). */
-export const fromPriceUsd = (p: Product) =>
-  p.kind === "deal" ? (p.priceUsd ?? 0) : unitPriceUsd(p, { finish: p.finishes[0], size: p.sizes?.[0], qty: p.quantities?.[0], packs: 1 });
-
-/** A line in words: "50 die-cut stickers, 3 in, gloss" (× packs). */
-export function lineSummary(p: Product, c: LineChoice) {
-  const what = p.product === "labels" ? "labels" : `${p.shape} stickers`;
-  const base = `${c.qty} ${what}, ${sizeLabel(p, c.size ?? 3)}, ${FINISH_LABEL[c.finish].toLowerCase()}`;
-=======
   return priceUsd({ range: p.range, shape: c.shape, w: c.w, h: c.h, material: c.material, qty: c.qty });
 }
 
@@ -792,7 +639,6 @@ export function lineSummary(p: Product, c: LineChoice) {
   ];
   if (p.range === "labels") parts.push(c.format === "roll" ? "on a roll" : "on sheets");
   const base = parts.join(" · ");
->>>>>>> Stashed changes
   return c.packs > 1 ? `${base} (${c.packs} packs)` : base;
 }
 

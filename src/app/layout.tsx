@@ -1,10 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, Archivo, Fraunces, Yellowtail } from "next/font/google";
-<<<<<<< Updated upstream
-=======
 import { SmoothScroll } from "@/components/fx/SmoothScroll";
 import { BASE_URL, BRAND } from "@/lib/site";
->>>>>>> Stashed changes
 import "./globals.css";
 
 // UI and display: one family. Archivo's width axis gives the headline its label-press stance.
@@ -21,12 +18,6 @@ const anton = Anton({ subsets: ["latin"], weight: "400", variable: "--font-anton
 const fraunces = Fraunces({ subsets: ["latin"], weight: ["600"], style: ["normal"], variable: "--font-fraunces", preload: false });
 const yellowtail = Yellowtail({ subsets: ["latin"], weight: "400", variable: "--font-yellowtail", preload: false });
 
-<<<<<<< Updated upstream
-export const metadata: Metadata = {
-  title: "Label Bros · Custom stickers and product labels",
-  description:
-    "Custom die-cut stickers and product labels, cut to any shape. Send your artwork or let our designers make it, and approve a free proof before we print.",
-=======
 const DESCRIPTION =
   "Custom product labels on rolls and sheets for food, drinks, candles and cosmetics, with bulk pricing for business. Type your size, upload your artwork or let us design it, and approve a free proof before we print.";
 
@@ -39,7 +30,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: { title: "Label Bros · Custom product labels for business", description: DESCRIPTION, url: "/", siteName: BRAND, type: "website", locale: "en_CA" },
   twitter: { card: "summary_large_image", title: "Label Bros · Custom product labels for business", description: DESCRIPTION },
->>>>>>> Stashed changes
 };
 
 export const viewport: Viewport = {

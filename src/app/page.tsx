@@ -2,16 +2,6 @@ import Link from "next/link";
 import { BulkSlider } from "@/components/fx/BulkSlider";
 import { MaterialLab } from "@/components/fx/MaterialLab";
 import { Hero } from "@/components/hero/Hero";
-<<<<<<< Updated upstream
-import { Labels } from "@/components/sections/Labels";
-import { Pricing } from "@/components/sections/Pricing";
-import { Process } from "@/components/sections/Process";
-import { Products } from "@/components/sections/Products";
-import { SampleKit } from "@/components/sections/SampleKit";
-import { Footer } from "@/components/site/Footer";
-import { Header } from "@/components/site/Header";
-import { SAMPLE_KIT_ON } from "@/lib/site";
-=======
 import { Faq } from "@/components/home/Faq";
 import { FormatCards } from "@/components/home/FormatCards";
 import { ProcessSteps } from "@/components/home/ProcessSteps";
@@ -41,7 +31,6 @@ const ORGANIZATION = {
   ...(CONTACT.email ? { email: CONTACT.email } : {}),
   ...(CONTACT.phone ? { telephone: CONTACT.phone } : {}),
 };
->>>>>>> Stashed changes
 
 const byProduct = LABEL_PRODUCTS.filter((p) => p.group === "product");
 const byFormat = LABEL_PRODUCTS.filter((p) => p.group === "format");
@@ -54,13 +43,6 @@ export default function Home() {
         <Motion name="reveal" />
         <Motion name="magnet" />
         <Hero />
-<<<<<<< Updated upstream
-        <Products />
-        <Labels />
-        <Process />
-        <Pricing />
-        {SAMPLE_KIT_ON && <SampleKit />}
-=======
         <div className="qp-wrap">
           <QuickPrice />
         </div>
@@ -95,9 +77,9 @@ export default function Home() {
         <TrustStrip className="trust-home" />
         <Reviews />
         <Faq />
->>>>>>> Stashed changes
       </main>
       <Footer />
+      <JsonLd data={ORGANIZATION} />
     </>
   );
 }

@@ -13,7 +13,7 @@ import { ago, isPast, money } from "./format";
 
 /* ---------- Shell ---------- */
 
-export type Section = "overview" | "orders" | "kits" | "quotes" | "leads" | "messages" | "all";
+export type Section = "overview" | "orders" | "kits" | "quotes" | "leads" | "messages" | "subscribers" | "all";
 
 const NAV: { group?: string; items: { id: Section; label: string; href: string; kind?: Kind }[] }[] = [
   { items: [{ id: "overview", label: "Overview", href: "/admin" }] },
@@ -30,6 +30,7 @@ const NAV: { group?: string; items: { id: Section; label: string; href: string; 
       { id: "quotes", label: "Quotes", href: "/admin/quotes", kind: "quote" },
       { id: "leads", label: "Business leads", href: "/admin/leads", kind: "business" },
       { id: "messages", label: "Messages", href: "/admin/messages", kind: "contact" },
+      { id: "subscribers", label: "Email list", href: "/admin/subscribers" },
     ],
   },
   { items: [{ id: "all", label: "Everything", href: "/admin/all" }] },
@@ -42,6 +43,7 @@ const ICONS: Record<Section, string> = {
   quotes: "M5 3.5h7l3 3V16.5H5zM12 3.5v3h3M7.5 10h5M7.5 13h5",
   leads: "M3.5 16V6.5h5V16M8.5 16V3.5h8V16M2.5 16h15M11 6.5h3M11 9.5h3M11 12.5h3",
   messages: "M3.5 5h13v9h-8l-3.5 3v-3H3.5z",
+  subscribers: "M3 5.5h14v9H3zM3 5.5l7 5 7-5",
   all: "M8.5 14a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zM12.5 12.5 17 17",
 };
 

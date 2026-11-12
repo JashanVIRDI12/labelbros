@@ -5,10 +5,6 @@ import { DEALS, LABEL_PRODUCTS, SAMPLE_PACK, STICKER_PRODUCTS } from "@/lib/prod
 import { contactOr } from "@/lib/site";
 import { Arrow } from "./Arrow";
 import { Motion } from "./Motion";
-<<<<<<< Updated upstream
-import { SecondAsk } from "@/components/site/SecondAsk";
-import { SAMPLE_KIT_ON } from "@/lib/site";
-=======
 import { Ph } from "./Ph";
 import { ShipTo } from "./ShipTo";
 import { Signup } from "./Signup";
@@ -18,7 +14,6 @@ import { MapleLeaf, PayMarks } from "./Trust";
  * The close: one last ask on the blue band, every product and page, the email sign-up, how you
  * can pay, and the wordmark stuck across the bottom like a strip of label tape.
  */
->>>>>>> Stashed changes
 
 const COLUMNS = [
   {
@@ -36,34 +31,15 @@ const COLUMNS = [
   {
     title: "Business",
     links: [
-<<<<<<< Updated upstream
-      { label: "Shop", href: "/shop" },
-      { label: "How it works", href: "/how-it-works" },
-      { label: "Custom design", href: "/services/custom-design" },
-      { label: "All services", href: "/services" },
-      { label: "Order now", href: "/quote#pricing" },
-      ...(SAMPLE_KIT_ON ? [{ label: "Sample kit", href: "/#samples" }] : []),
-=======
       { label: "Bulk pricing", href: "/business" },
       { label: "Pay by invoice", href: "/business#invoice" },
       { label: "Large orders", href: "/business#quote" },
       { label: "Roll labels", href: "/shop/roll-labels" },
->>>>>>> Stashed changes
     ],
   },
   {
     title: "Help",
     links: [
-<<<<<<< Updated upstream
-      { label: "Artwork guide", href: "/how-it-works#faq" },
-      { label: "Questions", href: "/how-it-works#faq" },
-      { label: "Contact us", href: "/contact" },
-    ],
-  },
-];
-
-/** The close: one more ask, the site map, and the wordmark stuck across the bottom. */
-=======
       { label: "How it works", href: "/how-it-works" },
       { label: "Questions", href: "/how-it-works#faq" },
       { label: "Track my order", href: "/track" },
@@ -82,23 +58,10 @@ const COLUMNS = [
   },
 ];
 
->>>>>>> Stashed changes
 export function Footer() {
   return (
     <footer className="ftr" data-motion-root>
       <Motion name="footer" />
-<<<<<<< Updated upstream
-      <div className="footer-top">
-        <div>
-          <h2 className="section-title max-w-[12ch]">Got something to stick?</h2>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link href="/quote#pricing" className="btn btn-primary">
-              Upload your design
-              <Arrow />
-            </Link>
-            <SecondAsk />
-          </div>
-=======
       <section className="ftr-cta" aria-labelledby="ftr-cta-title">
         <h2 id="ftr-cta-title" className="display ftr-cta-title">
           Your labels, ready for the shelf.
@@ -126,7 +89,6 @@ export function Footer() {
             </span>
           </p>
           <Signup />
->>>>>>> Stashed changes
         </div>
         <nav aria-label="Footer" className="ftr-nav">
           {COLUMNS.map((c) => (
@@ -146,18 +108,9 @@ export function Footer() {
         </nav>
       </div>
 
-<<<<<<< Updated upstream
-      <div className="footer-mark" aria-hidden="true">
-        <span className="footer-logo">Label Bros</span>
-      </div>
-
-      <div className="footer-legal text-14 text-liner-soft">
-        <p>© 2026 Label Bros</p>
-=======
       <div className="ftr-base">
         <PayMarks className="ftr-pay" />
         <ShipTo className="ftr-ship" />
->>>>>>> Stashed changes
         <p>
           © 2026 Label Bros · {CURRENCY}. {SHIPPING}.
         </p>

@@ -1,11 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-<<<<<<< Updated upstream
-import type { Finish } from "./facts";
-=======
 import type { ArtworkId, FinishId, FormatId, MaterialId, ShapeId } from "./options";
->>>>>>> Stashed changes
 
 /*
  * The cart, in the visitor's browser: the lines in localStorage (they survive reloads), each
@@ -26,12 +22,8 @@ export type CartLine = {
   qty: number;
   /** deals: how many packs; custom lines: 1 */
   packs: number;
-<<<<<<< Updated upstream
-  artwork: "upload" | "design";
-=======
   /** their file, ours to design, sent after ordering, or none needed (the sample pack) */
   artwork: ArtworkId;
->>>>>>> Stashed changes
   fileName?: string;
   fileSize?: number;
   notes?: string;
@@ -149,6 +141,31 @@ export async function addLine(line: Omit<CartLine, "id" | "fileName" | "fileSize
   if (file) await putFile(id, file);
   save([...getLines(), { ...line, id, fileName: file?.name, fileSize: file?.size }]);
   return id;
+}
+
+/** Change a line in place (Edit in the cart): new choices, and a new file if one is given. */
+export async function updateLine(id: string, line: Omit<CartLine, "id" | "fileName" | "fileSize">, file?: File | null) {
+  if (file) await putFile(id, file);
+  const keepFile = line.artwork === "upload" && !file;
+  if (line.artwork !== "upload") void dropFile(id);
+  save(
+    getLines().map((l) =>
+      l.id === id
+        ? { ...line, id, fileName: file ? file.name : keepFile ? l.fileName : undefined, fileSize: file ? file.size : keepFile ? l.fileSize : undefined }
+        : l,
+    ),
+  );
+}
+
+/** Attach (or replace) a line's artwork from the cart. */
+export async function attachFile(id: string, file: File) {
+  await putFile(id, file);
+  save(getLines().map((l) => (l.id === id ? { ...l, artwork: "upload", fileName: file.name, fileSize: file.size } : l)));
+}
+
+/** A custom line's quantity (the cart's stepper moves through the price breaks). */
+export function setQty(id: string, qty: number) {
+  save(getLines().map((l) => (l.id === id ? { ...l, qty } : l)));
 }
 
 export function setPacks(id: string, packs: number) {

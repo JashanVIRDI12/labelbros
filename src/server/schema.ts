@@ -6,12 +6,9 @@
  *   events        the history of every change
  *   stripe_events webhook events already handled (so none is handled twice)
  *   rate_hits     recent requests per visitor, for rate limits
-<<<<<<< Updated upstream
-=======
  *   subscribers   email sign-ups, with the consent each one gave (CASL) and when they left
  *   proofs        the proofs we send for an order: the file, a private link for the customer,
  *                 and what they said (approved, or the changes they want)
->>>>>>> Stashed changes
  */
 export const SCHEMA = /* sql */ `
 create table if not exists submissions (
@@ -72,8 +69,6 @@ create table if not exists rate_hits (
   at            timestamptz not null default now()
 );
 create index if not exists rate_hits_bucket_at on rate_hits (bucket, at);
-<<<<<<< Updated upstream
-=======
 
 create table if not exists subscribers (
   id            uuid primary key default gen_random_uuid(),
@@ -103,5 +98,4 @@ create table if not exists proofs (
   decided_at    timestamptz
 );
 create index if not exists proofs_submission on proofs (submission_id, version);
->>>>>>> Stashed changes
 `;

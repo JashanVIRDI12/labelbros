@@ -32,8 +32,6 @@ const nextConfig: NextConfig = {
       { source: "/api/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex" }] },
     ];
   },
-<<<<<<< Updated upstream
-=======
   // the names people guess for the policy pages, and the pages the shop replaced (2026-11-11)
   async redirects() {
     const moved: [string, string][] = [
@@ -71,7 +69,6 @@ const nextConfig: NextConfig = {
       { source: "/about-us", destination: "/about", permanent: true },
     ];
   },
->>>>>>> Stashed changes
 };
 
 export default nextConfig;

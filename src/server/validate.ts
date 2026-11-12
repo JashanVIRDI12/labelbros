@@ -1,23 +1,16 @@
 import "server-only";
 import { z } from "zod";
-import { QUANTITIES, CUSTOM_QTY, FINISHES, PRODUCTS, SHAPES, SIZES, CUSTOM } from "@/components/sections/pricing-model";
 import { FILES } from "@/lib/facts";
-<<<<<<< Updated upstream
-import { RECT_RATIO } from "@/components/sheet/sizes";
-import { CURRENCIES, priceIn, priceSize, quotePrice, SAMPLE_KIT, type Currency } from "@/lib/facts";
-=======
 import { CURRENCIES, type Currency } from "@/lib/facts";
->>>>>>> Stashed changes
 import { BUSINESS_KINDS, BUSINESS_OFTEN, BUSINESS_VOLUME, CONTACT_TOPICS } from "@/lib/forms";
 
 /*
  * What each public form may send, checked on the server whatever the browser did. Text is
- * trimmed and capped; anything unexpected is rejected. Prices are never taken from the browser:
- * `priceQuote` works them out again from the choices.
+ * trimmed and capped; anything unexpected is rejected. Prices are never taken from the browser
+ * (the cart is priced again in /api/checkout from lib/products.ts).
  */
 
 const text = (max: number) => z.string().trim().max(max);
-const optional = (max: number) => text(max).optional().transform((v) => v || undefined);
 // one line only: no line breaks (they could forge email headers)
 const line = (max: number) => text(max).regex(/^[^\r\n]*$/, "One line only");
 
@@ -30,14 +23,6 @@ export const person = {
   company: line(160).optional().transform((v) => v || undefined),
 };
 
-const link = z
-  .string()
-  .trim()
-  .max(500)
-  .optional()
-  .transform((v) => v || undefined)
-  .refine((v) => !v || /^https?:\/\/\S+$/i.test(v), "Paste the whole link, starting with https://");
-
 const date = z
   .string()
   .trim()
@@ -45,75 +30,8 @@ const date = z
   .transform((v) => v || undefined)
   .refine((v) => !v || /^\d{4}-\d{2}-\d{2}$/.test(v), "Pick a date.");
 
-/** The quote as the builder sends it (the same fields as its URL). */
-export const quoteSchema = z
-  .object({
-    product: z.enum(ids(PRODUCTS)),
-    shape: z.enum(ids(SHAPES)),
-    finish: z.enum(ids(FINISHES)),
-    artwork: z.enum(["upload", "design"]),
-    size: z.coerce.number().optional(),
-    w: z.coerce.number().optional(),
-    h: z.coerce.number().optional(),
-    qty: z.coerce.number().int(),
-  })
-  .superRefine((q, ctx) => {
-    const custom = q.size === undefined;
-    if (!custom && !SIZES.includes(q.size!)) ctx.addIssue({ code: "custom", message: "Unknown size", path: ["size"] });
-    if (custom) {
-      for (const k of ["w", "h"] as const) {
-        const v = q[k];
-        if (v === undefined || v < CUSTOM.min || v > CUSTOM.max)
-          ctx.addIssue({ code: "custom", message: `Size must be ${CUSTOM.min} to ${CUSTOM.max} inches`, path: [k] });
-      }
-    }
-    if (!QUANTITIES.includes(q.qty) && (q.qty < CUSTOM_QTY.min || q.qty > CUSTOM_QTY.max))
-      ctx.addIssue({ code: "custom", message: "Quantity out of range", path: ["qty"] });
-  });
-export type QuoteInput = z.infer<typeof quoteSchema>;
-
-const label = (list: readonly { id: string; label: string }[], id: string) => list.find((x) => x.id === id)?.label ?? id;
-const inches = (n: number) => String(Math.round(n * 100) / 100);
-
 export const currencySchema = z.enum(CURRENCIES as [Currency, ...Currency[]]).catch("cad");
 
-<<<<<<< Updated upstream
-/** The price in cents (in the order's currency) and a plain description, worked out on the server. */
-export function priceQuote(q: QuoteInput, cur: Currency) {
-  // the same rule as the builder; a preset rectangle is size × size·RECT_RATIO, the others a square
-  const w = q.size ?? q.w!;
-  const h = q.size ? (q.shape === "rectangle" ? q.size * RECT_RATIO : q.size) : q.h!;
-  const longest = priceSize(q.shape, w, h);
-  const { total } = quotePrice(q.qty, longest, q.finish as "gloss" | "matte" | "holo", cur);
-  const size = q.size ? `${inches(q.size)} in (longest side)` : `${inches(q.w!)} × ${inches(q.h!)} in`;
-  const thing = q.product === "labels" ? "labels" : "stickers";
-  const summary = `${q.qty.toLocaleString("en-CA")} ${label(SHAPES, q.shape).toLowerCase()} ${thing}, ${size}, ${label(FINISHES, q.finish).toLowerCase()}`;
-  return { cents: Math.round(total * 100), summary };
-}
-
-export const kitPrice = (cur: Currency) => priceIn(SAMPLE_KIT.usd, cur) * 100;
-
-const PHONE_NEEDED = "We need a phone number to call you about your design.";
-
-/** The order form on /quote (sent with the quote fields above, plus an optional file). */
-export const orderSchema = z.object({
-  ...person,
-  // required for orders: the shop calls when a design needs changes
-  phone: z
-    .string({ error: PHONE_NEEDED })
-    .trim()
-    .max(40)
-    .regex(/^[^\r\n]*$/, "One line only")
-    .regex(/\d(?:\D*\d){6}/, PHONE_NEEDED),
-  needed: date,
-  link,
-  notes: optional(3000),
-  mode: z.enum(["pay", "quote"]),
-  currency: currencySchema,
-});
-
-=======
->>>>>>> Stashed changes
 export const contactSchema = z.object({
   kind: z.literal("contact"),
   name: person.name,
